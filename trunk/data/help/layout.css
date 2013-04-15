@@ -1,0 +1,78 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	font-size: 0.95em;
+	font-family: Verdana;
+}
+h1 {
+	font-size: 160%;
+	margin: 10px 0;
+}
+h2 {
+	font-size: 140%;
+	margin: 10px 0;
+}
+p {
+	margin: 15px 0;
+}
+div {
+	padding: 10px;
+	border-bottom: 2px solid #000000;
+}
+div #noline{
+	padding: 10px;
+	border-bottom: 0px #000000;
+}
+table {
+	border-spacing: 0px;
+}
+th {
+	text-align: left;
+	padding: 5px;
+	border-spacing: 0px;
+}
+td {
+	text-align: left;
+	padding: 5px;
+	border-spacing: 0px;
+}
+.back-to-top {
+	text-decoration: underline;
+}
+.headline {
+	font-weight: bold;
+	font-size: 110%;
+}
+.ul-none {
+	list-style-type: none;
+}
+#welcome {
+	border: none;
+}
+#navigation {
+}
+#plumber {
+}
+#target {
+}
+#control {
+}
+#difficulties {
+}
+#highscore {
+}
+#editor {
+}
+#impressum {
+	border: none;
+}
+
+#about_us {
+	border: none;
+	text-align: center;
+}
+.center {
+	text-align: center;
+}
