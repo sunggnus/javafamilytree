@@ -1,0 +1,94 @@
+<html>
+<head>
+<title> Hilfe </title>
+<link rel="stylesheet" type="text/css" href="layout.css" media="screen" />
+</head>
+<body>
+<div id="welcome">
+<a name="top"></a>
+</div>
+<div>
+<h1>Anleitung</h1>
+<h2>Willkommen beim Stammbaumeditor</h2>
+<h4>der intuitive Editor zum erzeugen und bearbeiten des eigenen Familienstammbaums</h4>
+ </div>
+ <div id="navigation">
+<p class="headline">Inhaltsverzeichnis</p>
+<ul class="ul-none">
+<li><a href="#person">Person anlegen / editieren</a></li>
+<li><a href="#hauptfenster">Das Hauptfenster</a></li>
+<li><a href="#menubar">Die Menubar</a></li>
+<li><a href="#optionen">Das Optionsfenster</a></li>
+<li><a href="#impressum">Impressum</a></li>
+</ul>
+</div>
+ <div id="person">
+ <a name="person"></a>
+<h3>Person anlegen / editieren </h3>
+Es kann eine neue Person entweder &uuml;ber den Menueintrag Person - Neue Person anlegen oder &uuml;ber den Eintrag 
+Person - Personenliste - Person erstellen
+erzeugt werden. Eine bereits existierende Person l&auml;sst sich entweder durch einen einfachen 
+Mausklick auf die Person innerhalb des Stammbaums editieren oder aber 
+&uuml;ber die Personen&uuml;bersicht ausw&auml;hlen.
+Die Felder f&uuml;r Vor- und Nachname sollten ausgef&uuml;llt werden.
+Au&szlig;erdem muss eine X-Koordinate angegeben werden. Desto gr&ouml;&szlig;er der Wert
+desto weiter rechts wird die Person positoniert. <br>
+Geburts- und Todesdatum m&uuml;ssen in der Form dd.mm.yyyy angegeben werden.
+<p><a href="#top" class="back-to-top">Zum Anfang</a></p>
+</div>
+<div id="hauptfenster">
+<a name="hauptfenster"></a>
+<h3>Das Hauptfenster</h3>
+Im Hauptfenster wird der Stammbaum gezeichnet. Ist der Stammbaum f&uuml;r das Fenster zu gro&szlig;
+so werden automatisch Scrollbalken eingezeichnet. Auf der linken Seite gibt es einen Balken zum
+in den Stammbaum zoomen / herauszoomen. Dieser Zoom wirkt sich direkt auf die Gr&ouml;&szlig;e
+beim Drucken oder exportieren des Stammbaumes aus. M&ouml;chte man beim exportieren des Stammbaums
+als Bild eine hohe Qualit&auml;t so sollte man ganz in den Baum hinein zoomen. Achtung eine
+Ausgabe des Stammbaums in hoher Qualit&auml;t ben&ouml;tigt viel Arbeitsspeicher.<br>
+Am oberen Fensterrand befindet sich zum einen die Menubar, mit welcher sich durch das Programm 
+navigieren l&auml;sst siehe hierzu auch <a href="#menubar">Menubar</a> und zum anderen gibt es
+hier die M&ouml;glichkeit den Gesamten Stammbaum mittels der Pfeiltasten nach rechts oder links zu
+verschieben. Auch das Verschieben eines Teilstammbaums ist hier m&ouml;glich. 
+Hierzu muss sowohl in dem X als auch in dem Y Feld ein Wert gr&ouml;&szlig;er gleich Null stehen.
+Es werden alle diejenigen Personen dann verschoben, deren X und Y Position gr&ouml;&szlig;er 
+als der eingegebene Wert ist. (Das Koordinatensystemkreuz befindet sich in der oberen linken Ecke,
+der Y-Wert ist also gr&ouml;&szlig;er je weiter unten sich die Person befindet und der X-Wert 
+ist gr&ouml;&szlig;er je weiter recht sich die Person befindet)<br>
+Einzelne oder mehrere Personen lassen sich durch rechtsklick auch markieren und in dem man 
+in eine markierte Person mit der linken Maustaste dr&uuml;ckt auch verschieben (Maustaste 
+gedr&uuml;ckt halten). Die Markierung l&auml;sst sich durch einen zweiten Rechtsklick wieder
+aufheben.
+Die Felder Standardbreite und Standardh&ouml;he beeinflussen direkt die Rahmengr&ouml;&szlig;e 
+um die Person.
+</div>
+<div id="menubar">
+<a name="menubar"></a>
+<h3>Die Menuleiste</h3>
+Die Menuleiste beginnt rechts mit dem Eintrag Datei. Hier lassen sich Stammb&auml;ume laden und 
+speichern, sowie diese drucken oder als Bild exportieren (png oder jpeg).
+Auﬂerdem kann hier ein Bild unter den Stammbaum gelegt werden. Unter Optionen kommt man 
+zum <a href="#optionen">Optionsfenster</a>.<br>
+Unter dem Eintrag Person lassen sich neue Personen anlegen, Notizen zum Stammbaum hinzuf&uuml;gen,
+eine &Uuml;bersicht der Personen oder der Notizen aufrufen, sowie die Grid-Koordinaten der Personen
+im Stammbaum anzeigen oder ausblenden.<br>
+Unter Hilfe kann man sich das Impressum anschauen oder diese Hilfe &ouml;ffnen.
+</div>
+<div id="optionen">
+<a name="optionen"></a>
+<h3>Optionen</h3>
+Hier l&auml;sst sich der Anzeigemodus ausw&auml;hlen, sowie die Standardeinstellungen f&uuml;r die
+H&ouml;he und Breite der Rahmen um die Personen konfigurieren. Die &Auml;nderung der H&ouml;he und
+Breite wird nicht direkt &uuml;bernommen sondern in die Config.ini geladen, so dass es sich hierbei
+um die neuen Einstellungen beim &Ouml;ffnen des Programms handelt.
+</div>
+<div id="impressum">
+<a name="impressum"></a>
+<h1>Impressum</h1>
+<p>Dieser Stammbaumeditor wurde von Stefan Fl&ouml;ser im Jahr 2013 geschrieben. Es wurden die Bibliothek Metadata-Extractor-2.6.4 und
+xmpcore verwendet. (Diese stehen unter der <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache 2.0 License</a>)</p>
+<p>Dieses Programm wurde unter der <a href="http://de.wikipedia.org/wiki/GNU_Lesser_General_Public_License" target="_blank">Lesser General Public License (LGPL)</a> ver&ouml;ffentlicht. </p>
+<p><a href="#top" class="back-to-top">Zum Anfang</a></p>
+</div>
+
+</body>
+</html>
