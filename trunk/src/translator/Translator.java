@@ -67,7 +67,7 @@ public class Translator {
 		return resourceOverviewJDialog;
 	}
 	
-	public String getTranlation(String key, int source){
+	public String getTranslation(String key, int source){
 		try{
 			switch(source){
 			case MAIN_FRAME:

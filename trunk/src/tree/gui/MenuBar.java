@@ -353,14 +353,14 @@ public class MenuBar extends JMenuBar{
 	 * generates the MenuBar for this program
 	 */
 	public MenuBar(){
-		JMenu file = new JMenu(Main.getTranslator().getTranlation("file",Translator.MAIN_FRAME));
-		JMenu help = new JMenu(Main.getTranslator().getTranlation("help",Translator.MAIN_FRAME));
-		JMenu language = new JMenu(Main.getTranslator().getTranlation("language",Translator.MAIN_FRAME));
-		JMenu extras = new JMenu(Main.getTranslator().getTranlation("extra", Translator.MAIN_FRAME));
+		JMenu file = new JMenu(Main.getTranslator().getTranslation("file",Translator.MAIN_FRAME));
+		JMenu help = new JMenu(Main.getTranslator().getTranslation("help",Translator.MAIN_FRAME));
+		JMenu language = new JMenu(Main.getTranslator().getTranslation("language",Translator.MAIN_FRAME));
+		JMenu extras = new JMenu(Main.getTranslator().getTranslation("extra", Translator.MAIN_FRAME));
 		//create new Person
-		JMenu neu = new JMenu(Main.getTranslator().getTranlation("person",Translator.MAIN_FRAME));
+		JMenu neu = new JMenu(Main.getTranslator().getTranslation("person",Translator.MAIN_FRAME));
 		
-		JMenuItem newPerson = new JMenuItem(Main.getTranslator().getTranlation("newPerson",Translator.MAIN_FRAME));
+		JMenuItem newPerson = new JMenuItem(Main.getTranslator().getTranslation("newPerson",Translator.MAIN_FRAME));
 		
 		neu.add(newPerson);
 		this.add(file);
@@ -372,24 +372,24 @@ public class MenuBar extends JMenuBar{
 		newPerson.addActionListener(MenuBarListener.ADD_PERSON);
 		
 		//add Note
-		JMenuItem addNote = new JMenuItem(Main.getTranslator().getTranlation("newNote",Translator.MAIN_FRAME));
+		JMenuItem addNote = new JMenuItem(Main.getTranslator().getTranslation("newNote",Translator.MAIN_FRAME));
 		addNote.addActionListener(MenuBarListener.ADD_NOTE);
 		neu.add(addNote);
 		
 		
 		
 		//save Tree
-		JMenuItem saveTree = new JMenuItem(Main.getTranslator().getTranlation("saveTree",Translator.MAIN_FRAME));
+		JMenuItem saveTree = new JMenuItem(Main.getTranslator().getTranslation("saveTree",Translator.MAIN_FRAME));
 		saveTree.addActionListener(MenuBarListener.SAVE_TREE);
 		file.add(saveTree);
 		
 		//load Tree
-		JMenuItem loadTree = new JMenuItem(Main.getTranslator().getTranlation("loadTree",Translator.MAIN_FRAME));
+		JMenuItem loadTree = new JMenuItem(Main.getTranslator().getTranslation("loadTree",Translator.MAIN_FRAME));
 		loadTree.addActionListener(MenuBarListener.LOAD_TREE);
 		file.add(loadTree);
 		
 		//jpeg exportieren
-		JMenu exportAs = new JMenu(Main.getTranslator().getTranlation("exportAs",Translator.MAIN_FRAME));
+		JMenu exportAs = new JMenu(Main.getTranslator().getTranslation("exportAs",Translator.MAIN_FRAME));
 		JMenuItem exportAsJPEG = new JMenuItem("jpg");
 		exportAsJPEG.addActionListener(MenuBarListener.EXPORT_AS_JPEG);
 		exportAs.add(exportAsJPEG);
@@ -401,20 +401,20 @@ public class MenuBar extends JMenuBar{
 		file.add(exportAs);
 	
 		
-		JMenuItem overview = new JMenuItem(Main.getTranslator().getTranlation("personOverview",Translator.MAIN_FRAME));
+		JMenuItem overview = new JMenuItem(Main.getTranslator().getTranslation("personOverview",Translator.MAIN_FRAME));
 		overview.addActionListener(MenuBarListener.PERSON_OVERVIEW);
 		neu.add(overview);
 		
 		
 		//background picture loading
 		
-		JMenuItem loadBackground = new JMenuItem(Main.getTranslator().getTranlation("loadBackground",Translator.MAIN_FRAME));
+		JMenuItem loadBackground = new JMenuItem(Main.getTranslator().getTranslation("loadBackground",Translator.MAIN_FRAME));
 		loadBackground.addActionListener(MenuBarListener.LOAD_BACKGROUND_PICTURE);
 		file.add(loadBackground);
 		
 		//background picture export
 		
-		JMenu exportBackground = new JMenu(Main.getTranslator().getTranlation("exportBackground", Translator.MAIN_FRAME));
+		JMenu exportBackground = new JMenu(Main.getTranslator().getTranslation("exportBackground", Translator.MAIN_FRAME));
 		JMenuItem exportBackgroundAsJPEG = new JMenuItem("jpg");
 		exportBackgroundAsJPEG.addActionListener(MenuBarListener.EXPORT_BACKGROUND_AS_JPEG);
 		exportBackground.add(exportBackgroundAsJPEG);
@@ -429,37 +429,37 @@ public class MenuBar extends JMenuBar{
 		
 		//print
 		
-		JMenuItem print = new JMenuItem(Main.getTranslator().getTranlation("print",Translator.MAIN_FRAME));
+		JMenuItem print = new JMenuItem(Main.getTranslator().getTranslation("print",Translator.MAIN_FRAME));
 		print.addActionListener(MenuBarListener.PRINT_TREE);
 		file.add(print);
 		
 		
 		
 		//note overview
-		JMenuItem noteOverview = new JMenuItem(Main.getTranslator().getTranlation("noteOverview",Translator.MAIN_FRAME));
+		JMenuItem noteOverview = new JMenuItem(Main.getTranslator().getTranslation("noteOverview",Translator.MAIN_FRAME));
 		noteOverview.addActionListener(MenuBarListener.NOTE_OVERVIEW);
 		neu.add(noteOverview);
 		
-		JCheckBox drawX = new JCheckBox(Main.getTranslator().getTranlation("coords",Translator.MAIN_FRAME));
+		JCheckBox drawX = new JCheckBox(Main.getTranslator().getTranslation("coords",Translator.MAIN_FRAME));
 		drawX.addActionListener(MenuBarListener.DRAW_X_Y_POSITION);
 		neu.add(drawX);
 		
-		JMenuItem helpEntry = new JMenuItem(Main.getTranslator().getTranlation("help",Translator.MAIN_FRAME));
+		JMenuItem helpEntry = new JMenuItem(Main.getTranslator().getTranslation("help",Translator.MAIN_FRAME));
 		helpEntry.addActionListener(MenuBarListener.SHOW_HELP);
 		help.add(helpEntry);
 		
 		
-		JMenuItem impressum = new JMenuItem(Main.getTranslator().getTranlation("about",Translator.MAIN_FRAME));
+		JMenuItem impressum = new JMenuItem(Main.getTranslator().getTranslation("about",Translator.MAIN_FRAME));
 		impressum.addActionListener(MenuBarListener.SHOW_IMPRESSUM);
 		help.add(impressum);
 		
 		//languages
 		
-		JMenuItem german = new JMenuItem(Main.getTranslator().getTranlation("german",Translator.MAIN_FRAME));
+		JMenuItem german = new JMenuItem(Main.getTranslator().getTranslation("german",Translator.MAIN_FRAME));
 		german.addActionListener(MenuBarListener.LANG_GERMAN);
 		language.add(german);
 		
-		JMenuItem english = new JMenuItem(Main.getTranslator().getTranlation("english",Translator.MAIN_FRAME));
+		JMenuItem english = new JMenuItem(Main.getTranslator().getTranslation("english",Translator.MAIN_FRAME));
 		english.addActionListener(MenuBarListener.LANG_ENGLISH);
 		language.add(english);
 		
@@ -467,12 +467,12 @@ public class MenuBar extends JMenuBar{
 		//extras
 		//options
 		
-		JMenuItem options = new JMenuItem(Main.getTranslator().getTranlation("options",Translator.MAIN_FRAME));
+		JMenuItem options = new JMenuItem(Main.getTranslator().getTranslation("options",Translator.MAIN_FRAME));
 		options.addActionListener(MenuBarListener.OPEN_OPTIONS);
 		extras.add(options);
 		
 		//refresh background
-		JMenuItem redrawBackground = new JMenuItem(Main.getTranslator().getTranlation("redraw", Translator.MAIN_FRAME));
+		JMenuItem redrawBackground = new JMenuItem(Main.getTranslator().getTranslation("redraw", Translator.MAIN_FRAME));
 		redrawBackground.addActionListener(MenuBarListener.REDRAW_BACKGROUND);
 		
 		extras.add(redrawBackground);

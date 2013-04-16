@@ -89,7 +89,7 @@ public class MainFrame extends JFrame{
 	
 		
 		
-		this.setTitle(Main.getTranslator().getTranlation("title",Translator.MAIN_FRAME));
+		this.setTitle(Main.getTranslator().getTranslation("title",Translator.MAIN_FRAME));
 		this.setJMenuBar(new MenuBar());
 		canvas = new TreeCanvas(Config.PERSON_HEIGHT, Config.PERSON_WIDTH, Config.SCALING);
 		pane = new JScrollPane();
@@ -107,10 +107,10 @@ public class MainFrame extends JFrame{
 		final EntryField yCoordinate = new EntryField("Y: ",AbstractField.DEFAULT_LABEL_WIDTH);
 		yCoordinate.setContent("-1");
 		
-		widthUnit = new EntryField(Main.getTranslator().getTranlation("defaultWidth",Translator.MAIN_FRAME),AbstractField.DEFAULT_LABEL_WIDTH);
+		widthUnit = new EntryField(Main.getTranslator().getTranslation("defaultWidth",Translator.MAIN_FRAME),AbstractField.DEFAULT_LABEL_WIDTH);
 		widthUnit.setContent(String.valueOf(Config.PERSON_WIDTH));
 		
-		heightUnit = new EntryField(Main.getTranslator().getTranlation("defaultHeight",Translator.MAIN_FRAME),AbstractField.DEFAULT_LABEL_WIDTH);
+		heightUnit = new EntryField(Main.getTranslator().getTranslation("defaultHeight",Translator.MAIN_FRAME),AbstractField.DEFAULT_LABEL_WIDTH);
 		heightUnit.setContent(String.valueOf(Config.PERSON_HEIGHT));
 		
 		heightUnit.addDocumentListener(new DocumentListener(){
@@ -312,9 +312,9 @@ public class MainFrame extends JFrame{
 	
 	public void changeLanguage(){
 		this.setJMenuBar(new MenuBar());
-		this.setTitle(Main.getTranslator().getTranlation("title",Translator.MAIN_FRAME));
-		this.heightUnit.setLabelText(Main.getTranslator().getTranlation("defaultHeight",Translator.MAIN_FRAME));
-		this.widthUnit.setLabelText(Main.getTranslator().getTranlation("defaultWidth",Translator.MAIN_FRAME));
+		this.setTitle(Main.getTranslator().getTranslation("title",Translator.MAIN_FRAME));
+		this.heightUnit.setLabelText(Main.getTranslator().getTranslation("defaultHeight",Translator.MAIN_FRAME));
+		this.widthUnit.setLabelText(Main.getTranslator().getTranslation("defaultWidth",Translator.MAIN_FRAME));
 		this.revalidate();
 		this.canvas.repaint();
 		this.pane.getViewport().revalidate();

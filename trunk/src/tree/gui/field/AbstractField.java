@@ -31,7 +31,13 @@ public abstract class AbstractField extends JPanel{
 		this(name,labelWidth,field,EMPTY_TEXT_FIELD_WIDTH);
 	}
 	
-	
+	/**
+	 * 
+	 * @param name
+	 * @param labelWidth
+	 * @param field
+	 * @param fieldWidth
+	 */
 	protected AbstractField(String name, int labelWidth, JComponent field,int fieldWidth){
 		this.field = field;
 		this.label = new JLabel(name);

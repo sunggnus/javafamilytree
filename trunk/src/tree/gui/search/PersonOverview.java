@@ -87,7 +87,7 @@ public class PersonOverview extends AbstractOverview{
 		
 		//north panel
 		
-		this.getAddButton().setText(Main.getTranslator().getTranlation("generatePerson", Translator.OVERVIEW_JDIALOG));
+		this.getAddButton().setText(Main.getTranslator().getTranslation("generatePerson", Translator.OVERVIEW_JDIALOG));
 		
 		
 		this.getAddButton().addActionListener(new ActionListener(){

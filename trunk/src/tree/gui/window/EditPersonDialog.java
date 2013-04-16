@@ -34,7 +34,7 @@ import tree.gui.field.PersonEditField;
 import tree.gui.util.IconUtil;
 import tree.gui.util.ImageLoaderDialog;
 import tree.model.Person;
-import tree.model.PersonUtil;
+import tree.model.Utils;
 
 public class EditPersonDialog extends JDialog{
 
@@ -96,8 +96,8 @@ public class EditPersonDialog extends JDialog{
 		this.isNewPerson = false;
 		if(!addPerson){
 			this.editablePerson = (Person) javax.swing.JOptionPane.showInputDialog(this
-					, Main.getTranslator().getTranlation("choosePerson", Translator.EDIT_PERSON_JDIALOG)
-					, Main.getTranslator().getTranlation("editPerson", Translator.EDIT_PERSON_JDIALOG), 
+					, Main.getTranslator().getTranslation("choosePerson", Translator.EDIT_PERSON_JDIALOG)
+					, Main.getTranslator().getTranslation("editPerson", Translator.EDIT_PERSON_JDIALOG), 
 					javax.swing.JOptionPane.NO_OPTION, 
 					null, Main.getMainNode().getPersons().toArray()
 					, new JComboBox<Person>());
@@ -109,32 +109,32 @@ public class EditPersonDialog extends JDialog{
 		JPanel panel = new JPanel();
 		
 		
-		givenName = new EntryField(Main.getTranslator().getTranlation("givenName", Translator.EDIT_PERSON_JDIALOG)
+		givenName = new EntryField(Main.getTranslator().getTranslation("givenName", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		familyName = new EntryField(Main.getTranslator().getTranlation("familyName", Translator.EDIT_PERSON_JDIALOG)
+		familyName = new EntryField(Main.getTranslator().getTranslation("familyName", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		birthName = new EntryField(Main.getTranslator().getTranlation("birthName", Translator.EDIT_PERSON_JDIALOG)
+		birthName = new EntryField(Main.getTranslator().getTranslation("birthName", Translator.EDIT_PERSON_JDIALOG)
 				, AbstractField.DEFAULT_LABEL_WIDTH);
-		commentOne = new EntryField(Main.getTranslator().getTranlation("comment", Translator.EDIT_PERSON_JDIALOG)
+		commentOne = new EntryField(Main.getTranslator().getTranslation("comment", Translator.EDIT_PERSON_JDIALOG)
 				, AbstractField.DEFAULT_LABEL_WIDTH);
-		xPosition = new EntryField(Main.getTranslator().getTranlation("relX", Translator.EDIT_PERSON_JDIALOG)
+		xPosition = new EntryField(Main.getTranslator().getTranslation("relX", Translator.EDIT_PERSON_JDIALOG)
 				, AbstractField.DEFAULT_LABEL_WIDTH);
-		xPosition.setToolTip(Main.getTranslator().getTranlation("relX_tool", Translator.EDIT_PERSON_JDIALOG));
-		dateOfBirth = new EntryField(Main.getTranslator().getTranlation("dateOfBirth", Translator.EDIT_PERSON_JDIALOG)
+		xPosition.setToolTip(Main.getTranslator().getTranslation("relX_tool", Translator.EDIT_PERSON_JDIALOG));
+		dateOfBirth = new EntryField(Main.getTranslator().getTranslation("dateOfBirth", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		dateOfDeath = new EntryField(Main.getTranslator().getTranlation("dateOfDeath", Translator.EDIT_PERSON_JDIALOG)
+		dateOfDeath = new EntryField(Main.getTranslator().getTranslation("dateOfDeath", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		sex = new DropDownField<String>(Main.getTranslator().getTranlation("sex", Translator.EDIT_PERSON_JDIALOG)
+		sex = new DropDownField<String>(Main.getTranslator().getTranslation("sex", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		sex.add(Main.getTranslator().getTranlation("male", Translator.EDIT_PERSON_JDIALOG));
-		sex.add(Main.getTranslator().getTranlation("female", Translator.EDIT_PERSON_JDIALOG));
+		sex.add(Main.getTranslator().getTranslation("male", Translator.EDIT_PERSON_JDIALOG));
+		sex.add(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG));
 		sex.addItemListener(new ItemListener(){
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED && e.getItem() instanceof String){
 					editablePerson.setSex(((String) sex.getSelectedItem()).
-							equals(Main.getTranslator().getTranlation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE);
+							equals(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE);
 			
 				}
 				
@@ -143,14 +143,14 @@ public class EditPersonDialog extends JDialog{
 		});
 		
 		
-		alive = new ModifiedCheckBox(Main.getTranslator().getTranlation("alive", Translator.EDIT_PERSON_JDIALOG)
+		alive = new ModifiedCheckBox(Main.getTranslator().getTranslation("alive", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		mother = new PersonEditField(editablePerson, PersonEditField.MODE_MOTHER,
 				AbstractField.DEFAULT_WIDTH);
 		father = new PersonEditField(editablePerson,PersonEditField.MODE_FATHER,
 				AbstractField.DEFAULT_WIDTH);
-		accept = new ModifiedJButton(Main.getTranslator().getTranlation("generatePerson", Translator.EDIT_PERSON_JDIALOG), 0,
+		accept = new ModifiedJButton(Main.getTranslator().getTranslation("generatePerson", Translator.EDIT_PERSON_JDIALOG), 0,
 				AbstractField.DEFAULT_WIDTH);
 		
 		
@@ -216,9 +216,9 @@ public class EditPersonDialog extends JDialog{
 		JPanel picturePanel = new JPanel();
 		
 	
-		ModifiedJButton loadImage = new ModifiedJButton(Main.getTranslator().getTranlation("loadImage", Translator.EDIT_PERSON_JDIALOG),
+		ModifiedJButton loadImage = new ModifiedJButton(Main.getTranslator().getTranslation("loadImage", Translator.EDIT_PERSON_JDIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
-		ModifiedJButton deleteImage = new ModifiedJButton(Main.getTranslator().getTranlation("removeImage", Translator.EDIT_PERSON_JDIALOG),
+		ModifiedJButton deleteImage = new ModifiedJButton(Main.getTranslator().getTranslation("removeImage", Translator.EDIT_PERSON_JDIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		
@@ -286,7 +286,7 @@ public class EditPersonDialog extends JDialog{
 			this.isNewPerson = true;
 			this.editablePerson =new Person(givenName.getContent(), 
 					familyName.getContent(), ((String) sex.getSelectedItem()).
-					equals(Main.getTranslator().getTranlation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE
+					equals(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE
 					);
 		}
 		
@@ -310,7 +310,7 @@ public class EditPersonDialog extends JDialog{
 		
 		String[] birth = txt.split("\\.");
 		InvalidInputException exp = new InvalidInputException(
-				Main.getTranslator().getTranlation("invalidInput", Translator.EDIT_PERSON_JDIALOG));
+				Main.getTranslator().getTranslation("invalidInput", Translator.EDIT_PERSON_JDIALOG));
 		
 		if(birth.length!=3){
 			throw exp;
@@ -340,7 +340,7 @@ public class EditPersonDialog extends JDialog{
 		editablePerson.setBirthName(birthName.getContent());
 		editablePerson.setCommentOne(commentOne.getContent());
 		editablePerson.setSex(((String) sex.getSelectedItem()).
-					equals(Main.getTranslator().getTranlation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE);
+					equals(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE);
 		if(!Config.XAUTO_POSITIONING){
 			int xpos = Integer.parseInt(xPosition.getContent());
 			editablePerson.setXPosition(xpos, false);
@@ -372,7 +372,7 @@ public class EditPersonDialog extends JDialog{
 			javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
 		}catch(NumberFormatException k){
 			javax.swing.JOptionPane.showMessageDialog(this,
-					Main.getTranslator().getTranlation("validX", Translator.EDIT_PERSON_JDIALOG));
+					Main.getTranslator().getTranslation("validX", Translator.EDIT_PERSON_JDIALOG));
 		}
 	}
 	
@@ -384,13 +384,13 @@ public class EditPersonDialog extends JDialog{
 		this.familyName.setContent(this.editablePerson.getFamilyName());
 		this.birthName.setContent(this.editablePerson.getBirthName());
 		this.commentOne.setContent(this.editablePerson.getCommentOne());
-		this.dateOfBirth.setContent(PersonUtil.calendarToSimpleString(
+		this.dateOfBirth.setContent(Utils.calendarToSimpleString(
 				this.editablePerson.getBirthdate()));
-		this.dateOfDeath.setContent(PersonUtil.calendarToSimpleString(
+		this.dateOfDeath.setContent(Utils.calendarToSimpleString(
 				this.editablePerson.getDeathdate()));
 		this.alive.setSelected(this.editablePerson.isAlive());
 		this.sex.setSelectedItem(this.editablePerson.isFemale()?
-				Main.getTranslator().getTranlation("female", Translator.EDIT_PERSON_JDIALOG):Main.getTranslator().getTranlation("male", Translator.EDIT_PERSON_JDIALOG));
+				Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG):Main.getTranslator().getTranslation("male", Translator.EDIT_PERSON_JDIALOG));
 		this.father.setOwner(this.editablePerson);
 		this.mother.setOwner(this.editablePerson);
 		this.xPosition.setContent(String.valueOf(this.editablePerson.getXPosition()));

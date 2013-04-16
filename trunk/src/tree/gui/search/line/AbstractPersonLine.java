@@ -8,7 +8,7 @@ import javax.swing.SpringLayout;
 
 import tree.gui.search.AbstractOverview;
 import tree.model.Person;
-import tree.model.PersonUtil;
+import tree.model.Utils;
 
 public abstract class AbstractPersonLine extends AbstractLine{
 
@@ -41,10 +41,10 @@ public abstract class AbstractPersonLine extends AbstractLine{
 		birthday = new JLabel("");
 		deathday = new JLabel("");
 		if(person.getBirthdate()!=null){
-		birthday.setText(PersonUtil.calendarToSimpleString(person.getBirthdate()));
+		birthday.setText(Utils.calendarToSimpleString(person.getBirthdate()));
 		}
 		if(person.getDeathdate()!=null){
-		deathday.setText(PersonUtil.calendarToSimpleString(person.getDeathdate()));
+		deathday.setText(Utils.calendarToSimpleString(person.getDeathdate()));
 		}
 		
 		

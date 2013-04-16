@@ -10,10 +10,10 @@ public class TestPerson {
 	public void testAge() throws AgeException, InvalidSexException{
 		Person person = new Person("","",true, Person.FEMALE, null, null, 25, 9,1988);
 		Assert.assertEquals(24, person.getAge());
-		System.out.println(PersonUtil.calendarToString(person.getBirthdate()));
+		System.out.println(Utils.calendarToString(person.getBirthdate()));
 		Person person2 = new Person("","",true, Person.FEMALE, null, null, 25, 1,1988);
 		Assert.assertEquals(25, person2.getAge());
-		System.out.println(PersonUtil.calendarToString(person2.getBirthdate()));
+		System.out.println(Utils.calendarToString(person2.getBirthdate()));
 	}
 
 }

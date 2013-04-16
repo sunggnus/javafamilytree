@@ -40,15 +40,15 @@ public class OptionDialog extends JDialog{
 		int width = AbstractField.DEFAULT_LABEL_WIDTH+50;
 		JPanel panel = new JPanel();
 		DropDownField<OptionList> mode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranlation("displayMode", Translator.OPTION_JDIALOG),
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("displayMode", Translator.OPTION_JDIALOG),
 						width);
 		
 		DropDownField<OptionList> lineDrawMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranlation("lineMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("lineMode", Translator.OPTION_JDIALOG), 
 						width);
 		
 		DropDownField<OptionList> backgroundMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranlation("backgroundMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("backgroundMode", Translator.OPTION_JDIALOG), 
 						width);
 		
 		final JSlider xBackgroundPosition = new JSlider();
@@ -58,7 +58,7 @@ public class OptionDialog extends JDialog{
 		
 		
 		DropDownField<OptionList> lineBreakMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranlation("lineBreakMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("lineBreakMode", Translator.OPTION_JDIALOG), 
 						width);
 		//text ist still lineBreakMode
 		DropDownField<OptionList> dataPositioningMode = 
@@ -67,11 +67,11 @@ public class OptionDialog extends JDialog{
 		
 		
 		DropDownField<OptionList> mouseMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranlation("mouseMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("mouseMode", Translator.OPTION_JDIALOG), 
 						width);
 		
 		DropDownField<OptionList> keyboardMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranlation("keyboardMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("keyboardMode", Translator.OPTION_JDIALOG), 
 						width);
 		
 		for(OptionList dispMode : OptionList.values()){
@@ -228,7 +228,7 @@ public class OptionDialog extends JDialog{
 			
 		});
 		
-		final EntryField unitWidth = new EntryField(Main.getTranslator().getTranlation("defaultWidth", Translator.OPTION_JDIALOG),
+		final EntryField unitWidth = new EntryField(Main.getTranslator().getTranslation("defaultWidth", Translator.OPTION_JDIALOG),
 				width);
 		final EntryField unitHeight = new EntryField("defaultHeight", width);
 		

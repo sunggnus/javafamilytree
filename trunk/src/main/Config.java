@@ -18,7 +18,7 @@ import tree.gui.TreeCanvasMouseListener;
  * @author Stefan
  *
  */
-public class Config {
+public final class Config {
 	
 	static public final String LINE_SEPARATOR = System.getProperties().getProperty("line.separator");
 

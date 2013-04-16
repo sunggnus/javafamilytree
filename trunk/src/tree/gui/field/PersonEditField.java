@@ -82,10 +82,10 @@ public class PersonEditField extends JPanel{
 			}
 			break;
 		case MODE_CHILD:
-				this.constructMulti(Main.getTranslator().getTranlation("children", Translator.EDIT_PERSON_JDIALOG));
+				this.constructMulti(Main.getTranslator().getTranslation("children", Translator.EDIT_PERSON_JDIALOG));
 			break;
 		case MODE_PARTNER:
-				this.constructMulti(Main.getTranslator().getTranlation("partner", Translator.EDIT_PERSON_JDIALOG));
+				this.constructMulti(Main.getTranslator().getTranslation("partner", Translator.EDIT_PERSON_JDIALOG));
 			break;
 		default:
 			//do nothing field stays empty			
@@ -99,7 +99,7 @@ public class PersonEditField extends JPanel{
 	private void constructMulti(final String header){
 		int defaultSize = AbstractField.DEFAULT_WIDTH-buttonSize+3;
 		ModifiedJButton add = new ModifiedJButton(header,
-				Main.getTranslator().getTranlation("add", Translator.EDIT_PERSON_JDIALOG),
+				Main.getTranslator().getTranslation("add", Translator.EDIT_PERSON_JDIALOG),
 				defaultSize, 
 				buttonSize);
 		
@@ -136,11 +136,11 @@ public class PersonEditField extends JPanel{
 		for(final Person person : theList){
 			String labelContent = person.getGivenName() + " " + person.getFamilyName();
 			if(person.getBirthName()!=null&&!person.getBirthName().isEmpty()){
-				labelContent += " " + Main.getTranslator().getTranlation("birth", Translator.EDIT_PERSON_JDIALOG)
+				labelContent += " " + Main.getTranslator().getTranslation("birth", Translator.EDIT_PERSON_JDIALOG)
 						+ person.getBirthName();
 			}
 			ModifiedJButton button = new ModifiedJButton(labelContent, 
-					Main.getTranslator().getTranlation("remove", Translator.EDIT_PERSON_JDIALOG), 
+					Main.getTranslator().getTranslation("remove", Translator.EDIT_PERSON_JDIALOG), 
 					defaultSize, buttonSize);
 			button.getJButton().addActionListener(new ActionListener(){
 
@@ -192,15 +192,15 @@ public class PersonEditField extends JPanel{
 	private void constructSingle(Person person){
 		final int but = 2;
 		
-		final JButton delete = new JButton(Main.getTranslator().getTranlation("remove", Translator.EDIT_PERSON_JDIALOG));
+		final JButton delete = new JButton(Main.getTranslator().getTranslation("remove", Translator.EDIT_PERSON_JDIALOG));
 		JButton change = new JButton("ersetzen");
 		String labelContent = (mode==MODE_MOTHER)?
-				Main.getTranslator().getTranlation("mum", Translator.EDIT_PERSON_JDIALOG):
-				Main.getTranslator().getTranlation("dad", Translator.EDIT_PERSON_JDIALOG);
+				Main.getTranslator().getTranslation("mum", Translator.EDIT_PERSON_JDIALOG):
+				Main.getTranslator().getTranslation("dad", Translator.EDIT_PERSON_JDIALOG);
 		if(person!=null){
 		labelContent += person.getGivenName() + " " + person.getFamilyName();
 		if(person.getBirthName()!=null&&!person.getBirthName().isEmpty()){
-			labelContent += " " + Main.getTranslator().getTranlation("birth", Translator.EDIT_PERSON_JDIALOG) + person.getBirthName();
+			labelContent += " " + Main.getTranslator().getTranslation("birth", Translator.EDIT_PERSON_JDIALOG) + person.getBirthName();
 		}
 		}
 		final JLabel name = new JLabel(labelContent);
@@ -246,11 +246,11 @@ public class PersonEditField extends JPanel{
 				switch (mode) {
 				case MODE_FATHER:
 					person = owner.getFather();
-					labelContent = Main.getTranslator().getTranlation("dad", Translator.EDIT_PERSON_JDIALOG);
+					labelContent = Main.getTranslator().getTranslation("dad", Translator.EDIT_PERSON_JDIALOG);
 					break;
 				case MODE_MOTHER:
 					person = owner.getMother();
-					labelContent = Main.getTranslator().getTranlation("mum", Translator.EDIT_PERSON_JDIALOG);
+					labelContent = Main.getTranslator().getTranslation("mum", Translator.EDIT_PERSON_JDIALOG);
 					break;
 				default:
 					person = owner.getFather();
@@ -263,7 +263,7 @@ public class PersonEditField extends JPanel{
 							+ person.getFamilyName();
 					if (person.getBirthName() != null
 							&& !person.getBirthName().isEmpty()) {
-						labelContent += " "+ Main.getTranslator().getTranlation("birth", Translator.EDIT_PERSON_JDIALOG)
+						labelContent += " "+ Main.getTranslator().getTranslation("birth", Translator.EDIT_PERSON_JDIALOG)
 								+ person.getBirthName();
 					}
 				} else {

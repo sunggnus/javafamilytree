@@ -2,7 +2,7 @@ package tree.gui.search;
 
 import tree.model.Note;
 import tree.model.Person;
-import tree.model.PersonUtil;
+import tree.model.Utils;
 
 public class DefaultFilter implements Filter {
 
@@ -23,11 +23,11 @@ public class DefaultFilter implements Filter {
 			String birthday = "";
 			String deathday = "";
 			if (person.getBirthdate() != null) {
-				birthday = PersonUtil.calendarToSimpleString(person
+				birthday = Utils.calendarToSimpleString(person
 						.getBirthdate());
 			}
 			if (person.getDeathdate() != null) {
-				deathday = PersonUtil.calendarToSimpleString(person
+				deathday = Utils.calendarToSimpleString(person
 						.getDeathdate());
 			}
 			toSearch = person.getGivenName() + " " + person.getFamilyName()

@@ -1,9 +1,6 @@
 package tree.model;
 
 
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
 
 
@@ -389,7 +385,7 @@ public class Person implements Serializable{
 		if(this.father==father){
 			return;
 		}
-		if(this.isOlderThan(father)==IS_OLDER_THAN){
+		if(this.compareAge(father)==IS_OLDER_THAN){
 			throw new AgeException("Eltern dürfen nicht jünger als ihre Kinder sein.");
 		}
 		
@@ -448,7 +444,7 @@ public class Person implements Serializable{
 		if(this.mother==mother){
 			return;
 		}
-		if(this.isOlderThan(mother)==IS_OLDER_THAN){
+		if(this.compareAge(mother)==IS_OLDER_THAN){
 			throw new AgeException("Eltern dürfen nicht jünger als ihre Kinder sein.");
 		}
 		
@@ -696,50 +692,29 @@ public class Person implements Serializable{
 	 * @return UNDECIDABLE if it is undecidable IS_OLDER_THAN if this person is older 
 	 * and IS_YOUNGER_THAN if this person is younger
 	 */
-	public int isOlderThan(Person person){
+	public int compareAge(Person person){
 		
-		int result = 0;
+		int result = UNDECIDABLE;
 		if(person == null){
 			return result;
 		}
 		if(this.getBirthdate()!=null&&person.getBirthdate()!=null){
 			boolean isOlder = this.getBirthdate().before(person.getBirthdate());
 			if(isOlder){
-				result = 1;
+				result = IS_OLDER_THAN;
 			}
 			else{
-				result = -1;
+				result = IS_YOUNGER_THAN;
 			}
 		}
 		return result;
-	}
-	/**
-	 * decides if this person is younger than the given person
-	 * @param person to compare to
-	 * @return UNDECIDABLE if it is undecidable IS_OLDER_THAN if this person is older 
-	 * and IS_YOUNGER_THAN if this person is younger
-	 */
-	public int isYoungerThan(Person person){
-		return this.isOlderThan(person);
 	}
 	
 	@Override
 	public String toString(){
 		return this.getGivenName() + " " + 
 				this.getFamilyName() + " *" + 
-				((this.getBirthdate()!=null)?PersonUtil.calendarToString(this.getBirthdate()):"");
-				
-	}
-	
-	public String status(){
-		String result = this.toString()+ " Kinder: \n";
-		
-		String children = "";
-		for(Person child : this.children){
-			children += child.toString() + "\n";
-		}
-		
-		return result+children;
+				((this.getBirthdate()!=null)?Utils.calendarToString(this.getBirthdate()):"");
 				
 	}
 
@@ -998,7 +973,7 @@ public class Person implements Serializable{
 		}
 		
 		if(primByte.length>50){
-			this.setPicture(this.convertByteToImage(primByte));
+			this.setPicture(Utils.convertByteToImage(primByte));
 		}
 		else{
 			this.setPicture(null);
@@ -1006,30 +981,6 @@ public class Person implements Serializable{
 	}
 	
 	
-	private BufferedImage convertByteToImage(byte[] bytearray)
-    {
-    Image image=Toolkit.getDefaultToolkit().createImage(bytearray);
-    JFrame frm=new JFrame();
-    MediaTracker mt=new MediaTracker(frm);
-    mt.addImage(image,0);
-    try
-        {
-        mt.waitForAll();
-        }
-    catch(InterruptedException ex)
-        {
-        
-        }
-    int width=image.getWidth(null);
-    int height=image.getHeight(null);
-    BufferedImage bi=new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
-    while(!bi.createGraphics().drawImage(image,0,0,null)){
-    	
-    }
-    return bi;
-    }
-
-
 	public String getBirthName() {
 		return birthName;
 	}
