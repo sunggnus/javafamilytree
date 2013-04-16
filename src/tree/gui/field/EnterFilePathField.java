@@ -28,7 +28,7 @@ public class EnterFilePathField extends JPanel{
 	
 	public EnterFilePathField(){
 		
-		JLabel defaultSearch = new JLabel(Main.getTranslator().getTranlation("defaultSearch", Translator.OPTION_JDIALOG));
+		JLabel defaultSearch = new JLabel(Main.getTranslator().getTranslation("defaultSearch", Translator.OPTION_JDIALOG));
 		
 		final JTextField text = new JTextField();
 		text.setText(Config.DEFAULT_PATH);
@@ -54,23 +54,23 @@ public class EnterFilePathField extends JPanel{
 		});
 		text.setEditable(false);
 		
-		final JButton edit = new JButton(Main.getTranslator().getTranlation("edit", Translator.OPTION_JDIALOG));
+		final JButton edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.OPTION_JDIALOG));
 		edit.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				text.setEditable(!text.isEditable());
 				if(text.isEditable()){
-					edit.setText(Main.getTranslator().getTranlation("save", Translator.OPTION_JDIALOG));
+					edit.setText(Main.getTranslator().getTranslation("save", Translator.OPTION_JDIALOG));
 				}
 				else{
-					edit.setText(Main.getTranslator().getTranlation("edit", Translator.OPTION_JDIALOG));
+					edit.setText(Main.getTranslator().getTranslation("edit", Translator.OPTION_JDIALOG));
 				}
 			}
 			
 		});
 		
-		final JButton search = new JButton(Main.getTranslator().getTranlation("search", Translator.OPTION_JDIALOG));
+		final JButton search = new JButton(Main.getTranslator().getTranslation("search", Translator.OPTION_JDIALOG));
 		search.addActionListener(new ActionListener(){
 
 			@Override

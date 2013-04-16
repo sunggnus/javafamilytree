@@ -52,20 +52,20 @@ public class EditNoteDialog extends JDialog{
 		
 		
 		
-		textArea = new TextAreaField(Main.getTranslator().getTranlation("note", Translator.EDIT_NOTE_JDIALOG) ,
+		textArea = new TextAreaField(Main.getTranslator().getTranslation("note", Translator.EDIT_NOTE_JDIALOG) ,
 				TextAreaField.DEFAULT_LABEL_WIDTH, 
 				TextAreaField.EMPTY_TEXT_FIELD_WIDTH);
 		
-		xCoord = new EntryField(Main.getTranslator().getTranlation("xCoord", Translator.EDIT_NOTE_JDIALOG),
+		xCoord = new EntryField(Main.getTranslator().getTranslation("xCoord", Translator.EDIT_NOTE_JDIALOG),
 				EntryField.DEFAULT_LABEL_WIDTH);
-		yCoord = new EntryField(Main.getTranslator().getTranlation("yCoord", Translator.EDIT_NOTE_JDIALOG), 
+		yCoord = new EntryField(Main.getTranslator().getTranslation("yCoord", Translator.EDIT_NOTE_JDIALOG), 
 				EntryField.DEFAULT_LABEL_WIDTH);
-		fontSize = new EntryField(Main.getTranslator().getTranlation("fontSize", Translator.EDIT_NOTE_JDIALOG)
+		fontSize = new EntryField(Main.getTranslator().getTranslation("fontSize", Translator.EDIT_NOTE_JDIALOG)
 				, EntryField.DEFAULT_LABEL_WIDTH);
 		
 		
 		JSlider smoothX = new JSlider();
-		smoothX.setToolTipText(Main.getTranslator().getTranlation("smoothX_tool", Translator.EDIT_NOTE_JDIALOG));
+		smoothX.setToolTipText(Main.getTranslator().getTranslation("smoothX_tool", Translator.EDIT_NOTE_JDIALOG));
 		
 		smoothX.setMaximum(100);
 		smoothX.setValue((int) Math.ceil(this.editableNote.getSmoothX()*smoothX.getMaximum()));
@@ -91,7 +91,7 @@ public class EditNoteDialog extends JDialog{
 		});
 		
 		JSlider smoothY = new JSlider();
-		smoothY.setToolTipText(Main.getTranslator().getTranlation("smoothY_tool", Translator.EDIT_NOTE_JDIALOG));
+		smoothY.setToolTipText(Main.getTranslator().getTranslation("smoothY_tool", Translator.EDIT_NOTE_JDIALOG));
 		smoothY.setMaximum(100);
 		smoothY.setValue((int) Math.ceil(this.editableNote.getSmoothY()*smoothY.getMaximum()));
 		
@@ -112,7 +112,7 @@ public class EditNoteDialog extends JDialog{
 			
 		});
 		
-		JButton accept = new JButton(Main.getTranslator().getTranlation("saveNote", Translator.EDIT_NOTE_JDIALOG));
+		JButton accept = new JButton(Main.getTranslator().getTranslation("saveNote", Translator.EDIT_NOTE_JDIALOG));
 		
 		accept.addActionListener(new ActionListener(){
 
@@ -141,7 +141,7 @@ public class EditNoteDialog extends JDialog{
 			
 		});
 		
-		JButton delete = new JButton(Main.getTranslator().getTranlation("removeNote", Translator.EDIT_NOTE_JDIALOG));
+		JButton delete = new JButton(Main.getTranslator().getTranslation("removeNote", Translator.EDIT_NOTE_JDIALOG));
 		
 		delete.addActionListener(new ActionListener(){
 

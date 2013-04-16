@@ -166,7 +166,7 @@ public abstract class AbstractOverview extends JDialog{
 		if(showAddButton){
 			getNorth().add(this.getAddButton());
 		}
-			getNorth().add(new JLabel(Main.getTranslator().getTranlation("search", Translator.OVERVIEW_JDIALOG)));
+			getNorth().add(new JLabel(Main.getTranslator().getTranslation("search", Translator.OVERVIEW_JDIALOG)));
 			getNorth().add(getFilterText());
 			
 			this.add(getNorth(),BorderLayout.NORTH);

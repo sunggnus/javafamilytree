@@ -42,8 +42,8 @@ public class NoteEditLine extends AbstractLine{
 			contentOne.setText(comments.get(0));
 		}
 		
-		this.edit = new JButton(Main.getTranslator().getTranlation("editNote", Translator.OVERVIEW_JDIALOG));
-		this.delete = new JButton(Main.getTranslator().getTranlation("removeNote", Translator.OVERVIEW_JDIALOG));
+		this.edit = new JButton(Main.getTranslator().getTranslation("editNote", Translator.OVERVIEW_JDIALOG));
+		this.delete = new JButton(Main.getTranslator().getTranslation("removeNote", Translator.OVERVIEW_JDIALOG));
 		
 				//layout stuff
 				SpringLayout layout = new SpringLayout();

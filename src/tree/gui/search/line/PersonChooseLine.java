@@ -38,7 +38,7 @@ public class PersonChooseLine extends AbstractPersonLine{
 		super(person, view);
 		this.setMulti(this.getMulti()+1);
 		
-		choose = new JButton(Main.getTranslator().getTranlation("choose", Translator.OVERVIEW_JDIALOG));
+		choose = new JButton(Main.getTranslator().getTranslation("choose", Translator.OVERVIEW_JDIALOG));
 		
 		choose.addActionListener(new ActionListener(){
 

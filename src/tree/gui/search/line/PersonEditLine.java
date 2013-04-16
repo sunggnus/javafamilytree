@@ -15,7 +15,7 @@ import tree.gui.window.EditPersonDialog;
 import tree.model.AgeException;
 import tree.model.InvalidSexException;
 import tree.model.Person;
-import tree.model.PersonUtil;
+import tree.model.Utils;
 
 public class PersonEditLine extends AbstractPersonLine{
 
@@ -33,8 +33,8 @@ public class PersonEditLine extends AbstractPersonLine{
 	public PersonEditLine(final Person person, final AbstractOverview view){
 		super(person,view);
 		this.setMulti(this.getMulti()+2);
-		delete = new JButton(Main.getTranslator().getTranlation("remove", Translator.OVERVIEW_JDIALOG));
-		edit = new JButton(Main.getTranslator().getTranlation("edit", Translator.OVERVIEW_JDIALOG));
+		delete = new JButton(Main.getTranslator().getTranslation("remove", Translator.OVERVIEW_JDIALOG));
+		edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.OVERVIEW_JDIALOG));
 		final PersonEditLine thisLine = this;
 		delete.addActionListener(new ActionListener(){
 
@@ -79,10 +79,10 @@ public class PersonEditLine extends AbstractPersonLine{
 				getBirthday().setText("");
 				getDeathday().setText("");
 				if(person.getBirthdate()!=null){
-					getBirthday().setText(PersonUtil.calendarToSimpleString(person.getBirthdate()));
+					getBirthday().setText(Utils.calendarToSimpleString(person.getBirthdate()));
 					}
 					if(person.getDeathdate()!=null){
-					getDeathday().setText(PersonUtil.calendarToSimpleString(person.getDeathdate()));
+					getDeathday().setText(Utils.calendarToSimpleString(person.getDeathdate()));
 					}
 				
 			}

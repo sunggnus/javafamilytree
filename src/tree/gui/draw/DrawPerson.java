@@ -7,7 +7,7 @@ import main.Main;
 import main.OptionList;
 import translator.Translator;
 import tree.model.Person;
-import tree.model.PersonUtil;
+import tree.model.Utils;
 
 public class DrawPerson extends AbstractDraw {
 
@@ -192,7 +192,7 @@ public class DrawPerson extends AbstractDraw {
 		if (this.person.getBirthName() != null
 				&& !this.person.getBirthName().isEmpty()) {
 			g.drawString(
-					Main.getTranslator().getTranlation("birth",
+					Main.getTranslator().getTranslation("birth",
 							Translator.EDIT_PERSON_JDIALOG)
 							+ this.person.getBirthName(), innerX,
 					this.nextRow());
@@ -205,7 +205,7 @@ public class DrawPerson extends AbstractDraw {
 		if (this.person.getBirthdate() != null) {
 			g.drawString(
 					"* "
-							+ PersonUtil.calendarToSimpleString(this.person
+							+ Utils.calendarToSimpleString(this.person
 									.getBirthdate()), innerX, this.nextRow());
 		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
 			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
@@ -213,7 +213,7 @@ public class DrawPerson extends AbstractDraw {
 		if (this.person.getDeathdate() != null) {
 			g.drawString(
 					"\u2020  "
-							+ PersonUtil.calendarToSimpleString(this.person
+							+ Utils.calendarToSimpleString(this.person
 									.getDeathdate()), innerX, this.nextRow());
 		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
 			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
