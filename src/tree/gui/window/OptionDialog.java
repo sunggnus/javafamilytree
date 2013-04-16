@@ -7,7 +7,6 @@ import java.awt.event.ItemListener;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -20,6 +19,7 @@ import tree.gui.field.AbstractField;
 import tree.gui.field.DropDownField;
 import tree.gui.field.EnterFilePathField;
 import tree.gui.field.EntryField;
+import tree.gui.field.ModifiedJSlider;
 import tree.gui.util.IconUtil;
 
 public class OptionDialog extends JDialog{
@@ -51,10 +51,12 @@ public class OptionDialog extends JDialog{
 				new DropDownField<OptionList>(Main.getTranslator().getTranslation("backgroundMode", Translator.OPTION_JDIALOG), 
 						width);
 		
-		final JSlider xBackgroundPosition = new JSlider();
-		final JSlider yBackgroundPosition = new JSlider();
-		xBackgroundPosition.setVisible(false);
-		yBackgroundPosition.setVisible(false);
+		final ModifiedJSlider xBackgroundPosition = 
+				new ModifiedJSlider(Main.getTranslator().getTranslation("xSlider", Translator.OPTION_JDIALOG),width);
+		final ModifiedJSlider yBackgroundPosition = 
+				new ModifiedJSlider(Main.getTranslator().getTranslation("ySlider", Translator.OPTION_JDIALOG),width);
+		xBackgroundPosition.setVisible(Config.BACKGROUND_MODE.equals(OptionList.DRAW_LOADED_BACKGROUND));
+		yBackgroundPosition.setVisible(Config.BACKGROUND_MODE.equals(OptionList.DRAW_LOADED_BACKGROUND));
 		
 		
 		DropDownField<OptionList> lineBreakMode = 
