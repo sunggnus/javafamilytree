@@ -84,6 +84,8 @@ public abstract class AbstractField extends JPanel{
 		return this.field;
 	}
 	
+
+	
 	public void setToolTip(String toolTip){
 		this.getLabel().setToolTipText(toolTip);
 	}

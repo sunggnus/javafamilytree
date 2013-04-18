@@ -30,11 +30,19 @@ public class PersonEditLine extends AbstractPersonLine{
 	
 	private JButton edit;
 	
+	private JButton visible;
+	
 	public PersonEditLine(final Person person, final AbstractOverview view){
 		super(person,view);
-		this.setMulti(this.getMulti()+2);
+		this.setMulti(this.getMulti()+3);
 		delete = new JButton(Main.getTranslator().getTranslation("remove", Translator.OVERVIEW_JDIALOG));
 		edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.OVERVIEW_JDIALOG));
+		visible =  new JButton(Main.getTranslator().getTranslation("makeVisible", Translator.OVERVIEW_JDIALOG));
+		
+		if(person.isVisible()){
+			visible.setText(Main.getTranslator().getTranslation("makeInvisible", Translator.OVERVIEW_JDIALOG));
+		}
+		
 		final PersonEditLine thisLine = this;
 		delete.addActionListener(new ActionListener(){
 
@@ -88,6 +96,24 @@ public class PersonEditLine extends AbstractPersonLine{
 			}
 			
 		});
+		
+		visible.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				person.setVisible(!person.isVisible());
+				
+				if(person.isVisible()){
+					visible.setText(Main.getTranslator().getTranslation("makeInvisible", Translator.OVERVIEW_JDIALOG));
+				}else{
+					visible.setText(Main.getTranslator().getTranslation("makeVisible", Translator.OVERVIEW_JDIALOG));
+				}
+				
+				Main.getMainFrame().getCanvas().repaint();
+				
+			}
+			
+		});
 				//layout stuff
 				SpringLayout layout = (SpringLayout) this.getLayout();
 				
@@ -106,9 +132,17 @@ public class PersonEditLine extends AbstractPersonLine{
 				layout.putConstraint(SpringLayout.NORTH, this.delete,
 						5, SpringLayout.NORTH, this);
 				
+				//visible
+				
+				layout.putConstraint(SpringLayout.WEST, this.visible, 
+						5, SpringLayout.EAST, this.delete);
+				
+				layout.putConstraint(SpringLayout.NORTH, this.visible, 
+						5, SpringLayout.NORTH, this);
+				
 				this.add(edit);
 				this.add(delete);
-				
+				this.add(visible);
 
 				//this.setLayout(layout);
 		

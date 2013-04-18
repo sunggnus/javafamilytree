@@ -124,6 +124,12 @@ public class Person implements Serializable{
 	 */
 	private int xPosition;
 	
+	
+	/**
+	 * this boolean is true if the person should be visible within the family tree else false
+	 */
+	private boolean visible;
+	
 	/**
 	 * contains a picture of the person
 	 */
@@ -132,7 +138,13 @@ public class Person implements Serializable{
 	 * this boolean contains necessary information for the oedipus algorithm
 	 */
 	private boolean visited;
+	/**
+	 * this boolean contains necessary information for the oedipus algorithm
+	 */
 	private boolean trulyVisited;
+	/**
+	 * this Person contains necessary information for the oedipus algorithm
+	 */
 	private Person noCall;
 	
 	/**
@@ -998,6 +1010,40 @@ public class Person implements Serializable{
 
 	public void setCommentOne(String commentOne) {
 		this.commentOne = commentOne;
+	}
+
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	/**
+	 * sets recursively the parent visibility to the value of visible
+	 * @param visible
+	 */
+	public void setParentVisibility(boolean visible){
+		if(this.getMother() != null){
+			this.getMother().setVisible(visible);
+			this.getMother().setParentVisibility(visible);
+		}
+		if(this.getFather() != null){
+			this.getFather().setVisible(visible);
+			this.getFather().setParentVisibility(visible);
+		}
+	}
+	/**
+	 * set recursively the children visibility to the value of visible
+	 * @param visible
+	 */
+	public void setChildrenVisibility(boolean visible){
+		for(Person child : this.getChildren()){
+			child.setVisible(visible);
+			child.setChildrenVisibility(visible);
+		}
 	}
 
 

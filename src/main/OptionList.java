@@ -12,6 +12,7 @@ public enum OptionList {
 	NO_DRAW_BACKGROUND("Kein Hintergrundbild generieren",OptionList.TYPE_BACKGROUND_MODE),
 	DRAW_MIRRORED_BACKGROUND("Geladenes Hintergrundbild verwenden",OptionList.TYPE_BACKGROUND_MODE),
 	DRAW_LOADED_BACKGROUND("Geladenes Hintergrundbild verwenden",OptionList.TYPE_BACKGROUND_MODE),
+	DRAW_LOADED_BACKGROUND_FIT("Geladenes Hintergrundbild verwenden", OptionList.TYPE_BACKGROUND_MODE),
 	BACKGROUND_SUMMER_TREE("Sommerbaum als Hintergrundbild erzeugen",OptionList.TYPE_BACKGROUND_MODE),
 	BACKGROUND_SUMMER_TREE_RANDOM("Sommerbaum mit Zufall als Hintergrundbild erzeugen",OptionList.TYPE_BACKGROUND_MODE),
 	NAME_LINE_BREAK("Vorname und Nachname in zwei Zeilen",OptionList.TYPE_LINE_BREAK_MODE),

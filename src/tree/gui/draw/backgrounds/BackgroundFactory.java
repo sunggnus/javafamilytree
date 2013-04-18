@@ -9,7 +9,9 @@ import main.OptionList;
 public class BackgroundFactory {
 	
 	static private Background background=null;
+	
 	static private DrawBackgroundImage image;
+	
 	static private JMenuItem exportListener;
 	
 	static public Background generateBackground(int width, int height){
@@ -33,7 +35,13 @@ public class BackgroundFactory {
 				image.setMode(DrawBackgroundImage.MODE_SCALED);
 			}
 			setBackground(image);
-			return background; //TODO implement;
+			return background; 
+		case DRAW_LOADED_BACKGROUND_FIT:
+			if(image!=null){
+				image.setMode(DrawBackgroundImage.MODE_FIT);
+			}
+			setBackground(image);
+			return background; 
 		case NO_DRAW_BACKGROUND:
 			return null;
 		default:

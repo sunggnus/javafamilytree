@@ -127,6 +127,11 @@ public class TreeCanvas extends JPanel implements ExportImage{
 			this.repaint();
 		}
 	}
+	
+	
+	public void generateBackground(){
+		background = BackgroundFactory.generateBackground(prefX, prefY);
+	}
 
 	
 	/**
