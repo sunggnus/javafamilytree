@@ -57,6 +57,10 @@ public class DrawPerson extends AbstractDraw {
 	@Override
 	public void draw(Graphics2D g, int widthUnit, int heightUnit,
 			double scaling, boolean drawXPosition) {
+		
+		if(!this.person.isVisible()){
+			return; //the person will not be drawn if she is not visible
+		}
 
 		this.setScaling(scaling);
 		scaling = 1.0; // by now resizing is done with the graphics only thing
@@ -76,11 +80,14 @@ public class DrawPerson extends AbstractDraw {
 		int motherx = 0;
 		int parentx = 0;
 		double half = 0.5;
-		if (this.person.getFather() != null) {
+		
+		
+		
+		if (this.person.getFather() != null && this.person.getFather().isVisible() ) {
 			fatherx = (int) (this.person.getFather().getHalfXPosition()
 					* scaling * widthUnit * 1.1);
 		}
-		if (this.person.getMother() != null) {
+		if (this.person.getMother() != null && this.person.getMother().isVisible()) {
 			motherx = (int) (this.person.getMother().getHalfXPosition()
 					* scaling * widthUnit * 1.1);
 		}
@@ -102,6 +109,11 @@ public class DrawPerson extends AbstractDraw {
 			int maxX = ownX;
 			int minX = ownX;
 			for (Person partner : this.person.getPartners()) {
+				
+				if(!partner.isVisible()){
+					continue; //only visible partners are relevant for the calculation
+				}
+				
 				int personX = (int) (partner.getHalfXPosition() * scaling
 						* widthUnit * 1.1);
 				if (personX > maxX) {
@@ -122,7 +134,8 @@ public class DrawPerson extends AbstractDraw {
 		}
 
 		// determine line end
-		if (this.person.getFather() != null || this.person.getMother() != null) {
+		if ((this.person.getFather() != null && this.person.getFather().isVisible()) || //not null and visible!
+				(this.person.getMother() != null && this.person.getMother().isVisible())) {
 
 			int upperYmarging = (int) (y - scaling * heightUnit * 0.3);
 			if (this.person.hasTwoParents()
@@ -132,7 +145,8 @@ public class DrawPerson extends AbstractDraw {
 							.getFather().hasOrHadPartner())) {
 				upperYmarging += (int) Math.ceil(DEFAULT_MARGING * scaling);
 			}
-
+			
+			//draw connections
 			if (Config.CONNECTION_MODE.equals(OptionList.DIAGONAL_CONNECTION)) {
 				g.drawLine(parentx, upperYmarging, (int) (x + scaling
 						* widthUnit * half), lowYmarging);
@@ -296,6 +310,10 @@ public class DrawPerson extends AbstractDraw {
 		} else {
 			// TODO draw default image
 		}
+	}
+	
+	public boolean isVisible(){
+		return this.person.isVisible();
 	}
 
 }

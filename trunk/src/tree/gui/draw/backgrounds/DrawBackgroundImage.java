@@ -99,7 +99,7 @@ public class DrawBackgroundImage extends Background{
 				if (scale * imHeight > this.height) {
 					scale = this.height / (double) imHeight;
 				}
-				g.drawImage(image, xPos, yPos, (int) (scale * imWidth),
+				g.drawImage(image, (int) (xPos*scale),(int) (yPos*scale), (int) (scale * imWidth),
 						(int) (scale * imHeight), null);
 				break;
 			case MODE_FIT:
@@ -162,6 +162,14 @@ public class DrawBackgroundImage extends Background{
 	
 	public void setYPosition(int y){
 		this.yPos = y;
+	}
+	
+	public int getXPosition(){
+		return this.xPos;
+	}
+	
+	public int getYPosition(){
+		return this.yPos;
 	}
 	
 	public int getHeight(){

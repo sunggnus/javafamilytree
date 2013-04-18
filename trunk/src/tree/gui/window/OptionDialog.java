@@ -7,6 +7,9 @@ import java.awt.event.ItemListener;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -15,6 +18,7 @@ import main.Main;
 import main.OptionList;
 import translator.Translator;
 import tree.gui.draw.backgrounds.BackgroundFactory;
+import tree.gui.draw.backgrounds.DrawBackgroundImage;
 import tree.gui.field.AbstractField;
 import tree.gui.field.DropDownField;
 import tree.gui.field.EnterFilePathField;
@@ -55,9 +59,7 @@ public class OptionDialog extends JDialog{
 				new ModifiedJSlider(Main.getTranslator().getTranslation("xSlider", Translator.OPTION_JDIALOG),width);
 		final ModifiedJSlider yBackgroundPosition = 
 				new ModifiedJSlider(Main.getTranslator().getTranslation("ySlider", Translator.OPTION_JDIALOG),width);
-		xBackgroundPosition.setVisible(Config.BACKGROUND_MODE.equals(OptionList.DRAW_LOADED_BACKGROUND));
-		yBackgroundPosition.setVisible(Config.BACKGROUND_MODE.equals(OptionList.DRAW_LOADED_BACKGROUND));
-		
+		initSliders(xBackgroundPosition, yBackgroundPosition);
 		
 		DropDownField<OptionList> lineBreakMode = 
 				new DropDownField<OptionList>(Main.getTranslator().getTranslation("lineBreakMode", Translator.OPTION_JDIALOG), 
@@ -159,14 +161,9 @@ public class OptionDialog extends JDialog{
 				if(e.getStateChange()==ItemEvent.SELECTED && e.getItem() instanceof OptionList){
 					OptionList item = (OptionList) e.getItem();
 					Config.BACKGROUND_MODE = item;
-					BackgroundFactory.deleteSavedBackground();
-					if(item.equals(OptionList.DRAW_LOADED_BACKGROUND)){
-						xBackgroundPosition.setVisible(true);
-						yBackgroundPosition.setVisible(true);
-					}else{
-						xBackgroundPosition.setVisible(false);
-						yBackgroundPosition.setVisible(false);
-					}
+					BackgroundFactory.deleteSavedBackground();		
+					Main.getMainFrame().getCanvas().generateBackground();
+					initSliders(xBackgroundPosition, yBackgroundPosition);
 					Main.getMainFrame().getCanvas().repaint();
 				}
 				
@@ -306,5 +303,72 @@ public class OptionDialog extends JDialog{
 		this.setResizable(false);
 		this.setVisible(true);
 	}
+	
+	static private void initSliders(ModifiedJSlider xMSlider, ModifiedJSlider yMSlider){
+		
+		if(BackgroundFactory.getBufferedBackground() != null && 
+				BackgroundFactory.getBufferedBackground() instanceof DrawBackgroundImage &&
+				Config.BACKGROUND_MODE.equals(OptionList.DRAW_LOADED_BACKGROUND)){
+			DrawBackgroundImage background = (DrawBackgroundImage) BackgroundFactory.getBufferedBackground();
+			JSlider xSlider = xMSlider.getJSlider();
+			JSlider ySlider = yMSlider.getJSlider();
+			xSlider.setMaximum(background.getWidth());
+			ySlider.setMaximum(background.getHeight());
+			
+			xSlider.setMinimum(-background.getWidth());
+			ySlider.setMinimum(-background.getHeight());
+			
+			xSlider.setValue(background.getXPosition());
+			ySlider.setValue(background.getYPosition());
+			
+			
+			
+			xMSlider.addChangeListener(createChangeListener('x', background));
+			yMSlider.addChangeListener(createChangeListener('y', background));
+			
+			xMSlider.setVisible(true);
+			yMSlider.setVisible(true);
+			
+		}else{
+			xMSlider.setVisible(false);
+			yMSlider.setVisible(false);
+		}
+	}
+	
+	static private ChangeListener createChangeListener(final char a, final DrawBackgroundImage background){
+		ChangeListener result = new ChangeListener() {
+			private int oldValue;
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if(e.getSource() instanceof JSlider){
+					JSlider source = (JSlider) e.getSource();
+					int val = source.getValue();
+					if(oldValue != val){
+						oldValue = val;
+						switch(a){
+						case 'x':
+							background.setXPosition(val);
+							break;
+						case 'y':
+							background.setYPosition(val);
+							break;
+						default:
+							//do nothing
+						}
+						
+					}
+					Main.getMainFrame().getCanvas().repaint();
+				}
+				
+			}
+		};
+		
+		return result;
+	}
+	
+	
+	
+	
 
 }

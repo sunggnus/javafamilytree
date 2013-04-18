@@ -113,6 +113,13 @@ static public final int STRING_HEIGHT=15;
 	}
 
 	public boolean containsCoordinates(int x, int y) {
+		
+		if(this instanceof DrawPerson){
+			if(!((DrawPerson) this).isVisible()){
+				return false; //so mouse only reacts if the person is visible
+			}
+			
+		}
 	
 		return (this.getMinX() < x && x < this.getMaxX() && this.getMinY() < y && y < this.getMaxY());
 	}

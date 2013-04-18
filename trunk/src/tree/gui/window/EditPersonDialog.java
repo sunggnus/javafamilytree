@@ -63,6 +63,8 @@ public class EditPersonDialog extends JDialog{
 	
 	private ModifiedCheckBox alive;
 	
+	private ModifiedCheckBox visible;
+	
 	private PersonEditField mother;
 	
 	private PersonEditField father;
@@ -146,6 +148,9 @@ public class EditPersonDialog extends JDialog{
 		alive = new ModifiedCheckBox(Main.getTranslator().getTranslation("alive", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
 		
+		visible = new ModifiedCheckBox(Main.getTranslator().getTranslation("visible", Translator.EDIT_PERSON_JDIALOG)
+				,AbstractField.DEFAULT_LABEL_WIDTH);
+		
 		mother = new PersonEditField(editablePerson, PersonEditField.MODE_MOTHER,
 				AbstractField.DEFAULT_WIDTH);
 		father = new PersonEditField(editablePerson,PersonEditField.MODE_FATHER,
@@ -169,7 +174,7 @@ public class EditPersonDialog extends JDialog{
 		
 		
 		
-		
+		panel.add(visible);
 		panel.add(givenName);
 		panel.add(familyName);
 		panel.add(birthName);
@@ -239,9 +244,59 @@ public class EditPersonDialog extends JDialog{
 		picturePanel.add(loadImage);
 		picturePanel.add(deleteImage);
 		
+		//visibility stuff added to picture stuff
+		ModifiedJButton visibleParents = new ModifiedJButton(Main.getTranslator().
+				getTranslation("visibleParents", Translator.EDIT_PERSON_JDIALOG),
+				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
+		visibleParents.getJButton().addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editablePerson.setParentVisibility(true);
+				Main.getMainFrame().getCanvas().repaint();
+			}	
+		});
 		
+		ModifiedJButton invisibleParents = new ModifiedJButton(Main.getTranslator().
+				getTranslation("invisibleParents", Translator.EDIT_PERSON_JDIALOG),
+				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
+		invisibleParents.getJButton().addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editablePerson.setParentVisibility(false);
+				Main.getMainFrame().getCanvas().repaint();
+			}	
+		});
+		
+		ModifiedJButton visibleChildren = new ModifiedJButton(Main.getTranslator().
+				getTranslation("visibleChildren", Translator.EDIT_PERSON_JDIALOG),
+				-10, AbstractField.DEFAULT_LABEL_WIDTH);
+		
+		visibleChildren.getJButton().addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editablePerson.setChildrenVisibility(true);
+				Main.getMainFrame().getCanvas().repaint();
+			}	
+		});
+		
+		ModifiedJButton invisibleChildren = new ModifiedJButton(Main.getTranslator().
+				getTranslation("invisibleChildren", Translator.EDIT_PERSON_JDIALOG),
+				-10, AbstractField.DEFAULT_LABEL_WIDTH);
+		
+		invisibleChildren.getJButton().addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editablePerson.setChildrenVisibility(false);
+				Main.getMainFrame().getCanvas().repaint();
+			}	
+		});
+		
+		picturePanel.add(visibleParents);
+		picturePanel.add(invisibleParents);
+		picturePanel.add(visibleChildren);
+		picturePanel.add(invisibleChildren);
 		
 		//south stuff
 		
@@ -353,6 +408,7 @@ public class EditPersonDialog extends JDialog{
 		boolean alive = this.alive.isSelected();
 		alive = alive && (death == null);
 		editablePerson.setAlive(alive);
+		editablePerson.setVisible(this.visible.isSelected());
 		if(birth != null){
 			this.editablePerson.setBirthdate(birth[0], birth[1], birth[2]);
 		}
@@ -389,6 +445,7 @@ public class EditPersonDialog extends JDialog{
 		this.dateOfDeath.setContent(Utils.calendarToSimpleString(
 				this.editablePerson.getDeathdate()));
 		this.alive.setSelected(this.editablePerson.isAlive());
+		this.visible.setSelected(this.editablePerson.isVisible());
 		this.sex.setSelectedItem(this.editablePerson.isFemale()?
 				Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG):Main.getTranslator().getTranslation("male", Translator.EDIT_PERSON_JDIALOG));
 		this.father.setOwner(this.editablePerson);

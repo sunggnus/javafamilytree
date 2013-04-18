@@ -15,8 +15,14 @@ public class MainNode implements Serializable{
 
 	private Person mainPerson;
 	
+	/**
+	 * contains every person within the tree
+	 */
 	private LinkedList<Person> createdPersons;
 	
+	/**
+	 * contains every note within the tree
+	 */
 	private LinkedList<Note> notes;
 	
 	public MainNode(Person person){
@@ -96,6 +102,12 @@ public class MainNode implements Serializable{
 		
 		if(this.notes==null){
 			this.notes =new LinkedList<Note>();
+		}
+	}
+	
+	public void setTreeVisibility(boolean visible){
+		for(Person person : this.createdPersons){
+			person.setVisible(visible);
 		}
 	}
 
