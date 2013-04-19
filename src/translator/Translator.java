@@ -34,12 +34,12 @@ public class Translator {
 	public void loadLocale(Locale loc, String path){
 		 try{
 		Locale.setDefault(loc);
-		
-		resourceMainFrame = ResourceBundle.getBundle(path + "MainFrame",loc);
-		resourceEditNoteJDialog = ResourceBundle.getBundle(path + "EditNoteJDialog",loc);
-		resourceEditPersonJDialog = ResourceBundle.getBundle(path + "EditPersonJDialog", loc);
-		resourceOptionJDialog = ResourceBundle.getBundle(path + "OptionJDialog",loc);
-		resourceOverviewJDialog = ResourceBundle.getBundle(path + "OverviewJDialog", loc);
+		ResourceBundleControl control = new ResourceBundleControl();
+		resourceMainFrame = ResourceBundle.getBundle(path + "MainFrame",loc,control);
+		resourceEditNoteJDialog = ResourceBundle.getBundle(path + "EditNoteJDialog",loc,control);
+		resourceEditPersonJDialog = ResourceBundle.getBundle(path + "EditPersonJDialog", loc,control);
+		resourceOptionJDialog = ResourceBundle.getBundle(path + "OptionJDialog",loc,control);
+		resourceOverviewJDialog = ResourceBundle.getBundle(path + "OverviewJDialog", loc,control);
 		
 		 }catch(MissingResourceException e){
 			 System.out.println("Resource not found");
