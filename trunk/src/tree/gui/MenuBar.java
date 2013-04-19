@@ -66,6 +66,12 @@ public class MenuBar extends JMenuBar{
 				loadLanguage("en", "US");
 			}
 		},
+		LANG_RUSSIAN(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				loadLanguage("ru", "RU");
+			}
+		},
 		REDRAW_BACKGROUND(){
 			@Override
 			public void actionPerformed(ActionEvent e){
@@ -134,7 +140,7 @@ public class MenuBar extends JMenuBar{
 					try {
 						if(!saver.writeImageAs(filePath,mode, BackgroundFactory.getBufferedBackground(), false)){
 							int override = javax.swing.JOptionPane.
-									showConfirmDialog(null, "Die Datei existiert bereits, soll sie überschrieben werden?");
+									showConfirmDialog(null, "Die Datei existiert bereits, soll sie ï¿½berschrieben werden?");
 							if(override == javax.swing.JOptionPane.YES_OPTION){
 								saver.writeImageAs(filePath,mode, BackgroundFactory.getBufferedBackground(), true);
 							}
@@ -195,7 +201,7 @@ public class MenuBar extends JMenuBar{
 					try {
 						if(!saver.writeTree(Main.getMainNode(), filePath)){
 							int override = javax.swing.JOptionPane.
-									showConfirmDialog(null, "Die Datei existiert bereits, soll sie überschrieben werden?");
+									showConfirmDialog(null, "Die Datei existiert bereits, soll sie ï¿½berschrieben werden?");
 							if(override == javax.swing.JOptionPane.YES_OPTION){
 								saver.writeTree(Main.getMainNode(), filePath,true);
 							}
@@ -244,7 +250,7 @@ public class MenuBar extends JMenuBar{
 					try {
 						if(!saver.writeImageAs(filePath,mode, Main.getMainFrame().getCanvas(), false)){
 							int override = javax.swing.JOptionPane.
-									showConfirmDialog(null, "Die Datei existiert bereits, soll sie überschrieben werden?");
+									showConfirmDialog(null, "Die Datei existiert bereits, soll sie ï¿½berschrieben werden?");
 							if(override == javax.swing.JOptionPane.YES_OPTION){
 								saver.writeImageAs(filePath,mode, Main.getMainFrame().getCanvas(), true);
 							}
@@ -463,6 +469,9 @@ public class MenuBar extends JMenuBar{
 		english.addActionListener(MenuBarListener.LANG_ENGLISH);
 		language.add(english);
 		
+		JMenuItem russian = new JMenuItem(Main.getTranslator().getTranslation("russian",Translator.MAIN_FRAME));
+		russian.addActionListener(MenuBarListener.LANG_RUSSIAN);
+		language.add(russian);
 		
 		//extras
 		//options
