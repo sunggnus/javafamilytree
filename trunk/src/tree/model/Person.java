@@ -398,7 +398,7 @@ public class Person implements Serializable{
 			return;
 		}
 		if(this.compareAge(father)==IS_OLDER_THAN){
-			throw new AgeException("Eltern dürfen nicht jünger als ihre Kinder sein.");
+			throw new AgeException("Eltern dï¿½rfen nicht jï¿½nger als ihre Kinder sein.");
 		}
 		
 		
@@ -428,7 +428,7 @@ public class Person implements Serializable{
 			else{
 				this.setFather(null);
 			}
-			throw new AgeException("Etwas in der Erblinie stimmt nicht, Änderung wurde nicht akzeptiert!");
+			throw new AgeException("Etwas in der Erblinie stimmt nicht, ï¿½nderung wurde nicht akzeptiert!");
 		}
 		
 		int gen = person.getGeneration();
@@ -457,7 +457,7 @@ public class Person implements Serializable{
 			return;
 		}
 		if(this.compareAge(mother)==IS_OLDER_THAN){
-			throw new AgeException("Eltern dürfen nicht jünger als ihre Kinder sein.");
+			throw new AgeException("Eltern dï¿½rfen nicht jï¿½nger als ihre Kinder sein.");
 		}
 		
 		
@@ -1021,6 +1021,29 @@ public class Person implements Serializable{
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
+	
+	/**
+	 * sets recursively the ancestor visibility to the value of visible
+	 * @param visible
+	 */
+	public void setAncestorVisibility(boolean visible){
+		List<Person> subTree = Utils.generateSubTree(this, Utils.TREE_UP);
+		for(Person person : subTree){
+			person.setVisible(visible);
+		}
+	}
+	
+	/**
+	 * sets recursively the descendant visibility to the value of visible
+	 * @param visible
+	 */
+	public void setDescendantVisibility(boolean visible){
+		List<Person> subTree = Utils.generateSubTree(this, Utils.TREE_DOWN);
+		for(Person person : subTree){
+			person.setVisible(visible);
+		}
+	}
+	
 	/**
 	 * sets recursively the parent visibility to the value of visible
 	 * @param visible

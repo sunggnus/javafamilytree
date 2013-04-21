@@ -17,6 +17,7 @@ import javax.swing.event.ChangeListener;
 import main.Main;
 import translator.Translator;
 import tree.gui.field.EntryField;
+import tree.gui.field.ModifiedCheckBox;
 import tree.gui.field.TextAreaField;
 import tree.gui.util.IconUtil;
 import tree.model.Note;
@@ -29,6 +30,8 @@ public class EditNoteDialog extends JDialog{
 	private static final long serialVersionUID = -3585799795490081086L;
 	
 	private Note editableNote;
+	
+	private ModifiedCheckBox visible;
 	
 	private TextAreaField textArea;
 	
@@ -63,6 +66,10 @@ public class EditNoteDialog extends JDialog{
 		fontSize = new EntryField(Main.getTranslator().getTranslation("fontSize", Translator.EDIT_NOTE_JDIALOG)
 				, EntryField.DEFAULT_LABEL_WIDTH);
 		
+		
+		visible = new ModifiedCheckBox(Main.getTranslator().getTranslation("visible", Translator.EDIT_PERSON_JDIALOG),
+				EntryField.DEFAULT_LABEL_WIDTH);
+		visible.setSelected(this.editableNote.isVisible());
 		
 		JSlider smoothX = new JSlider();
 		smoothX.setToolTipText(Main.getTranslator().getTranslation("smoothX_tool", Translator.EDIT_NOTE_JDIALOG));
@@ -133,6 +140,7 @@ public class EditNoteDialog extends JDialog{
 				}
 				self.editableNote.setX(x);
 				self.editableNote.setY(y);
+				self.editableNote.setVisible(visible.isSelected());
 				self.editableNote.setFontSize(fSize);
 				Main.getMainNode().addNote(self.editableNote);
 				Main.getMainFrame().revalidateTree();
@@ -154,6 +162,7 @@ public class EditNoteDialog extends JDialog{
 			
 		});
 		
+		panel.add(visible);
 		panel.add(xCoord);
 		panel.add(smoothX);
 		panel.add(yCoord);

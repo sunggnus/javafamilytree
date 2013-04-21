@@ -292,6 +292,13 @@ public class TreeCanvas extends JPanel implements ExportImage{
 	public void changeDrawXYPositon() {
 		this.drawXYPositon = !this.drawXYPositon;
 	}
+	/**
+	 * returns the value of {@link #drawXYPositon}
+	 * @return value of {@link #drawXYPositon}
+	 */
+	public boolean isDrawXYPosition(){
+		return this.drawXYPositon;
+	}
 	
 	/**
 	 * sets a new {@link #scaling} value

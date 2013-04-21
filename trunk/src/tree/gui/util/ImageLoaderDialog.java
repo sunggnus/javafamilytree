@@ -25,7 +25,11 @@ public class ImageLoaderDialog implements ActionListener {
 			try {
 				String filePath = chooser.getSelectedFile().getAbsolutePath();
 				String lowerCase = filePath.toLowerCase();
-				if (!(lowerCase.endsWith(".jpg") || lowerCase.endsWith(".jpeg"))) {
+				if (!(lowerCase.endsWith(".jpg") || 
+						lowerCase.endsWith(".jpeg") ||
+						lowerCase.endsWith(".png") ||
+						lowerCase.endsWith(".gif"))) {
+					draw = null;
 					throw new IOException("Keine gueltige Bilddatei!");
 				}
 				draw.setImage(filePath);
@@ -36,5 +40,9 @@ public class ImageLoaderDialog implements ActionListener {
 
 		}
 
+	}
+	
+	public DrawImage getDraw(){
+		return this.draw;
 	}
 }

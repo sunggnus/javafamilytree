@@ -252,7 +252,7 @@ public class EditPersonDialog extends JDialog{
 		visibleParents.getJButton().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editablePerson.setParentVisibility(true);
+				editablePerson.setAncestorVisibility(true);
 				Main.getMainFrame().getCanvas().repaint();
 			}	
 		});
@@ -264,7 +264,7 @@ public class EditPersonDialog extends JDialog{
 		invisibleParents.getJButton().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editablePerson.setParentVisibility(false);
+				editablePerson.setAncestorVisibility(false);
 				Main.getMainFrame().getCanvas().repaint();
 			}	
 		});
@@ -276,7 +276,7 @@ public class EditPersonDialog extends JDialog{
 		visibleChildren.getJButton().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editablePerson.setChildrenVisibility(true);
+				editablePerson.setDescendantVisibility(true);
 				Main.getMainFrame().getCanvas().repaint();
 			}	
 		});
@@ -288,7 +288,7 @@ public class EditPersonDialog extends JDialog{
 		invisibleChildren.getJButton().addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editablePerson.setChildrenVisibility(false);
+				editablePerson.setDescendantVisibility(false);
 				Main.getMainFrame().getCanvas().repaint();
 			}	
 		});

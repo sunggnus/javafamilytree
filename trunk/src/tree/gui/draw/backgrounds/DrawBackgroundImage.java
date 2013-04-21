@@ -38,7 +38,11 @@ public class DrawBackgroundImage extends Background{
 	
 	static final public int MODE_FIT=2;
 	
-	public DrawBackgroundImage(DrawImage basic){
+	public DrawBackgroundImage(DrawImage basic) throws InvalidDrawImageException{
+		if(basic==null){
+			throw new InvalidDrawImageException("DrawImage is null!");
+		}
+		
 		this.mode = MODE_MIRRORED;
 		
 		this.westNorth = (DrawImage) basic.clone();
