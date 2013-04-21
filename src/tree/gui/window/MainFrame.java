@@ -101,16 +101,22 @@ public class MainFrame extends JFrame{
 		
 		BasicArrowButton moveLeft = new BasicArrowButton(BasicArrowButton.WEST);
 		JButton moveRight = new BasicArrowButton(BasicArrowButton.EAST);
+		
+		int width = 75;
 
-		final EntryField xCoordinate = new EntryField("X: ",AbstractField.DEFAULT_LABEL_WIDTH);
+		final EntryField xCoordinate = new EntryField("X: ",AbstractField.DEFAULT_LABEL_WIDTH,width);
 		xCoordinate.setContent("-1");
-		final EntryField yCoordinate = new EntryField("Y: ",AbstractField.DEFAULT_LABEL_WIDTH);
+		final EntryField yCoordinate = new EntryField("Y: ",AbstractField.DEFAULT_LABEL_WIDTH,width);
 		yCoordinate.setContent("-1");
 		
-		widthUnit = new EntryField(Main.getTranslator().getTranslation("defaultWidth",Translator.MAIN_FRAME),AbstractField.DEFAULT_LABEL_WIDTH);
+		
+		
+		widthUnit = new EntryField(Main.getTranslator().getTranslation("defaultWidth",Translator.MAIN_FRAME),
+				AbstractField.DEFAULT_LABEL_WIDTH,width);
 		widthUnit.setContent(String.valueOf(Config.PERSON_WIDTH));
 		
-		heightUnit = new EntryField(Main.getTranslator().getTranslation("defaultHeight",Translator.MAIN_FRAME),AbstractField.DEFAULT_LABEL_WIDTH);
+		heightUnit = new EntryField(Main.getTranslator().getTranslation("defaultHeight",Translator.MAIN_FRAME),
+				AbstractField.DEFAULT_LABEL_WIDTH,width);
 		heightUnit.setContent(String.valueOf(Config.PERSON_HEIGHT));
 		
 		heightUnit.addDocumentListener(new DocumentListener(){

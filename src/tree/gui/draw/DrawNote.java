@@ -27,6 +27,9 @@ public class DrawNote extends AbstractDraw{
 		 */
 		@Override
 		public void draw(Graphics2D g,   int widthUnit, int heightUnit, double scaling, boolean drawX){
+			if(!note.isVisible()){
+				return;
+			}
 			this.startDraw(g);
 			//save org Font
 			Font orgFont = g.getFont();
@@ -110,6 +113,11 @@ public class DrawNote extends AbstractDraw{
 		@Override
 		public void setRelativeYCoordinate(int y) {
 			this.getNote().setY(y);
+		}
+		
+		@Override
+		public void setVisible(boolean visible){
+			this.getNote().setVisible(visible);
 		}
 
 }

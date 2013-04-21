@@ -131,6 +131,10 @@ static public final int STRING_HEIGHT=15;
 	public void setMarked(boolean marked) {
 		this.marked = marked;
 	}
+	/**
+	 * sets the content visibility
+	 */
+	abstract public void setVisible(boolean visible);
 	
 	abstract public void setNewContentXCoordinate(int x);
 	

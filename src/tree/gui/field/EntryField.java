@@ -26,6 +26,15 @@ public class EntryField extends AbstractField{
 		
 		
 	}
+	/**
+	 * 
+	 * @param name
+	 * @param labelWidth
+	 * @param fieldWidth
+	 */
+	public EntryField(String name, int labelWidth, int fieldWidth){
+		super(name, labelWidth, new JTextField(), fieldWidth);
+	}
 	
 	
 	

@@ -19,6 +19,8 @@ public class Note implements Serializable{
 	
 	private int fontSize;
 	
+	private boolean visible;
+	
 	/**
 	 * moves the text within the note rectangle 
 	 * horizontally
@@ -106,6 +108,14 @@ public class Note implements Serializable{
 
 	public void setFontSize(int fontSize) {
 		this.fontSize = fontSize;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 }

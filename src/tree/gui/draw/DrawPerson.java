@@ -315,5 +315,9 @@ public class DrawPerson extends AbstractDraw {
 	public boolean isVisible(){
 		return this.person.isVisible();
 	}
+	
+	public void setVisible(boolean visible){
+		this.person.setVisible(visible);
+	}
 
 }

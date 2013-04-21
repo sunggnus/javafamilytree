@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 
+import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -18,6 +19,7 @@ import translator.Translator;
 import tree.gui.draw.DrawImage;
 import tree.gui.draw.backgrounds.BackgroundFactory;
 import tree.gui.draw.backgrounds.DrawBackgroundImage;
+import tree.gui.draw.backgrounds.InvalidDrawImageException;
 import tree.gui.search.DefaultFilter;
 import tree.gui.search.NoteOverview;
 import tree.gui.search.PersonOverview;
@@ -100,9 +102,16 @@ public class MenuBar extends JMenuBar{
 			@Override
 			public void actionPerformed(ActionEvent e){
 				DrawImage draw = new DrawImage(1024,800);
-				new ImageLoaderDialog(draw).actionPerformed(e);
-				Main.getMainFrame().getCanvas().setBackgroundImage(new DrawBackgroundImage(draw));
+				ImageLoaderDialog dialog = new ImageLoaderDialog(draw);
+				dialog.actionPerformed(e);
+				draw = dialog.getDraw();
+				try{
+				DrawBackgroundImage drawBackground = new DrawBackgroundImage(draw);
+				Main.getMainFrame().getCanvas().setBackgroundImage(drawBackground);
 				Main.getMainFrame().getCanvas().repaint();
+				}catch(InvalidDrawImageException exception){
+					//do nothing no new image is loaded
+				}
 			}
 		},
 		/**
@@ -316,6 +325,11 @@ public class MenuBar extends JMenuBar{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Main.getMainFrame().getCanvas().changeDrawXYPositon();
+				boolean value = Main.getMainFrame().getCanvas().isDrawXYPosition();
+				if(Main.getMainFrame().getJMenuBar() instanceof MenuBar){
+					MenuBar bar = (MenuBar) Main.getMainFrame().getJMenuBar();
+					bar.getDrawX().setSelected(value);
+				}
 				Main.getMainFrame().getCanvas().repaint();
 			}
 			
@@ -325,6 +339,10 @@ public class MenuBar extends JMenuBar{
 			Main.getTranslator().loadLocale(lang, country);
 			Main.getMainFrame().changeLanguage();
 			OptionList.translate();
+		}
+		
+		public AbstractAction getAction(){
+			return new ActionProvider(this);
 		}
 
 		@Override
@@ -355,6 +373,13 @@ public class MenuBar extends JMenuBar{
 	 * this unique id is used for serialization of the MenuBar
 	 */
 	private static final long serialVersionUID = 5029513380745844369L;
+	/**
+	 * this JCheckBox is a class variable since it is needed by the DRAW_X_Y_POSITION to actualize its selection state
+	 */
+	private JCheckBox drawX;
+	
+	
+	
 	/**
 	 * generates the MenuBar for this program
 	 */
@@ -446,7 +471,7 @@ public class MenuBar extends JMenuBar{
 		noteOverview.addActionListener(MenuBarListener.NOTE_OVERVIEW);
 		neu.add(noteOverview);
 		
-		JCheckBox drawX = new JCheckBox(Main.getTranslator().getTranslation("coords",Translator.MAIN_FRAME));
+		drawX = new JCheckBox(Main.getTranslator().getTranslation("coords",Translator.MAIN_FRAME));
 		drawX.addActionListener(MenuBarListener.DRAW_X_Y_POSITION);
 		neu.add(drawX);
 		
@@ -487,6 +512,10 @@ public class MenuBar extends JMenuBar{
 		extras.add(redrawBackground);
 		
 		
+	}
+	
+	protected JCheckBox getDrawX(){
+		return this.drawX;
 	}
 
 }
