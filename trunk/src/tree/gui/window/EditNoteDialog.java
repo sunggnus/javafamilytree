@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,7 +20,7 @@ import translator.Translator;
 import tree.gui.field.EntryField;
 import tree.gui.field.ModifiedCheckBox;
 import tree.gui.field.TextAreaField;
-import tree.gui.util.IconUtil;
+import tree.gui.util.GUIUtils;
 import tree.model.Note;
 
 public class EditNoteDialog extends JDialog{
@@ -46,7 +47,7 @@ public class EditNoteDialog extends JDialog{
 		if(editableNote==null){
 			this.editableNote = new Note();
 		}
-		IconUtil.assignIcon(this);
+		GUIUtils.assignIcon(this);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(700,800);
@@ -163,13 +164,21 @@ public class EditNoteDialog extends JDialog{
 		});
 		
 		panel.add(visible);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(xCoord);
+		panel.add(Box.createVerticalStrut(5));
 		panel.add(smoothX);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(yCoord);
+		panel.add(Box.createVerticalStrut(5));
 		panel.add(smoothY);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(fontSize);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(textArea);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(accept);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(delete);
 		
 		

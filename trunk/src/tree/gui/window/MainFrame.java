@@ -35,7 +35,7 @@ import tree.gui.MenuBar;
 import tree.gui.TreeCanvas;
 import tree.gui.field.AbstractField;
 import tree.gui.field.EntryField;
-import tree.gui.util.IconUtil;
+import tree.gui.util.GUIUtils;
 import tree.model.Person;
 
 public class MainFrame extends JFrame{
@@ -77,7 +77,7 @@ public class MainFrame extends JFrame{
 					except.getMessage());
 		}
 		
-		IconUtil.assignIcon(this);
+		GUIUtils.assignIcon(this);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 			@Override
@@ -231,7 +231,7 @@ public class MainFrame extends JFrame{
 			
 		});
 		
-		options.setLayout(new GridLayout(3,2));
+		options.setLayout(new GridLayout(3,2,1,5));
 		options.add(moveLeft);
 		options.add(moveRight);
 		

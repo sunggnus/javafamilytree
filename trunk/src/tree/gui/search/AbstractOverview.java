@@ -18,7 +18,7 @@ import main.Main;
 
 import translator.Translator;
 import tree.gui.search.line.factory.AbstractOverviewLineFactory;
-import tree.gui.util.IconUtil;
+import tree.gui.util.GUIUtils;
 
 
 
@@ -33,7 +33,7 @@ public abstract class AbstractOverview extends JDialog{
 	private AbstractOverviewLineFactory factory;
 	
 	public AbstractOverview(AbstractOverviewLineFactory factory, Filter filter){
-		IconUtil.assignIcon(this);
+		GUIUtils.assignIcon(this);
 		this.setFactory(factory);
 		this.setFilter(filter);
 		
