@@ -6,6 +6,13 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Window;
 
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import main.Config;
+import main.Main;
+
 
 
 public class GUIUtils {
@@ -38,6 +45,43 @@ public class GUIUtils {
 		if(min.getWidth()>pref.getWidth()){
 			pref.setSize(min.getWidth(), pref.getHeight());
 		}
+	}
+	
+	static public void loadLookAndFeel(){
+		switch(Config.LOOK_AND_FEEL_MODE){
+			case NATIVE_LOOK_AND_FEEL:
+				loadLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				break;
+			case JAVA_LOOK_AND_FEEL:
+				loadLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			default:
+				//do nothing
+		}
+	}
+	
+	static private void loadLookAndFeel(String name){
+		Exception except=null;
+		try {
+			UIManager.setLookAndFeel(name);
+
+		} catch (ClassNotFoundException e1) {
+			except=e1;
+		} catch (InstantiationException e1) {
+			except=e1;
+		} catch (IllegalAccessException e1) {
+			except=e1;
+		} catch (UnsupportedLookAndFeelException e1) {
+			except=e1;
+		}
+		
+		if (except !=null){
+			javax.swing.JOptionPane.showMessageDialog(null,
+					except.getMessage());
+		}else if(Main.getMainFrame()!=null){
+			SwingUtilities.updateComponentTreeUI(Main.getMainFrame());
+			Main.getMainFrame().refreshSlider();
+		}
+		
 	}
 	
 	

@@ -17,12 +17,14 @@ public enum OptionList {
 	BACKGROUND_SUMMER_TREE_RANDOM("Sommerbaum mit Zufall als Hintergrundbild erzeugen",OptionList.TYPE_BACKGROUND_MODE),
 	NAME_LINE_BREAK("Vorname und Nachname in zwei Zeilen",OptionList.TYPE_LINE_BREAK_MODE),
 	NAME_NO_LINE_BREAK("Vorname und Nachname in einer Zeile",OptionList.TYPE_LINE_BREAK_MODE),
-	FIXED_PERSON_DATA_POSITIONS("Personeninformationen stehen immer in der selben Höhe",OptionList.TYPE_PERSON_POSITION_DATA_MODE),
-	FLOW_PERSON_DATA_POSITIONS("Personeninformationen werden bündig angeordnet",OptionList.TYPE_PERSON_POSITION_DATA_MODE),
+	FIXED_PERSON_DATA_POSITIONS("Personeninformationen stehen immer in der selben Hï¿½he",OptionList.TYPE_PERSON_POSITION_DATA_MODE),
+	FLOW_PERSON_DATA_POSITIONS("Personeninformationen werden bï¿½ndig angeordnet",OptionList.TYPE_PERSON_POSITION_DATA_MODE),
 	MOUSE_DEFAULT_MODE("Mausstandardeinstellung",OptionList.TYPE_MOUSE_MODE),
 	MOUSE_SWAPPED_MODE("Maustasten vertauscht",OptionList.TYPE_MOUSE_MODE),
 	KEYBOARD_ACTIVE("Tastatureingaben aktiv", OptionList.TYPE_KEYBOARD_MODE),
-	KEYBOARD_INACTIVE("Tastatureingaben inaktiv", OptionList.TYPE_KEYBOARD_MODE); 
+	KEYBOARD_INACTIVE("Tastatureingaben inaktiv", OptionList.TYPE_KEYBOARD_MODE),
+	JAVA_LOOK_AND_FEEL("Java Look and Feel,", OptionList.TYPE_LOOK_AND_FEEL),
+	NATIVE_LOOK_AND_FEEL("System Look and Feel", OptionList.TYPE_LOOK_AND_FEEL); 
 	
 	static public final int TYPE_TEXT_LAYOUT = 0;
 	static public final int TYPE_CONNECTION_MODE = 1;
@@ -31,6 +33,7 @@ public enum OptionList {
 	static public final int TYPE_PERSON_POSITION_DATA_MODE = 4;
 	static public final int TYPE_MOUSE_MODE = 5;
 	static public final int TYPE_KEYBOARD_MODE = 6;
+	static public final int TYPE_LOOK_AND_FEEL = 7;
 	
 	private String description;
 	
@@ -63,6 +66,8 @@ public enum OptionList {
 		case TYPE_KEYBOARD_MODE:
 			configName = "keyboardmode=";
 			break;
+		case TYPE_LOOK_AND_FEEL:
+			configName = "lookandfeelmode=";
 		default:
 			configName = "noName";
 		}

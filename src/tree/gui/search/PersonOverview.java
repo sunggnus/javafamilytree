@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -69,19 +70,9 @@ public class PersonOverview extends AbstractOverview{
 		setCenter(new JPanel());
 		
 		
-		
-		setpSize(10);
-		for(Person person : persons){
-			AbstractLine edit = factory.createOverviewLine(person, this);
-			if(edit==null){
-				continue;
-			}
-			edit.setMainSize(90);
-			getCenter().add(edit);
-			setpSize((int)edit.getPreferredSize().getHeight());
-		}
-		
-		
+
+		this.filterView();
+	
 		
 		
 		//all visible / invisible button
@@ -140,17 +131,24 @@ public class PersonOverview extends AbstractOverview{
 	@Override
 	public void filterView(){
 		getCenter().removeAll();
+		getCenter().setLayout(new BoxLayout(getCenter(),BoxLayout.Y_AXIS));
+		
 		for(Person person : this.persons){
 			if(getFilter().filter(person,this.getFilterText().getText())){
 				AbstractLine edit = getFactory().createOverviewLine(person,this);
 				if(edit==null){
 					continue;
 				}
+				edit.setMainSize(90);		
 				getCenter().add(edit);
-				edit.setMainSize(90);			
+				setpSize((int)edit.getPreferredSize().getHeight());
+				
+				
 			}
 		}
-		this.actualizeSize();
+		if(this.isVisible()){
+			this.actualizeSize();
+		}
 	}
 
 }

@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -108,8 +107,17 @@ public class EditPersonDialog extends JDialog{
 		GUIUtils.assignIcon(this);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(700,800);
-		JPanel panel = new JPanel();
+		
+		JPanel panel = new JPanel(){
+			private static final long serialVersionUID = 3304353361624648625L;
+
+			@Override
+			public Component add(Component comp){
+				super.add(comp);
+				super.add(Box.createVerticalStrut(5));
+				return comp;
+			}
+		};
 		
 		
 		givenName = new EntryField(Main.getTranslator().getTranslation("givenName", Translator.EDIT_PERSON_JDIALOG)
@@ -152,10 +160,8 @@ public class EditPersonDialog extends JDialog{
 		visible = new ModifiedCheckBox(Main.getTranslator().getTranslation("visible", Translator.EDIT_PERSON_JDIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
 		
-		mother = new PersonEditField(editablePerson, PersonEditField.MODE_MOTHER,
-				AbstractField.DEFAULT_WIDTH);
-		father = new PersonEditField(editablePerson,PersonEditField.MODE_FATHER,
-				AbstractField.DEFAULT_WIDTH);
+		mother = new PersonEditField(editablePerson, PersonEditField.MODE_MOTHER);
+		father = new PersonEditField(editablePerson,PersonEditField.MODE_FATHER);
 		accept = new JButton(Main.getTranslator().getTranslation("generatePerson", Translator.EDIT_PERSON_JDIALOG));
 		
 		
@@ -190,19 +196,8 @@ public class EditPersonDialog extends JDialog{
 		
 		int maxwidth = 0;
 		
-		for(Component comp : panel.getComponents()){
-			if(maxwidth < comp.getPreferredSize().getWidth()){
-				maxwidth = (int)comp.getPreferredSize().getWidth();
-			}
-		}
-		int height = 10;
-		
-		for(Component comp : panel.getComponents()){
-			height += comp.getPreferredSize().getHeight()+13;
-		}
-		
-		panel.setLayout(new GridLayout(panel.getComponentCount(),1,0,5));
-		panel.setPreferredSize(new Dimension(maxwidth,height));
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+	
 		
 		
 		
@@ -321,10 +316,10 @@ public class EditPersonDialog extends JDialog{
 		
 		
 		PersonEditField partners = new PersonEditField(editablePerson, 
-				PersonEditField.MODE_PARTNER, AbstractField.DEFAULT_WIDTH);
+				PersonEditField.MODE_PARTNER);
 		partners.setBorder(new  LineBorder(Color.BLUE, 2, false));
 		PersonEditField children = new PersonEditField(editablePerson,
-				PersonEditField.MODE_CHILD,AbstractField.DEFAULT_WIDTH);
+				PersonEditField.MODE_CHILD);
 		children.setBorder(new  LineBorder(Color.BLUE, 2, false));
 		
 		
@@ -347,6 +342,8 @@ public class EditPersonDialog extends JDialog{
 		partners.setOwner(this.editablePerson);
 		children.setOwner(this.editablePerson);
 		
+		
+		this.setSize(700,800);
 		this.setVisible(true);
 	}
 	

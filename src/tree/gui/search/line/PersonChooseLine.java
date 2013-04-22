@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.SpringLayout;
 
 import main.Main;
 
@@ -72,17 +71,7 @@ public class PersonChooseLine extends AbstractPersonLine{
 			
 		});
 		
-		//layout stuff
-		SpringLayout layout = (SpringLayout) this.getLayout();
-		
 
-		//edit
-		layout.putConstraint(SpringLayout.WEST, this.choose,
-				5, SpringLayout.EAST, this.getDeathday());
-		
-		layout.putConstraint(SpringLayout.NORTH, this.choose,
-				5, SpringLayout.NORTH, this);
-		
 		this.add(choose);
 		
 		

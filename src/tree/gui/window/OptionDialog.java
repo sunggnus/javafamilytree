@@ -1,13 +1,17 @@
 package tree.gui.window;
 
 
+import java.awt.Component;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -37,12 +41,26 @@ public class OptionDialog extends JDialog{
 	
 	public static final int OPTION_WIDTH = 600;
 	
+	
 	public OptionDialog(){
+		
 		GUIUtils.assignIcon(this);
+		final OptionDialog self = this;
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		int width = AbstractField.DEFAULT_LABEL_WIDTH+50;
-		JPanel panel = new JPanel();
+		int width = AbstractField.DEFAULT_LABEL_WIDTH+100;
+		JPanel panel = new JPanel(){
+			private static final long serialVersionUID = 3996847380408971485L;
+			@Override
+			public Component add(Component comp){
+				super.add(Box.createVerticalStrut(5));
+				super.add(comp);
+				
+				return comp;
+			}
+			
+		};
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		DropDownField<OptionList> mode = 
 				new DropDownField<OptionList>(Main.getTranslator().getTranslation("displayMode", Translator.OPTION_JDIALOG),
 						width);
@@ -77,6 +95,8 @@ public class OptionDialog extends JDialog{
 		DropDownField<OptionList> keyboardMode = 
 				new DropDownField<OptionList>(Main.getTranslator().getTranslation("keyboardMode", Translator.OPTION_JDIALOG), 
 						width);
+		DropDownField<OptionList> lookAndFeelMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("lookAndFeelMode", Translator.OPTION_JDIALOG), 
+				width);
 		
 		for(OptionList dispMode : OptionList.values()){
 			switch(dispMode.getID()){
@@ -101,6 +121,8 @@ public class OptionDialog extends JDialog{
 				case OptionList.TYPE_KEYBOARD_MODE:
 					keyboardMode.add(dispMode);
 					break;
+				case OptionList.TYPE_LOOK_AND_FEEL:
+					lookAndFeelMode.add(dispMode);
 				default: //do nothing
 			}
 			
@@ -227,6 +249,19 @@ public class OptionDialog extends JDialog{
 			
 		});
 		
+		lookAndFeelMode.setSelectedItem(Config.LOOK_AND_FEEL_MODE);
+		lookAndFeelMode.addItemListener(new ItemListener(){
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange()==ItemEvent.SELECTED && arg0.getItem() instanceof OptionList){
+					OptionList item = (OptionList) arg0.getItem();
+					Config.setLookAndFeel(item);
+					SwingUtilities.updateComponentTreeUI(self);
+				}
+			}
+			
+		});
+		
 		final EntryField unitWidth = new EntryField(Main.getTranslator().getTranslation("defaultWidth", Translator.OPTION_JDIALOG),
 				width);
 		final EntryField unitHeight = new EntryField("defaultHeight", width);
@@ -284,7 +319,7 @@ public class OptionDialog extends JDialog{
 		});
 		
 		EnterFilePathField filePath = new EnterFilePathField();
-		
+		panel.add(Box.createVerticalStrut(20));
 		panel.add(mode);
 		panel.add(lineDrawMode);
 		panel.add(backgroundMode);
@@ -294,13 +329,14 @@ public class OptionDialog extends JDialog{
 		panel.add(dataPositioningMode);
 		panel.add(mouseMode);
 		panel.add(keyboardMode);
+		panel.add(lookAndFeelMode);
 		panel.add(filePath);
 		panel.add(unitWidth);
 		panel.add(unitHeight);
-		
+		panel.add(Box.createGlue());
 		this.add(panel);
 		this.setSize(OPTION_WIDTH,500);
-		this.setResizable(false);
+	//	this.setResizable(false);
 		this.setVisible(true);
 	}
 	
