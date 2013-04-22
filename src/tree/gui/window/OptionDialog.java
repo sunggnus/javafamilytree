@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -97,6 +99,19 @@ public class OptionDialog extends JDialog{
 						width);
 		DropDownField<OptionList> lookAndFeelMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("lookAndFeelMode", Translator.OPTION_JDIALOG), 
 				width);
+		
+		
+		
+		final DropDownField<LookAndFeelInfo> additionalLookAndFeel = new DropDownField<LookAndFeelInfo>("", width);
+		
+		for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+			additionalLookAndFeel.add(info);
+			if(info.getClassName().equals(Config.ADDITIONAL_LOOK_AND_FEEL)){
+				additionalLookAndFeel.setSelectedItem(info);
+			}
+		}
+		
+		additionalLookAndFeel.setVisible(Config.LOOK_AND_FEEL_MODE.equals(OptionList.ADDITIONAL_LOOK_AND_FEEL));
 		
 		for(OptionList dispMode : OptionList.values()){
 			switch(dispMode.getID()){
@@ -257,6 +272,21 @@ public class OptionDialog extends JDialog{
 					OptionList item = (OptionList) arg0.getItem();
 					Config.setLookAndFeel(item);
 					SwingUtilities.updateComponentTreeUI(self);
+					additionalLookAndFeel.setVisible(item.equals(OptionList.ADDITIONAL_LOOK_AND_FEEL));
+					
+				}
+			}
+			
+		});
+		
+		additionalLookAndFeel.addItemListener(new ItemListener(){
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange()==ItemEvent.SELECTED && arg0.getItem() instanceof LookAndFeelInfo){
+					LookAndFeelInfo info = (LookAndFeelInfo) arg0.getItem();
+					Config.setAdditionalLookAndFeel(info.getClassName());
+					SwingUtilities.updateComponentTreeUI(self);
 				}
 			}
 			
@@ -330,6 +360,7 @@ public class OptionDialog extends JDialog{
 		panel.add(mouseMode);
 		panel.add(keyboardMode);
 		panel.add(lookAndFeelMode);
+		panel.add(additionalLookAndFeel);
 		panel.add(filePath);
 		panel.add(unitWidth);
 		panel.add(unitHeight);

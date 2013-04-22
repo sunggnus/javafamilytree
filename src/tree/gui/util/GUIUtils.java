@@ -54,6 +54,10 @@ public class GUIUtils {
 				break;
 			case JAVA_LOOK_AND_FEEL:
 				loadLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+				break;
+			case ADDITIONAL_LOOK_AND_FEEL:
+				loadLookAndFeel(Config.ADDITIONAL_LOOK_AND_FEEL);
+				break;
 			default:
 				//do nothing
 		}
@@ -63,7 +67,7 @@ public class GUIUtils {
 		Exception except=null;
 		try {
 			UIManager.setLookAndFeel(name);
-
+			
 		} catch (ClassNotFoundException e1) {
 			except=e1;
 		} catch (InstantiationException e1) {

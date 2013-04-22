@@ -83,7 +83,7 @@ public class NoteOverview extends AbstractOverview{
 			
 		});
 		
-		this.setSize(700, 500);
+		this.setSize(700, 300);
 		this.setVisible(true);
 		
 	}

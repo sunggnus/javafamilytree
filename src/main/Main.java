@@ -2,6 +2,8 @@ package main;
 
 
 
+
+
 import translator.Translator;
 import tree.gui.window.MainFrame;
 import tree.model.MainNode;
@@ -31,6 +33,8 @@ public class Main {
 		node = new MainNode(null);
 		frame = new MainFrame();
 		Config.initiateConfig();
+		
+		
 		
 	}
 	

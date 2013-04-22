@@ -343,7 +343,7 @@ public class EditPersonDialog extends JDialog{
 		children.setOwner(this.editablePerson);
 		
 		
-		this.setSize(700,800);
+		this.pack();
 		this.setVisible(true);
 	}
 	

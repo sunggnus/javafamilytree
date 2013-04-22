@@ -24,7 +24,8 @@ public enum OptionList {
 	KEYBOARD_ACTIVE("Tastatureingaben aktiv", OptionList.TYPE_KEYBOARD_MODE),
 	KEYBOARD_INACTIVE("Tastatureingaben inaktiv", OptionList.TYPE_KEYBOARD_MODE),
 	JAVA_LOOK_AND_FEEL("Java Look and Feel,", OptionList.TYPE_LOOK_AND_FEEL),
-	NATIVE_LOOK_AND_FEEL("System Look and Feel", OptionList.TYPE_LOOK_AND_FEEL); 
+	NATIVE_LOOK_AND_FEEL("System Look and Feel", OptionList.TYPE_LOOK_AND_FEEL),
+	ADDITIONAL_LOOK_AND_FEEL("weitere Look and Feels", OptionList.TYPE_LOOK_AND_FEEL); 
 	
 	static public final int TYPE_TEXT_LAYOUT = 0;
 	static public final int TYPE_CONNECTION_MODE = 1;

@@ -3,6 +3,7 @@ package tree.gui.field;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -179,6 +180,9 @@ public class PersonEditField extends JPanel{
 				thisField.constructMulti(header);	
 				
 				thisField.getTopLevelAncestor().revalidate();
+				if(thisField.getTopLevelAncestor() instanceof Window){
+					((Window)thisField.getTopLevelAncestor()).pack();
+				}
 				
 			}
 			
