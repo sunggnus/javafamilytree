@@ -18,8 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -51,6 +49,8 @@ public class MainFrame extends JFrame{
 	
 	private JPanel options;
 	
+	private JSlider slider;
+	
 	private final EntryField widthUnit;
 	
 	private final EntryField heightUnit;
@@ -59,23 +59,7 @@ public class MainFrame extends JFrame{
 	
 	public MainFrame(){
 		
-		Exception except=null;
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e1) {
-			except=e1;
-		} catch (InstantiationException e1) {
-			except=e1;
-		} catch (IllegalAccessException e1) {
-			except=e1;
-		} catch (UnsupportedLookAndFeelException e1) {
-			except=e1;
-		}
-		
-		if (except !=null){
-			javax.swing.JOptionPane.showMessageDialog(null,
-					except.getMessage());
-		}
+		GUIUtils.loadLookAndFeel();
 		
 		GUIUtils.assignIcon(this);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -241,7 +225,7 @@ public class MainFrame extends JFrame{
 		options.add(widthUnit);
 		options.add(heightUnit);
 		JLabel zoom = new JLabel("  Zoom:");
-		JSlider slider = new JSlider();
+		slider = new JSlider();
 		slider.setUI(new CustomSliderUI(slider));
 		slider.setOrientation(JSlider.VERTICAL);
 		slider.setValue(100); //this corresponds to 100%
@@ -328,6 +312,10 @@ public class MainFrame extends JFrame{
 	
 	public MainFrameKeyInputMap getKeyInputMap(){
 		return this.map;
+	}
+	
+	public void refreshSlider(){
+		slider.setUI(new CustomSliderUI(slider));
 	}
 
 }

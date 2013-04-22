@@ -3,8 +3,8 @@ package tree.gui.search;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -98,6 +98,7 @@ public abstract class AbstractOverview extends JDialog{
 
 	protected void setCenter(JPanel center) {
 		this.center = center;
+		this.center.setLayout(new BoxLayout(this.center,BoxLayout.Y_AXIS));
 	}
 
 	protected JScrollPane getPane() {
@@ -118,11 +119,15 @@ public abstract class AbstractOverview extends JDialog{
 
 	public void actualizeSize() {
 		int pCounter = this.getCenter().getComponentCount();
-		getCenter().setLayout(new GridLayout(pCounter,1));
 		getCenter().setPreferredSize(new Dimension(300,pCounter*(getpSize()+5)));
 		getCenter().setMinimumSize(getCenter().getPreferredSize());
-		getCenter().repaint();
+		
+		
+		this.revalidate();
 		getPane().getViewport().revalidate();
+		
+		this.revalidate();
+		getPane().getViewport().repaint();
 		
 	}
 	
@@ -148,7 +153,6 @@ public abstract class AbstractOverview extends JDialog{
 	 */
 	protected void constructOverview(boolean showAddButton){
 		int pCounter = getCenter().getComponentCount();
-		getCenter().setLayout(new GridLayout(pCounter,1));
 		getCenter().setPreferredSize(new Dimension(300,pCounter*(getpSize()+5)));
 		
 		setPane(new JScrollPane());
@@ -178,6 +182,8 @@ public abstract class AbstractOverview extends JDialog{
 			this.setSize(800, 500);
 		
 	}
+	
+	
 
 	protected JPanel getNorth() {
 		return north;

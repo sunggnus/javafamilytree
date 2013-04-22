@@ -7,8 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
 import tree.gui.TreeCanvasMouseListener;
+import tree.gui.util.GUIUtils;
 
 
 
@@ -62,6 +64,9 @@ public final class Config {
 	 * contains the path to the default folder you will see when you open a file chooser
 	 * 
 	 */
+	
+	static public OptionList LOOK_AND_FEEL_MODE = OptionList.NATIVE_LOOK_AND_FEEL;
+	
 	static public String DEFAULT_PATH="./";
 	/**
 	 * contains the last path which was used
@@ -129,6 +134,7 @@ public final class Config {
 						DATA_POSITIONING_MODE = readOption(line,DATA_POSITIONING_MODE.getConfigName(),DATA_POSITIONING_MODE);
 						MOUSE_MODE = readOption(line,MOUSE_MODE.getConfigName(),MOUSE_MODE);
 						KEYBOARD_MODE = readOption(line,KEYBOARD_MODE.getConfigName(),KEYBOARD_MODE);
+						LOOK_AND_FEEL_MODE = readOption(line,LOOK_AND_FEEL_MODE.getConfigName(),LOOK_AND_FEEL_MODE);
 					}
 					}catch (IllegalArgumentException illArg){
 						System.out.println(line);
@@ -181,19 +187,31 @@ public final class Config {
 		}
 		
 		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(config));
+			class OptionWriter extends BufferedWriter{
+
+				public OptionWriter(Writer arg0) {
+					super(arg0);
+				}
+				public void write(OptionList option) throws IOException{
+					write(option.getConfigName() + option.name() + LINE_SEPARATOR);
+				}
+				
+			}
+			
+			OptionWriter out = new OptionWriter(new FileWriter(config));
 			out.write("defaultpath=" + DEFAULT_PATH + LINE_SEPARATOR);
 			
-			out.write(ORIENTATION_MODE.getConfigName() + ORIENTATION_MODE.name() + LINE_SEPARATOR);
-			out.write(CONNECTION_MODE.getConfigName() + CONNECTION_MODE.name() + LINE_SEPARATOR);
-			out.write(BACKGROUND_MODE.getConfigName() + BACKGROUND_MODE.name() + LINE_SEPARATOR);
+			out.write(ORIENTATION_MODE);
+			out.write(CONNECTION_MODE);
+			out.write(BACKGROUND_MODE);
 			out.write("personheight=" + PERSON_HEIGHT + LINE_SEPARATOR);
 			out.write("personwidth=" + PERSON_WIDTH + LINE_SEPARATOR);
 			out.write("scaling=" + SCALING + LINE_SEPARATOR);
-			out.write(LINE_BREAK_MODE.getConfigName() + LINE_BREAK_MODE.name() + LINE_SEPARATOR);
-			out.write(DATA_POSITIONING_MODE.getConfigName() + DATA_POSITIONING_MODE.name() + LINE_SEPARATOR);
-			out.write(MOUSE_MODE.getConfigName() + MOUSE_MODE.name() + LINE_SEPARATOR);
-			out.write(KEYBOARD_MODE.getConfigName() + KEYBOARD_MODE.name() + LINE_SEPARATOR);
+			out.write(LINE_BREAK_MODE);
+			out.write(DATA_POSITIONING_MODE);
+			out.write(MOUSE_MODE);
+			out.write(KEYBOARD_MODE);
+			out.write(LOOK_AND_FEEL_MODE);
 			
 			out.close();
 		} catch (IOException e) {
@@ -201,6 +219,8 @@ public final class Config {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public static void setMouseMode(OptionList mouseMode){
 		MOUSE_MODE = mouseMode;
@@ -230,6 +250,11 @@ public final class Config {
 			//do nothing
 			
 		}
+	}
+	
+	public static void setLookAndFeel(OptionList lookAndFeel){
+		LOOK_AND_FEEL_MODE = lookAndFeel;
+		GUIUtils.loadLookAndFeel();
 	}
 	
 	static public void initiateConfig(){

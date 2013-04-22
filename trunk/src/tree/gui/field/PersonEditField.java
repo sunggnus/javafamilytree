@@ -37,7 +37,7 @@ public class PersonEditField extends JPanel{
 	
 	private Person owner;
 	private int mode;
-	private int width;
+
 	
 	
 	/**
@@ -46,10 +46,10 @@ public class PersonEditField extends JPanel{
 	 * @param mode
 	 * @param width
 	 */
-	public PersonEditField(Person owner, int mode, int width){
+	public PersonEditField(Person owner, int mode){
 		
 		this.mode = mode;
-		this.width = width;
+
 	
 		this.setOwner(owner);
 		
@@ -59,7 +59,6 @@ public class PersonEditField extends JPanel{
 	public void setOwner(Person owner){
 
 		
-		this.setPreferredSize(new Dimension(this.width,(int)this.getPreferredSize().getHeight()));
 		
 		this.owner = owner;
 		this.removeAll();
@@ -286,6 +285,7 @@ public class PersonEditField extends JPanel{
 		right.add(delete);
 		this.add(left,BorderLayout.WEST);
 		this.add(right,BorderLayout.EAST);
+		
 		
 	}
 	

@@ -4,16 +4,18 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import translator.Translator;
+import tree.gui.util.GUIUtils;
 import tree.gui.window.OptionDialog;
 
 import main.Config;
@@ -32,7 +34,8 @@ public class EnterFilePathField extends JPanel{
 		
 		final JTextField text = new JTextField();
 		text.setText(Config.DEFAULT_PATH);
-		text.setPreferredSize(new Dimension(AbstractField.EMPTY_TEXT_FIELD_WIDTH,(int)text.getPreferredSize().getHeight()));
+		text.setMinimumSize(new Dimension(AbstractField.EMPTY_TEXT_FIELD_WIDTH,(int)text.getPreferredSize().getHeight()));
+		GUIUtils.normalizeSize(text);
 		text.getDocument().addDocumentListener(new DocumentListener(){
 
 			@Override
@@ -88,27 +91,31 @@ public class EnterFilePathField extends JPanel{
 			}
 			
 		});
-		int OFFSET = 35;
+	
 		int Y_OFFSET=30;
-		SpringLayout spring = new SpringLayout();
 		
-		spring.putConstraint(SpringLayout.WEST, defaultSearch, 10 + OFFSET, SpringLayout.WEST, this);
-		spring.putConstraint(SpringLayout.NORTH, defaultSearch, 5, SpringLayout.NORTH, this);
+		this.setPreferredSize(new Dimension(OptionDialog.OPTION_WIDTH,(int) (search.getPreferredSize().getHeight()+Y_OFFSET)));
+		this.setMaximumSize(new Dimension(1000,2*(int) (search.getPreferredSize().getHeight()+Y_OFFSET)));
+		JPanel firstLine = new JPanel();
 		
-		spring.putConstraint(SpringLayout.WEST, search,5+OFFSET, SpringLayout.WEST, this);
-		spring.putConstraint(SpringLayout.NORTH, search, 5+Y_OFFSET, SpringLayout.NORTH, this);
-		
-		spring.putConstraint(SpringLayout.WEST, edit, 10, SpringLayout.EAST, search);
-		spring.putConstraint(SpringLayout.NORTH, edit, 5+Y_OFFSET, SpringLayout.NORTH, this);
-		
-		spring.putConstraint(SpringLayout.WEST, text, AbstractField.DEFAULT_LABEL_WIDTH+OFFSET+65, SpringLayout.WEST, this);
-		spring.putConstraint(SpringLayout.NORTH, text, 6+Y_OFFSET, SpringLayout.NORTH, this);
-		this.setPreferredSize(new Dimension(OptionDialog.OPTION_WIDTH,(int) (search.getPreferredSize().getHeight()+5+Y_OFFSET)));
-		this.setLayout(spring);
-		this.add(defaultSearch);
-		this.add(search);
-		this.add(edit);		
-		this.add(text);
+		firstLine.setLayout(new BoxLayout(firstLine, BoxLayout.X_AXIS));
+		JPanel secondLine = new JPanel();
+		secondLine.setLayout(new BoxLayout(secondLine, BoxLayout.X_AXIS));
+		firstLine.add(Box.createHorizontalStrut(5));
+		firstLine.add(defaultSearch);
+		firstLine.add(Box.createGlue());
+		secondLine.add(Box.createHorizontalStrut(5));
+		secondLine.add(search);
+		secondLine.add(Box.createHorizontalStrut(5));
+		secondLine.add(edit);
+		secondLine.add(Box.createHorizontalStrut(5));
+		secondLine.add(Box.createGlue());
+		secondLine.add(text);
+		secondLine.add(Box.createHorizontalStrut(5));
+		text.setMaximumSize(new Dimension((int)text.getMaximumSize().getWidth(),Y_OFFSET));
+		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		this.add(firstLine);
+		this.add(secondLine);
 	}
 
 }

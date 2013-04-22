@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import main.Main;
@@ -65,17 +66,8 @@ public class NoteOverview extends AbstractOverview{
 		setCenter(new JPanel());
 		
 		
+		this.filterView();
 		
-		setpSize(10);
-		for(Note note : this.notes){
-			AbstractLine edit = factory.createOverviewLine(note, this);
-			if(edit==null){
-				continue;
-			}
-			edit.setMainSize(90);
-			getCenter().add(edit);
-			setpSize((int)edit.getPreferredSize().getHeight());
-		}
 		
 		this.constructOverview(true);
 		
@@ -99,17 +91,21 @@ public class NoteOverview extends AbstractOverview{
 	@Override
 	public void filterView() {
 		getCenter().removeAll();
+		getCenter().setLayout(new BoxLayout(getCenter(),BoxLayout.Y_AXIS));
 		for(Note note : this.notes){
 			if(getFilter().filter(note,this.getFilterText().getText())){
 				AbstractLine edit = getFactory().createOverviewLine(note,this);
 				if(edit==null){
 					continue;
 				}
+				edit.setMainSize(120);		
 				getCenter().add(edit);
-				edit.setMainSize(90);			
+				setpSize((int)edit.getPreferredSize().getHeight());
 			}
 		}
+		if(this.isVisible()){
 		this.actualizeSize();
+		}
 		
 	}
 

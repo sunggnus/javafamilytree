@@ -1,5 +1,7 @@
 package main;
 
+
+
 import translator.Translator;
 import tree.gui.window.MainFrame;
 import tree.model.MainNode;
@@ -39,6 +41,8 @@ public class Main {
 	static public MainFrame getMainFrame(){
 		return frame;
 	}
+	
+	
 	
 	static public Translator getTranslator(){
 		return translator;

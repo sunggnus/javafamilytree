@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.SpringLayout;
 
 import main.Main;
 import translator.Translator;
@@ -114,37 +113,11 @@ public class PersonEditLine extends AbstractPersonLine{
 			}
 			
 		});
-				//layout stuff
-				SpringLayout layout = (SpringLayout) this.getLayout();
-				
-		
-				//edit
-				layout.putConstraint(SpringLayout.WEST, this.edit,
-						5, SpringLayout.EAST, this.getDeathday());
-				
-				layout.putConstraint(SpringLayout.NORTH, this.edit,
-						5, SpringLayout.NORTH, this);
-				
-				//delete
-				layout.putConstraint(SpringLayout.WEST, this.delete,
-						5, SpringLayout.EAST, this.edit);
-				
-				layout.putConstraint(SpringLayout.NORTH, this.delete,
-						5, SpringLayout.NORTH, this);
-				
-				//visible
-				
-				layout.putConstraint(SpringLayout.WEST, this.visible, 
-						5, SpringLayout.EAST, this.delete);
-				
-				layout.putConstraint(SpringLayout.NORTH, this.visible, 
-						5, SpringLayout.NORTH, this);
 				
 				this.add(edit);
 				this.add(delete);
 				this.add(visible);
 
-				//this.setLayout(layout);
 		
 	}
 	@Override
