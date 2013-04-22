@@ -67,6 +67,8 @@ public final class Config {
 	
 	static public OptionList LOOK_AND_FEEL_MODE = OptionList.NATIVE_LOOK_AND_FEEL;
 	
+	static public String ADDITIONAL_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
+	
 	static public String DEFAULT_PATH="./";
 	/**
 	 * contains the last path which was used
@@ -125,6 +127,9 @@ public final class Config {
 						}catch(NumberFormatException e){
 							PERSON_WIDTH  = width;
 						}
+					}
+					else if(line.contains("additionalLookAndFeel=")){
+						ADDITIONAL_LOOK_AND_FEEL = line.replace("additionalLookAndFeel=", "").trim();
 					}
 					else{ 
 						ORIENTATION_MODE = readOption(line,ORIENTATION_MODE.getConfigName(),ORIENTATION_MODE);
@@ -212,6 +217,7 @@ public final class Config {
 			out.write(MOUSE_MODE);
 			out.write(KEYBOARD_MODE);
 			out.write(LOOK_AND_FEEL_MODE);
+			out.write("additionalLookAndFeel=" + ADDITIONAL_LOOK_AND_FEEL + LINE_SEPARATOR);
 			
 			out.close();
 		} catch (IOException e) {
@@ -254,6 +260,11 @@ public final class Config {
 	
 	public static void setLookAndFeel(OptionList lookAndFeel){
 		LOOK_AND_FEEL_MODE = lookAndFeel;
+		GUIUtils.loadLookAndFeel();
+	}
+	
+	public static void setAdditionalLookAndFeel(String name){
+		ADDITIONAL_LOOK_AND_FEEL = name;
 		GUIUtils.loadLookAndFeel();
 	}
 	

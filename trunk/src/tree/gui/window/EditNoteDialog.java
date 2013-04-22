@@ -50,7 +50,7 @@ public class EditNoteDialog extends JDialog{
 		GUIUtils.assignIcon(this);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setSize(700,800);
+		
 		JPanel panel = new JPanel();
 		
 		
@@ -194,7 +194,7 @@ public class EditNoteDialog extends JDialog{
 		yCoord.setContent(this.editableNote.getY());
 		fontSize.setContent(this.editableNote.getFontSize());
 		textArea.setContent(this.editableNote.getComments());
-		
+		this.pack();
 		this.setVisible(true);
 	}
 	

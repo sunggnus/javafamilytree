@@ -179,7 +179,7 @@ public abstract class AbstractOverview extends JDialog{
 			this.pack();
 			//the request focus does not work before the dialog is visible without calling pack first
 			this.getFilterText().requestFocus();
-			this.setSize(800, 500);
+		//	this.setSize(800, 500);
 		
 	}
 	
