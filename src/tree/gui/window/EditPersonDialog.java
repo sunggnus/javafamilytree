@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,7 +32,7 @@ import tree.gui.field.EntryField;
 import tree.gui.field.ModifiedCheckBox;
 import tree.gui.field.ModifiedJButton;
 import tree.gui.field.PersonEditField;
-import tree.gui.util.IconUtil;
+import tree.gui.util.GUIUtils;
 import tree.gui.util.ImageLoaderDialog;
 import tree.model.Person;
 import tree.model.Utils;
@@ -71,7 +72,7 @@ public class EditPersonDialog extends JDialog{
 	
 	
 	
-	private ModifiedJButton accept;
+	private JButton accept;
 	
 	
 	
@@ -104,7 +105,7 @@ public class EditPersonDialog extends JDialog{
 					null, Main.getMainNode().getPersons().toArray()
 					, new JComboBox<Person>());
 		}
-		IconUtil.assignIcon(this);
+		GUIUtils.assignIcon(this);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(700,800);
@@ -155,12 +156,11 @@ public class EditPersonDialog extends JDialog{
 				AbstractField.DEFAULT_WIDTH);
 		father = new PersonEditField(editablePerson,PersonEditField.MODE_FATHER,
 				AbstractField.DEFAULT_WIDTH);
-		accept = new ModifiedJButton(Main.getTranslator().getTranslation("generatePerson", Translator.EDIT_PERSON_JDIALOG), 0,
-				AbstractField.DEFAULT_WIDTH);
+		accept = new JButton(Main.getTranslator().getTranslation("generatePerson", Translator.EDIT_PERSON_JDIALOG));
 		
 		
-		JButton acceptButton = accept.getJButton();
-		acceptButton.addActionListener(new ActionListener(){
+		
+		accept.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -170,7 +170,8 @@ public class EditPersonDialog extends JDialog{
 			
 		});
 		
-		
+		accept.setMinimumSize(new Dimension(AbstractField.DEFAULT_WIDTH,(int)accept.getMinimumSize().getHeight()));
+		GUIUtils.normalizeSize(accept);
 		
 		
 		
@@ -197,14 +198,10 @@ public class EditPersonDialog extends JDialog{
 		int height = 10;
 		
 		for(Component comp : panel.getComponents()){
-			if(comp instanceof EntryField){
-			comp.setPreferredSize(new Dimension(maxwidth-AbstractField.EMPTY_TEXT_FIELD_WIDTH,
-					(int)comp.getPreferredSize().getHeight()));
-			}
-			height += comp.getPreferredSize().getHeight()+10;
+			height += comp.getPreferredSize().getHeight()+13;
 		}
 		
-		panel.setLayout(new GridLayout(panel.getComponentCount(),1));
+		panel.setLayout(new GridLayout(panel.getComponentCount(),1,0,5));
 		panel.setPreferredSize(new Dimension(maxwidth,height));
 		
 		
@@ -239,6 +236,7 @@ public class EditPersonDialog extends JDialog{
 		});
 		
 		pictureContent.setPreferredSize(new Dimension(50,50));
+		
 		picturePanel.add(pictureContent);
 		
 		picturePanel.add(loadImage);
@@ -293,10 +291,28 @@ public class EditPersonDialog extends JDialog{
 			}	
 		});
 		
+		picturePanel.add(Box.createVerticalStrut(15));
 		picturePanel.add(visibleParents);
 		picturePanel.add(invisibleParents);
 		picturePanel.add(visibleChildren);
 		picturePanel.add(invisibleChildren);
+		
+		maxwidth = 0;
+		for(Component comp : picturePanel.getComponents()){
+			if(comp.getPreferredSize().getWidth()>maxwidth){
+				maxwidth = (int) comp.getPreferredSize().getWidth();
+			}
+		}
+		picturePanel.setPreferredSize(new Dimension(maxwidth+10,(int)picturePanel.getPreferredSize().getHeight()));
+		for(Component comp : picturePanel.getComponents()){
+			if(comp instanceof ModifiedJButton){
+				ModifiedJButton but = (ModifiedJButton) comp;
+				but.getJButton().setPreferredSize(new Dimension(maxwidth,(int)comp.getPreferredSize().getHeight()));
+				but.getJButton().setMaximumSize(new Dimension(maxwidth,(int)comp.getPreferredSize().getHeight()));
+			}
+			comp.setMinimumSize(new Dimension(maxwidth,(int)comp.getPreferredSize().getHeight()));
+			
+		}
 		
 		//south stuff
 		
@@ -317,7 +333,9 @@ public class EditPersonDialog extends JDialog{
 		
 		orderPanel.add(partners);
 		orderPanel.add(children);
-		orderPanel.add(accept);
+		JPanel acceptPanel = new JPanel();
+		acceptPanel.add(accept);
+		orderPanel.add(acceptPanel);
 		
 		
 		

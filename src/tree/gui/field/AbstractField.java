@@ -2,10 +2,13 @@ package tree.gui.field;
 
 import java.awt.Dimension;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
+
+import tree.gui.util.GUIUtils;
 
 public abstract class AbstractField extends JPanel{
 
@@ -40,38 +43,39 @@ public abstract class AbstractField extends JPanel{
 	 */
 	protected AbstractField(String name, int labelWidth, JComponent field,int fieldWidth){
 		this.field = field;
-		this.label = new JLabel(name);
-		SpringLayout layout = new SpringLayout();
+		this.label = new JLabel();
 		
-		layout.putConstraint(SpringLayout.WEST, this.label,
-				5, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.NORTH, this.label, 
-				5, SpringLayout.NORTH, this);
+		this.label.setText(name);
 		
-		layout.putConstraint(SpringLayout.WEST, this.field,
-				5, SpringLayout.EAST, this.label);
-		
-		layout.putConstraint(SpringLayout.NORTH, this.field,
-				5, SpringLayout.NORTH, this);
-		
-		
-		this.field.setPreferredSize(new Dimension(fieldWidth,
+		this.field.setMinimumSize(new Dimension(fieldWidth,
 				(int)this.field.getPreferredSize().getHeight()));
-		this.label.setPreferredSize(new Dimension(labelWidth,
+		this.label.setMinimumSize(new Dimension(labelWidth,
 				(int)this.label.getPreferredSize().getHeight()));
+
+		
+		GUIUtils.normalizeSize(this.field);
+	    GUIUtils.normalizeSize(this.label);
 		
 		
+		Dimension filler = new Dimension(5,5);
+		
+		
+		this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+		this.add(new Box.Filler(filler , filler , filler ));
 		this.add(this.label);
 		this.add(this.field);
+		this.add(new Box.Filler(filler , filler , filler ));
 		
-		this.setLayout(layout);
-		this.setPreferredSize(new Dimension((int)this.field.getPreferredSize().getWidth() +
-				(int)this.label.getPreferredSize().getWidth() + OFFSET_SIZE  ,
-				(int)this.field.getPreferredSize().getHeight()+ Y_OFFSET_SIZE));
+		Dimension minDim = new Dimension(100,10);
+		minDim.setSize(fieldWidth + labelWidth + 10, ( this.field.getPreferredSize().getHeight()> this.label.getPreferredSize().getHeight())?
+				this.field.getPreferredSize().getHeight():this.label.getPreferredSize().getHeight());
 		
-		this.setMinimumSize(this.getPreferredSize());
-		this.setMaximumSize(this.getPreferredSize());
-		this.setSize(this.getPreferredSize());
+		this.setMinimumSize(minDim);
+		GUIUtils.normalizeSize(this);
+		
+		
+		this.setMaximumSize(new Dimension(1000,1000));
+		
 		
 	}
 	

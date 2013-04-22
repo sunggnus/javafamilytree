@@ -24,7 +24,7 @@ import tree.gui.field.DropDownField;
 import tree.gui.field.EnterFilePathField;
 import tree.gui.field.EntryField;
 import tree.gui.field.ModifiedJSlider;
-import tree.gui.util.IconUtil;
+import tree.gui.util.GUIUtils;
 
 public class OptionDialog extends JDialog{
 	
@@ -38,7 +38,7 @@ public class OptionDialog extends JDialog{
 	public static final int OPTION_WIDTH = 600;
 	
 	public OptionDialog(){
-		IconUtil.assignIcon(this);
+		GUIUtils.assignIcon(this);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		int width = AbstractField.DEFAULT_LABEL_WIDTH+50;

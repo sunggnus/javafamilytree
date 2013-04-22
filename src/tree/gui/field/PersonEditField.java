@@ -1,7 +1,7 @@
 package tree.gui.field;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,7 +61,6 @@ public class PersonEditField extends JPanel{
 		
 		this.setPreferredSize(new Dimension(this.width,(int)this.getPreferredSize().getHeight()));
 		
-		
 		this.owner = owner;
 		this.removeAll();
 		switch(mode){
@@ -97,7 +96,7 @@ public class PersonEditField extends JPanel{
 	}
 	
 	private void constructMulti(final String header){
-		int defaultSize = AbstractField.DEFAULT_WIDTH-buttonSize+3;
+		int defaultSize = AbstractField.DEFAULT_WIDTH-buttonSize;
 		ModifiedJButton add = new ModifiedJButton(header,
 				Main.getTranslator().getTranslation("add", Translator.EDIT_PERSON_JDIALOG),
 				defaultSize, 
@@ -190,7 +189,7 @@ public class PersonEditField extends JPanel{
 	}
 	
 	private void constructSingle(Person person){
-		final int but = 2;
+		
 		
 		final JButton delete = new JButton(Main.getTranslator().getTranslation("remove", Translator.EDIT_PERSON_JDIALOG));
 		JButton change = new JButton("ersetzen");
@@ -274,15 +273,19 @@ public class PersonEditField extends JPanel{
 			}
 			
 		});
-		delete.setPreferredSize(new Dimension(buttonSize,(int)delete.getPreferredSize().getHeight()));
-		change.setPreferredSize(new Dimension(buttonSize,(int)change.getPreferredSize().getHeight()));
-		name.setPreferredSize(new Dimension(this.width-but*buttonSize,(int)name.getPreferredSize().getHeight()));
-		FlowLayout layout = new FlowLayout();
-		layout.setAlignment(FlowLayout.LEFT);
-		this.setLayout(layout);
-		this.add(name);
-		this.add(change);
-		this.add(delete);
+		
+		
+		this.setLayout(new BorderLayout());
+		JPanel left = new JPanel();
+		left.add(name);
+		
+		JPanel right = new JPanel();
+		
+		right.add(change);
+
+		right.add(delete);
+		this.add(left,BorderLayout.WEST);
+		this.add(right,BorderLayout.EAST);
 		
 	}
 	

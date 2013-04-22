@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
-import tree.gui.util.IconUtil;
+import tree.gui.util.GUIUtils;
 
 
 
@@ -43,7 +43,7 @@ public class Help extends JDialog{
 	 */
 	private void assignIcon()
 	{
-		IconUtil.assignIcon(this);
+		GUIUtils.assignIcon(this);
 	}
 	
 	/**

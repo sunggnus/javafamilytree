@@ -30,6 +30,7 @@ public class DrawImage extends JPanel{
 	private static final long serialVersionUID = 2128719894096228434L;
 
 	
+	static public final int MARGING  = 10;
 	
 	//first the 0throw information than the 0th column information
 	static public final int TOP_LEFT_SIDE=1;
@@ -78,8 +79,8 @@ public class DrawImage extends JPanel{
 	}
 	
 	private void init(){
-		this.height = image.getHeight(null);
-		this.width = image.getWidth(null);
+		this.height = image.getHeight(null)+MARGING;
+		this.width = image.getWidth(null)+MARGING;
 	
 		scale();
 		this.setPreferredSize(new Dimension(width,height));
@@ -90,7 +91,7 @@ public class DrawImage extends JPanel{
 			int height = 0;
 			if(this.getParent()!=null){
 				for(Component comp : this.getParent().getComponents()){
-					height += (int)comp.getPreferredSize().getHeight();
+					height += (int)comp.getPreferredSize().getHeight()+5;
 				}
 			}
 			
@@ -264,7 +265,7 @@ public class DrawImage extends JPanel{
 	  @Override
 	  protected void paintComponent(Graphics g )
 	  {
-		 this.paintPicture(g,0,0);
+		 this.paintPicture(g,MARGING,MARGING);
 	    
 	  }
 	  /**
