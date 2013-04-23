@@ -45,6 +45,12 @@ public class GUIUtils {
 		if(min.getWidth()>pref.getWidth()){
 			pref.setSize(min.getWidth(), pref.getHeight());
 		}
+		if(pref.getWidth()> Short.MAX_VALUE){
+			pref.setSize(Short.MAX_VALUE, pref.getHeight());
+		}
+		if(min.getWidth()> Short.MAX_VALUE){
+			min.setSize(Short.MAX_VALUE, min.getHeight());
+		}
 	}
 	
 	static public void loadLookAndFeel(){

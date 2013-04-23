@@ -31,6 +31,7 @@ import tree.gui.field.EnterFilePathField;
 import tree.gui.field.EntryField;
 import tree.gui.field.ModifiedJSlider;
 import tree.gui.util.GUIUtils;
+import tree.gui.util.GroupSize;
 
 public class OptionDialog extends JDialog{
 	
@@ -45,13 +46,18 @@ public class OptionDialog extends JDialog{
 	
 	
 	public OptionDialog(){
-		
+		this.constructOptions();
+		}
+	
+	
+	private void constructOptions(){
+
 		GUIUtils.assignIcon(this);
 		final OptionDialog self = this;
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		int width = AbstractField.DEFAULT_LABEL_WIDTH+100;
-		JPanel panel = new JPanel(){
+		final JPanel panel = new JPanel(){
 			private static final long serialVersionUID = 3996847380408971485L;
 			@Override
 			public Component add(Component comp){
@@ -273,7 +279,8 @@ public class OptionDialog extends JDialog{
 					Config.setLookAndFeel(item);
 					SwingUtilities.updateComponentTreeUI(self);
 					additionalLookAndFeel.setVisible(item.equals(OptionList.ADDITIONAL_LOOK_AND_FEEL));
-					
+					remove(panel);
+					constructOptions();
 				}
 			}
 			
@@ -287,6 +294,8 @@ public class OptionDialog extends JDialog{
 					LookAndFeelInfo info = (LookAndFeelInfo) arg0.getItem();
 					Config.setAdditionalLookAndFeel(info.getClassName());
 					SwingUtilities.updateComponentTreeUI(self);
+					remove(panel);
+					constructOptions();
 				}
 			}
 			
@@ -350,6 +359,7 @@ public class OptionDialog extends JDialog{
 		
 		EnterFilePathField filePath = new EnterFilePathField();
 		panel.add(Box.createVerticalStrut(20));
+		GroupSize size = new GroupSize();
 		panel.add(mode);
 		panel.add(lineDrawMode);
 		panel.add(backgroundMode);
@@ -365,11 +375,20 @@ public class OptionDialog extends JDialog{
 		panel.add(unitWidth);
 		panel.add(unitHeight);
 		panel.add(Box.createGlue());
+		
+		for(Component comp : panel.getComponents()){
+			if(comp instanceof AbstractField){
+				AbstractField abs = ((AbstractField) comp);
+				abs.add(size);
+			}
+		}
+		size.processEvent();
+		
 		this.add(panel);
-		this.setSize(OPTION_WIDTH,500);
-	//	this.setResizable(false);
+		this.pack();
 		this.setVisible(true);
 	}
+	
 	
 	static private void initSliders(ModifiedJSlider xMSlider, ModifiedJSlider yMSlider){
 		

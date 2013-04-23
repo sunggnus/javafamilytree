@@ -16,13 +16,17 @@ import javax.swing.event.DocumentListener;
 
 import translator.Translator;
 import tree.gui.util.GUIUtils;
-import tree.gui.window.OptionDialog;
 
 import main.Config;
 import main.Main;
 
-public class EnterFilePathField extends JPanel{
+public class EnterFilePathField extends AbstractField{
 
+	
+	private JButton edit;
+	private JButton search;
+	private JLabel defaultSearch;
+	private JTextField text;
 	/**
 	 * 
 	 */
@@ -30,9 +34,9 @@ public class EnterFilePathField extends JPanel{
 	
 	public EnterFilePathField(){
 		
-		JLabel defaultSearch = new JLabel(Main.getTranslator().getTranslation("defaultSearch", Translator.OPTION_JDIALOG));
+		defaultSearch = new JLabel(Main.getTranslator().getTranslation("defaultSearch", Translator.OPTION_JDIALOG));
 		
-		final JTextField text = new JTextField();
+		text = new JTextField();
 		text.setText(Config.DEFAULT_PATH);
 		text.setMinimumSize(new Dimension(AbstractField.EMPTY_TEXT_FIELD_WIDTH,(int)text.getPreferredSize().getHeight()));
 		GUIUtils.normalizeSize(text);
@@ -57,7 +61,7 @@ public class EnterFilePathField extends JPanel{
 		});
 		text.setEditable(false);
 		
-		final JButton edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.OPTION_JDIALOG));
+		edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.OPTION_JDIALOG));
 		edit.addActionListener(new ActionListener(){
 
 			@Override
@@ -73,7 +77,7 @@ public class EnterFilePathField extends JPanel{
 			
 		});
 		
-		final JButton search = new JButton(Main.getTranslator().getTranslation("search", Translator.OPTION_JDIALOG));
+		search = new JButton(Main.getTranslator().getTranslation("search", Translator.OPTION_JDIALOG));
 		search.addActionListener(new ActionListener(){
 
 			@Override
@@ -92,27 +96,43 @@ public class EnterFilePathField extends JPanel{
 			
 		});
 	
-		int Y_OFFSET=30;
 		
-		this.setPreferredSize(new Dimension(OptionDialog.OPTION_WIDTH,(int) (search.getPreferredSize().getHeight()+Y_OFFSET)));
-		this.setMaximumSize(new Dimension(1000,2*(int) (search.getPreferredSize().getHeight()+Y_OFFSET)));
+		this.increaseLabelWidth(AbstractField.DEFAULT_LABEL_WIDTH + 100);
+		
+	}
+	
+	@Override
+	public void increaseLabelWidth(int width){
+		int Y_OFFSET=30;
 		JPanel firstLine = new JPanel();
 		
 		firstLine.setLayout(new BoxLayout(firstLine, BoxLayout.X_AXIS));
 		JPanel secondLine = new JPanel();
 		secondLine.setLayout(new BoxLayout(secondLine, BoxLayout.X_AXIS));
-		firstLine.add(Box.createHorizontalStrut(5));
+		int pos = 5;
+		firstLine.add(Box.createHorizontalStrut(pos));
 		firstLine.add(defaultSearch);
 		firstLine.add(Box.createGlue());
-		secondLine.add(Box.createHorizontalStrut(5));
-		secondLine.add(search);
-		secondLine.add(Box.createHorizontalStrut(5));
-		secondLine.add(edit);
-		secondLine.add(Box.createHorizontalStrut(5));
-		secondLine.add(Box.createGlue());
+		
+		GUIUtils.normalizeSize(edit);
+		GUIUtils.normalizeSize(search);
+		
+		JPanel subLine = new JPanel();
+		subLine.setLayout(new BoxLayout(subLine, BoxLayout.X_AXIS));
+		subLine.add(Box.createHorizontalStrut(pos));
+		subLine.add(search);
+		subLine.add(Box.createHorizontalStrut(5));
+		subLine.add(edit);
+		
+		int neccessaryMin = width - pos  - (int) ( edit.getMinimumSize().getWidth() + search.getMinimumSize().getWidth() );
+		
+		subLine.add(Box.createHorizontalStrut(neccessaryMin));
+		subLine.add(Box.createGlue());
+		subLine.setMaximumSize(new Dimension(width,100));
+		secondLine.add(subLine);
 		secondLine.add(text);
 		secondLine.add(Box.createHorizontalStrut(5));
-		text.setMaximumSize(new Dimension((int)text.getMaximumSize().getWidth(),Y_OFFSET));
+		text.setMaximumSize(new Dimension(Short.MAX_VALUE,Y_OFFSET));
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		this.add(firstLine);
 		this.add(secondLine);
