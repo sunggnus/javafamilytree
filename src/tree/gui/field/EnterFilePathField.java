@@ -124,7 +124,7 @@ public class EnterFilePathField extends AbstractField{
 		subLine.add(Box.createHorizontalStrut(5));
 		subLine.add(edit);
 		
-		int neccessaryMin = width - pos  - (int) ( edit.getMinimumSize().getWidth() + search.getMinimumSize().getWidth() );
+		int neccessaryMin = 5+width - pos  - (int) ( edit.getMinimumSize().getWidth() + search.getMinimumSize().getWidth() );
 		
 		subLine.add(Box.createHorizontalStrut(neccessaryMin));
 		subLine.add(Box.createGlue());
