@@ -68,23 +68,30 @@ public class Translator {
 	}
 	
 	public String getTranslation(String key, int source){
+		String path = ""; //for error handling
 		try{
+			
 			switch(source){
 			case MAIN_FRAME:
+				path = "MAIN_FRAME";
 				return this.getResourceMainFrame().getString(key);
 			case EDIT_NOTE_JDIALOG:
+				path = "EDIT_NOTE_JDIALOG";
 				return this.getResourceEditNoteJDialog().getString(key);
 			case EDIT_PERSON_JDIALOG:
+				path = "EDIT_PERSON_JDIALOG";
 				return this.getResourceEditPersonJDialog().getString(key);
 			case OPTION_JDIALOG:
+				path = "OPTION_JDIALOG";
 				return this.getResourceOptionJDialog().getString(key);
 			case OVERVIEW_JDIALOG:
+				path = "OVERVIEW_JDIALOG";
 				return this.getResourceOverviewJDialog().getString(key);
 			default:
 				return "err: missing String";
 			}
 		}catch(MissingResourceException e){
-			System.out.println("Konnte die Resource nicht laden");
+			System.out.println("Konnte die Resource " + key + " in " + path +" nicht finden!");
 			return "err: missing String";
 		}
 	}

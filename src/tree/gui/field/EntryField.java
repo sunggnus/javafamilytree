@@ -34,7 +34,6 @@ public class EntryField extends AbstractField{
 	 */
 	public EntryField(String name, int labelWidth, int fieldWidth){
 		super(name, labelWidth, new JTextField(), fieldWidth);
-	//	this.getField().setPreferredSize(new Dimension((int)this.getField().getPreferredSize().getWidth(),25));
 	}
 	
 	
