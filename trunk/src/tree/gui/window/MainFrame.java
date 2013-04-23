@@ -34,6 +34,7 @@ import tree.gui.TreeCanvas;
 import tree.gui.field.AbstractField;
 import tree.gui.field.EntryField;
 import tree.gui.util.GUIUtils;
+import tree.gui.util.GroupSize;
 import tree.model.Person;
 
 public class MainFrame extends JFrame{
@@ -56,6 +57,8 @@ public class MainFrame extends JFrame{
 	private final EntryField heightUnit;
 	
 	private final MainFrameKeyInputMap map;
+	
+	private GroupSize size;
 	
 	public MainFrame(){
 		
@@ -224,6 +227,9 @@ public class MainFrame extends JFrame{
 		
 		options.add(widthUnit);
 		options.add(heightUnit);
+		size = new GroupSize(AbstractField.DEFAULT_LABEL_WIDTH);
+		size.addPanel(options);
+		
 		JLabel zoom = new JLabel("  Zoom:");
 		slider = new JSlider();
 		slider.setUI(new CustomSliderUI(slider));
@@ -286,7 +292,7 @@ public class MainFrame extends JFrame{
 		map = new MainFrameKeyInputMap((JComponent)this.getContentPane());
 		map.deactivateKeyBindings();
 		map.setDefaultKeyBindings();
-		
+		this.pack();
 		this.setVisible(true);
 	}
 	
@@ -302,10 +308,13 @@ public class MainFrame extends JFrame{
 	
 	public void changeLanguage(){
 		this.setJMenuBar(new MenuBar());
+		size.unlockPrefSize();
 		this.setTitle(Main.getTranslator().getTranslation("title",Translator.MAIN_FRAME));
 		this.heightUnit.setLabelText(Main.getTranslator().getTranslation("defaultHeight",Translator.MAIN_FRAME));
 		this.widthUnit.setLabelText(Main.getTranslator().getTranslation("defaultWidth",Translator.MAIN_FRAME));
+		size.refreshSize();
 		this.revalidate();
+		
 		this.canvas.repaint();
 		this.pane.getViewport().revalidate();
 	}

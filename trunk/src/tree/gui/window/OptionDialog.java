@@ -376,13 +376,7 @@ public class OptionDialog extends JDialog{
 		panel.add(unitHeight);
 		panel.add(Box.createGlue());
 		
-		for(Component comp : panel.getComponents()){
-			if(comp instanceof AbstractField){
-				AbstractField abs = ((AbstractField) comp);
-				abs.add(size);
-			}
-		}
-		size.processEvent();
+		size.addPanel(panel);
 		
 		this.add(panel);
 		this.pack();

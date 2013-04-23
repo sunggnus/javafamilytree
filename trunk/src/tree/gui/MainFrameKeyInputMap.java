@@ -157,12 +157,15 @@ public class MainFrameKeyInputMap {
 		this.addKeyAction(KeyEvent.VK_L,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.LOAD_TREE);
 		//open person overview o
 		this.addKeyAction(KeyEvent.VK_O, NO_MODIFIERS, MenuBar.MenuBarListener.PERSON_OVERVIEW);
-		//open note overview ctrl-o
-		this.addKeyAction(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.NOTE_OVERVIEW);
+		//open note overview n
+		this.addKeyAction(KeyEvent.VK_N, NO_MODIFIERS, MenuBar.MenuBarListener.NOTE_OVERVIEW);
 		//show / hide coordinates c
 		this.addKeyAction(KeyEvent.VK_C,NO_MODIFIERS,MenuBar.MenuBarListener.DRAW_X_Y_POSITION);
-		//print strg-p
+		//print ctrl-p
 		this.addKeyAction(KeyEvent.VK_P,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.PRINT_TREE);
+		//export tree as jpeg ctrl-j
+		this.addKeyAction(KeyEvent.VK_J,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_AS_JPEG);
+		
 	}
 	
 	private void addKeyAction(int eventKey, int modifiers, KeyActions action){

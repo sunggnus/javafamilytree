@@ -1,7 +1,6 @@
 package tree.gui.field;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -22,7 +21,6 @@ public abstract class AbstractField extends JPanel{
 	private JComponent field;
 	private JLabel label;
 	
-	private JPanel labelPanel;
 	
 	private GroupSize size;
 
@@ -77,10 +75,8 @@ public abstract class AbstractField extends JPanel{
 		
 		this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		this.add(new Box.Filler(filler , filler , filler ));
-		labelPanel = new JPanel();
-		((FlowLayout) labelPanel.getLayout()).setAlignment(FlowLayout.LEFT);
-		labelPanel.add(this.label);
 		this.add(this.label);
+		this.add(Box.createHorizontalStrut(5));
 		this.add(this.field);
 		this.add(new Box.Filler(filler , filler , filler ));
 		
@@ -107,8 +103,6 @@ public abstract class AbstractField extends JPanel{
 	}
 	
 	public void increaseLabelWidth(int width){
-		
-		if(this.getLabel().getPreferredSize().getWidth()<width+2){
 			Dimension newDim = new Dimension(width, 
 					(int) this.getLabel().getPreferredSize().getHeight());
 			this.getLabel().setMinimumSize(newDim);
@@ -119,7 +113,7 @@ public abstract class AbstractField extends JPanel{
 			this.getLabel().setMaximumSize(newDim);
 			this.refreshMinDim(this.getFieldComponent().getMinimumSize().getWidth(),
 					this.getLabel().getMinimumSize().getWidth());
-		}
+		
 	}
 	
 	public boolean remove(GroupSize size){
