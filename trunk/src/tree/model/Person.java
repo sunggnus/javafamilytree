@@ -174,10 +174,11 @@ public class Person implements Serializable{
 	 * @param birthdate as a {@link GregorianCalendar}
 	 * @throws InvalidSexException 
 	 * @throws AgeException 
+	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
 			boolean alive, boolean sex, Person father, Person mother,
-			GregorianCalendar birthdate) throws InvalidSexException, AgeException{
+			GregorianCalendar birthdate) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
@@ -202,10 +203,11 @@ public class Person implements Serializable{
 	 * @param deathdate as a {@link GregorianCalendar}
 	 * @throws InvalidSexException 
 	 * @throws AgeException 
+	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
 			boolean alive, boolean sex, Person father, Person mother,
-			GregorianCalendar birthdate, GregorianCalendar deathdate) throws InvalidSexException, AgeException{
+			GregorianCalendar birthdate, GregorianCalendar deathdate) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
@@ -232,10 +234,11 @@ public class Person implements Serializable{
 	 * @param birthyear the year of birth
 	 * @throws InvalidSexException 
 	 * @throws AgeException 
+	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
 			boolean alive, boolean sex, Person father, Person mother,
-			int birthday, int birthmonth, int birthyear) throws InvalidSexException, AgeException{
+			int birthday, int birthmonth, int birthyear) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
@@ -264,11 +267,12 @@ public class Person implements Serializable{
 	 * @param deathyear the year of death
 	 * @throws InvalidSexException 
 	 * @throws AgeException 
+	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
 			boolean alive, boolean sex, Person father, Person mother,
 			int birthday, int birthmonth, int birthyear,
-			int deathday, int deathmonth, int deathyear) throws InvalidSexException, AgeException{
+			int deathday, int deathmonth, int deathyear) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
@@ -392,13 +396,14 @@ public class Person implements Serializable{
 	 * @param father
 	 * @throws InvalidSexException
 	 * @throws AgeException
+	 * @throws LineageException 
 	 */
-	public void setFather (Person father)throws InvalidSexException, AgeException {
+	public void setFather (Person father)throws InvalidSexException, AgeException, LineageException {
 		if(this.father==father){
 			return;
 		}
 		if(this.compareAge(father)==IS_OLDER_THAN){
-			throw new AgeException("Eltern d�rfen nicht j�nger als ihre Kinder sein.");
+			throw new AgeException("Parents cannot be younger than there children!");
 		}
 		
 		
@@ -417,7 +422,7 @@ public class Person implements Serializable{
 		}
 	}
 	
-	private void setParent(Person person) throws AgeException, InvalidSexException{
+	private void setParent(Person person) throws LineageException, InvalidSexException, AgeException{
 		person.addChild(this);
 		
 		if(this.isACircleStructure()||this.isOedipusStructure()){
@@ -428,7 +433,7 @@ public class Person implements Serializable{
 			else{
 				this.setFather(null);
 			}
-			throw new AgeException("Etwas in der Erblinie stimmt nicht, �nderung wurde nicht akzeptiert!");
+			throw new LineageException("Something is wrong with the lineage!");
 		}
 		
 		int gen = person.getGeneration();
@@ -452,12 +457,12 @@ public class Person implements Serializable{
 		
 	}
 	
-	public  void setMother(Person mother) throws InvalidSexException, AgeException{
+	public  void setMother(Person mother) throws InvalidSexException, AgeException, LineageException{
 		if(this.mother==mother){
 			return;
 		}
 		if(this.compareAge(mother)==IS_OLDER_THAN){
-			throw new AgeException("Eltern d�rfen nicht j�nger als ihre Kinder sein.");
+			throw new AgeException("Parents cannot be younger than there children!");
 		}
 		
 		
@@ -568,8 +573,9 @@ public class Person implements Serializable{
 	 * @param child
 	 * @return true if the adding was successful
 	 * @throws AgeException 
+	 * @throws LineageException 
 	 */
-	public boolean addChild(Person child) throws AgeException{
+	public boolean addChild(Person child) throws AgeException, LineageException{
 		boolean result = addPersons(this.children,child);
 		if(result){
 			try{
@@ -646,7 +652,7 @@ public class Person implements Serializable{
 			child.setMother(null);
 			return true;
 		}
-		}catch(InvalidSexException | AgeException e){
+		}catch(InvalidSexException | AgeException | LineageException e){
 			//should never happen
 		}
 		return false;
@@ -810,12 +816,14 @@ public class Person implements Serializable{
 	}
 	
 	/**
-	 * disconnects this person from any other persons via family structurs
+	 * disconnects this person from any other persons via family structures
 	 * this should be called before deleting a person
 	 * @throws InvalidSexException
 	 * @throws AgeException
+	 * @throws LineageException 
 	 */
-	public void disconnect() throws InvalidSexException, AgeException{
+	public void disconnect(){
+		try{
 		if(this.getFather()!=null){
 			this.getFather().removeChild(this);
 		}
@@ -839,6 +847,10 @@ public class Person implements Serializable{
 		this.partners = new LinkedList<Person>();
 		this.setFather(null);
 		this.setMother(null);
+		}catch(InvalidSexException | AgeException | LineageException e){
+			//do nothing should never happen
+		}
+		
 	}
 	
 	/**

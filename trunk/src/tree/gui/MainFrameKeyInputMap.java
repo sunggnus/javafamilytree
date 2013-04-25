@@ -143,6 +143,8 @@ public class MainFrameKeyInputMap {
 		this.addKeyAction(KeyEvent.VK_F1,NO_MODIFIERS,KeyActions.HELP);
 		//impressum on f2
 		this.addKeyAction(KeyEvent.VK_F2,NO_MODIFIERS,MenuBar.MenuBarListener.SHOW_IMPRESSUM);
+		//options on f3
+		this.addKeyAction(KeyEvent.VK_F3,NO_MODIFIERS,MenuBar.MenuBarListener.OPEN_OPTIONS);
 		//visible marked on v
 		this.addKeyAction(KeyEvent.VK_V,NO_MODIFIERS,KeyActions.VISIBLE_MARKED);
 		//invisible marked on i
@@ -165,6 +167,17 @@ public class MainFrameKeyInputMap {
 		this.addKeyAction(KeyEvent.VK_P,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.PRINT_TREE);
 		//export tree as jpeg ctrl-j
 		this.addKeyAction(KeyEvent.VK_J,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_AS_JPEG);
+		//export tree background as jpeg alt-j
+		this.addKeyAction(KeyEvent.VK_J, KeyEvent.ALT_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_BACKGROUND_AS_JPEG);
+		//export tree as png ctrl-k
+		this.addKeyAction(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_AS_PNG);
+		//export tree background as png alt-k
+		this.addKeyAction(KeyEvent.VK_K, KeyEvent.ALT_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_BACKGROUND_AS_PNG);
+		//create person p
+		this.addKeyAction(KeyEvent.VK_P, NO_MODIFIERS, MenuBar.MenuBarListener.ADD_PERSON);
+		//create note m
+		this.addKeyAction(KeyEvent.VK_M, NO_MODIFIERS, MenuBar.MenuBarListener.ADD_NOTE);
+		
 		
 	}
 	
