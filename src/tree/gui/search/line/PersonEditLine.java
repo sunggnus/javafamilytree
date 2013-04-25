@@ -11,8 +11,6 @@ import main.Main;
 import translator.Translator;
 import tree.gui.search.AbstractOverview;
 import tree.gui.window.EditPersonDialog;
-import tree.model.AgeException;
-import tree.model.InvalidSexException;
 import tree.model.Person;
 import tree.model.Utils;
 
@@ -47,7 +45,7 @@ public class PersonEditLine extends AbstractPersonLine{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				try {
+			
 					person.disconnect();
 					Main.getMainNode().removePerson(person);
 					if(Main.getMainNode().getPerson()==person){
@@ -64,13 +62,7 @@ public class PersonEditLine extends AbstractPersonLine{
 					
 					view.actualizeSize();
 					
-				} catch (InvalidSexException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (AgeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 				
 			}
 			

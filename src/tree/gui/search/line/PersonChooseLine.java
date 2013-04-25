@@ -11,6 +11,7 @@ import translator.Translator;
 import tree.gui.search.AbstractOverview;
 import tree.model.AgeException;
 import tree.model.InvalidSexException;
+import tree.model.LineageException;
 import tree.model.Person;
 
 public class PersonChooseLine extends AbstractPersonLine{
@@ -63,8 +64,22 @@ public class PersonChooseLine extends AbstractPersonLine{
 				}
 				view.dispose();
 				
-				}catch(InvalidSexException | AgeException e){
-					javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+				}catch(InvalidSexException e){
+					if(mode==MODE_FATHER){
+					javax.swing.JOptionPane.showMessageDialog(null, 
+							Main.getTranslator().getTranslation("InvalidSexExceptionMale", Translator.OVERVIEW_JDIALOG));
+					}
+					else{
+						javax.swing.JOptionPane.showMessageDialog(null, 
+								Main.getTranslator().getTranslation("InvalidSexExceptionFemale", Translator.OVERVIEW_JDIALOG));
+					
+					}
+				}catch(LineageException e){
+					javax.swing.JOptionPane.showMessageDialog(null, 
+							Main.getTranslator().getTranslation("LineageException", Translator.OVERVIEW_JDIALOG));
+				}catch(AgeException e){
+					javax.swing.JOptionPane.showMessageDialog(null, 
+							Main.getTranslator().getTranslation("AgeException", Translator.OVERVIEW_JDIALOG));
 				}
 				
 			}

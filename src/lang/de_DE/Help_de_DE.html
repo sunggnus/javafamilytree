@@ -18,8 +18,9 @@
 <ul class="ul-none">
 <li><a href="#person">Person anlegen / editieren</a></li>
 <li><a href="#hauptfenster">Das Hauptfenster</a></li>
-<li><a href="#menubar">Die Menubar</a></li>
+<li><a href="#menubar">Die Menübar</a></li>
 <li><a href="#optionen">Das Optionsfenster</a></li>
+<li><a href="#steuerung">Tastaturshortcuts</a>
 <li><a href="#impressum">Impressum</a></li>
 </ul>
 </div>
@@ -46,8 +47,8 @@ in den Stammbaum zoomen / herauszoomen. Dieser Zoom wirkt sich direkt auf die Gr
 beim Drucken oder exportieren des Stammbaumes aus. M&ouml;chte man beim exportieren des Stammbaums
 als Bild eine hohe Qualit&auml;t so sollte man ganz in den Baum hinein zoomen. Achtung eine
 Ausgabe des Stammbaums in hoher Qualit&auml;t ben&ouml;tigt viel Arbeitsspeicher.<br>
-Am oberen Fensterrand befindet sich zum einen die Menubar, mit welcher sich durch das Programm 
-navigieren l&auml;sst siehe hierzu auch <a href="#menubar">Menubar</a> und zum anderen gibt es
+Am oberen Fensterrand befindet sich zum einen die Menübar, mit welcher sich durch das Programm 
+navigieren l&auml;sst siehe hierzu auch <a href="#menubar">Menübar</a> und zum anderen gibt es
 hier die M&ouml;glichkeit den Gesamten Stammbaum mittels der Pfeiltasten nach rechts oder links zu
 verschieben. Auch das Verschieben eines Teilstammbaums ist hier m&ouml;glich. 
 Hierzu muss sowohl in dem X als auch in dem Y Feld ein Wert gr&ouml;&szlig;er gleich Null stehen.
@@ -58,14 +59,17 @@ ist gr&ouml;&szlig;er je weiter recht sich die Person befindet)<br>
 Einzelne oder mehrere Personen lassen sich durch rechtsklick auch markieren und in dem man 
 in eine markierte Person mit der linken Maustaste dr&uuml;ckt auch verschieben (Maustaste 
 gedr&uuml;ckt halten). Die Markierung l&auml;sst sich durch einen zweiten Rechtsklick wieder
-aufheben.
+aufheben. <br>
+Markierte Personen können mittels der Taste i unsichtbar und mittels der Taste v sichtbar gemacht werden.
+Verwendet man zusätzlich die Strg-Taste, so werden alle Personen sichtbar / unsichtbar. <br>
 Die Felder Standardbreite und Standardh&ouml;he beeinflussen direkt die Rahmengr&ouml;&szlig;e 
+<p><a href="#top" class="back-to-top">Zum Anfang</a></p>
 um die Person.
 </div>
 <div id="menubar">
 <a name="menubar"></a>
-<h3>Die Menuleiste</h3>
-Die Menuleiste beginnt rechts mit dem Eintrag Datei. Hier lassen sich Stammb&auml;ume laden und 
+<h3>Die Menüleiste</h3>
+Die Menüleiste beginnt rechts mit dem Eintrag Datei. Hier lassen sich Stammb&auml;ume laden und 
 speichern, sowie diese drucken oder als Bild exportieren (png oder jpeg).
 Außerdem kann hier ein Bild unter den Stammbaum gelegt werden. Unter Optionen kommt man 
 zum <a href="#optionen">Optionsfenster</a>.<br>
@@ -73,6 +77,7 @@ Unter dem Eintrag Person lassen sich neue Personen anlegen, Notizen zum Stammbau
 eine &Uuml;bersicht der Personen oder der Notizen aufrufen, sowie die Grid-Koordinaten der Personen
 im Stammbaum anzeigen oder ausblenden.<br>
 Unter Hilfe kann man sich das Impressum anschauen oder diese Hilfe &ouml;ffnen.
+<p><a href="#top" class="back-to-top">Zum Anfang</a></p>
 </div>
 <div id="optionen">
 <a name="optionen"></a>
@@ -81,12 +86,91 @@ Hier l&auml;sst sich der Anzeigemodus ausw&auml;hlen, sowie die Standardeinstell
 H&ouml;he und Breite der Rahmen um die Personen konfigurieren. Die &Auml;nderung der H&ouml;he und
 Breite wird nicht direkt &uuml;bernommen sondern in die Config.ini geladen, so dass es sich hierbei
 um die neuen Einstellungen beim &Ouml;ffnen des Programms handelt.
+Alle anderen Einstellungen wirken sich direkt auf das Design des Programms oder Stammbaums aus.
+So lassen sich unterschiedliche Look and Feels einstellen und es gibt einige Formatierungsoptionen
+für die Positionierung des Textes im Stammbaum oder die Verbindung einzelnder Knoten des Baums.
+Auch ein Standardsuchpfad, in welchem nach dem Starten des Programms Dateien gesucht werden sollen, wenn man
+einen der Ladedialoge öffnet, lässt sich hier konfigurieren.
+<p><a href="#top" class="back-to-top">Zum Anfang</a></p>
+</div>
+<div id="steuerung">
+<a name="steuerung"></a>
+<h3>Tastaturshortcuts</h3>
+<p class="headline">Eine kurze Übersicht über die Tastaturbelegung:</p>
+<table>
+<tr>
+  <th>Tastenbefehl</th>
+  <th>Funktion</th>
+</tr>
+<tr>
+<td>F1</td><td>Hilfe</td>
+</tr>
+<tr>
+<td>F2</td><td>Impressum</td>
+</tr>
+<tr>
+<td>F3</td><td>Optionen</td>
+</tr>
+<tr>
+<td>r</td><td>Hintergrund neu zeichnen</td>
+</tr>
+<tr>
+<td>v</td><td>Markierte Personen sichtbar machen</td>
+</tr>
+<tr>
+<td>i</td><td>Markierte Personen unsichtbar machen</td>
+</tr>
+<tr>
+<td>strg-v</td><td>Alle Personen sichtbar machen</td>
+</tr>
+<tr>
+<td>strg-i</td><td>Alle Personen unsichtbar machen</td>
+</tr>
+<tr>
+<td>strg-s</td><td>Stammbaum speichern</td>
+</tr>
+<tr>
+<td>strg-l</td><td>Stammbaum laden</td>
+</tr>
+<tr>
+<td>o</td><td>Personenübersicht öffnen</td>
+</tr>
+<tr>
+<td>n</td><td>Notizübersicht öffnen</td>
+</tr>
+<tr>
+<td>c</td><td>Koordinaten anzeigen / verstecken</td>
+</tr>
+<tr>
+<td>strg-p</td><td>Stammbaum drucken</td>
+</tr>
+<tr>
+<td>strg-j</td><td>Stammbaum als jpeg exportieren</td>
+</tr>
+<tr>
+<td>strg-k</td><td>Stammbaum als png exportieren</td>
+</tr>
+<tr>
+<td>alt-j</td><td>Hintergrund als jpeg exportieren</td>
+</tr>
+<tr>
+<td>alt-k</td><td>Hintergrund als png exportieren</td>
+<tr>
+<td>p</td><td>Person anlegen</td>
+</tr>
+<tr>
+<td>m</td><td>Notiz anlegen</td>
+</tr>
+</table>
+<p><a href="#top" class="back-to-top">Zum Anfang</a></p>
 </div>
 <div id="impressum">
 <a name="impressum"></a>
 <h1>Impressum</h1>
 <p>Dieser Stammbaumeditor wurde von Stefan Fl&ouml;ser im Jahr 2013 geschrieben. Es wurden die Bibliothek Metadata-Extractor-2.6.4 und
 xmpcore verwendet. (Diese stehen unter der <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache 2.0 License</a>)</p>
+Sowie die Klasse ResourceBundleControl aus dem aion-emu Projekt, welche unter der <a href="http://de.wikipedia.org/wiki/Gpl" target="_blank">General Public License (GPL)</a>
+steht.
 <p>Dieses Programm wurde unter der <a href="http://de.wikipedia.org/wiki/Gpl" target="_blank">General Public License (GPL)</a> ver&ouml;ffentlicht. </p>
 <p><a href="#top" class="back-to-top">Zum Anfang</a></p>
 </div>

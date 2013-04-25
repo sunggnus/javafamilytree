@@ -4,9 +4,10 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.File;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
@@ -16,6 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
+import main.Main;
+
+import translator.Translator;
 import tree.gui.util.GUIUtils;
 
 
@@ -51,9 +55,12 @@ public class Help extends JDialog{
 	 * @param boolean helpOrImp decides whether to show the help file or the about file true=help false=aboutUs
 	 */
 	public void showHelp(final boolean helpOrImp) {
+		
+		
+		
 		JScrollPane helpContentPane = new JScrollPane();
-		setTitle(helpOrImp?"Hilfe":"Impressum");
-		String path = helpOrImp?"./data/help/hilfe.html":"./data/help/impressum.html";
+		setTitle(helpOrImp?this.getTranslation("help"):this.getTranslation("about"));
+		String path = helpOrImp?Main.getTranslator().getHelpPath():Main.getTranslator().getAboutPath();
 		
 		JPanel undergroundPanel = new JPanel();
 
@@ -79,7 +86,7 @@ public class Help extends JDialog{
 									Desktop.getDesktop().browse(
 											e.getURL().toURI());
 								} catch (URISyntaxException e1) {
-									javax.swing.JOptionPane.showMessageDialog(null,"Browser konnte nicht gefunden werden.");
+									javax.swing.JOptionPane.showMessageDialog(null,getTranslation("noBrowser"));
 								}
 							}
 						} else {
@@ -87,17 +94,19 @@ public class Help extends JDialog{
 
 						}
 					} catch (IOException e1) {
-						javax.swing.JOptionPane.showMessageDialog(null,"Die " + (helpOrImp?"Hilfedatei":"Impressumsdatei") + " konnte nicht gefunden werden.");
+						javax.swing.JOptionPane.showMessageDialog(null, (helpOrImp?getTranslation("noHelp"):getTranslation("noAbout")) );
 					}
 				}
 			}
 		});
 
 		try {
-			File helpHTML = new File(path);
-			theHelpText.setPage(helpHTML.toURI().toURL());
+			System.out.println(path);
+			URL location = ClassLoader.getSystemResource(path);
+			System.out.println(location.toExternalForm());
+			theHelpText.setPage(location);
 		} catch (IOException e) {
-			javax.swing.JOptionPane.showMessageDialog(null,"Die " + (helpOrImp?"Hilfedatei":"Impressumsdatei") + " konnte nicht gefunden werden.");
+			javax.swing.JOptionPane.showMessageDialog(null,(helpOrImp?getTranslation("noHelp"):getTranslation("noAbout")));
 		}
 
 		GridLayout grid = new GridLayout(1, 1);
@@ -109,6 +118,10 @@ public class Help extends JDialog{
 
 		setVisible(true);
 		
+	}
+	
+	private String getTranslation(String key){
+		return Main.getTranslator().getTranslation(key, Translator.HELP);
 	}
 
 }
