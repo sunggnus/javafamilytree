@@ -62,6 +62,7 @@ public class Translator {
 			 System.out.println("Resource not found");
 			 System.out.println("Path: " + path);
 			 System.out.println("Switch to default Locale");
+			 javax.swing.JOptionPane.showMessageDialog(null, "Resource not found, switch to English!");
 			 this.loadLocale("en","US");
 		 }
 	}
