@@ -114,6 +114,11 @@ public class EnterFilePathField extends AbstractField{
 		firstLine.add(defaultSearch);
 		firstLine.add(Box.createGlue());
 		
+		JButton toDetermineMinEdit = new JButton(Main.getTranslator().getTranslation("save", Translator.OPTION_JDIALOG));
+		if(toDetermineMinEdit.getMinimumSize().getWidth()>edit.getMinimumSize().getWidth()){
+			edit.setMinimumSize(toDetermineMinEdit.getMinimumSize());
+		}
+		
 		GUIUtils.normalizeSize(edit);
 		GUIUtils.normalizeSize(search);
 		
@@ -126,6 +131,8 @@ public class EnterFilePathField extends AbstractField{
 		
 		int neccessaryMin = 5+width - pos  - (int) ( edit.getMinimumSize().getWidth() + search.getMinimumSize().getWidth() );
 		
+		
+		
 		subLine.add(Box.createHorizontalStrut(neccessaryMin));
 		subLine.add(Box.createGlue());
 		subLine.setMaximumSize(new Dimension(width,100));
@@ -137,5 +144,7 @@ public class EnterFilePathField extends AbstractField{
 		this.add(firstLine);
 		this.add(secondLine);
 	}
+	
+	
 
 }

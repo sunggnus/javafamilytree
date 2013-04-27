@@ -69,8 +69,9 @@ public enum OptionList {
 			break;
 		case TYPE_LOOK_AND_FEEL:
 			configName = "lookandfeelmode=";
+			break;
 		default:
-			configName = "noName";
+			configName = "noName=";
 		}
 	}
 	
