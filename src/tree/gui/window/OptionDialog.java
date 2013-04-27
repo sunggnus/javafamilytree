@@ -304,7 +304,7 @@ public class OptionDialog extends JDialog{
 		final EntryField unitWidth = new EntryField(Main.getTranslator().getTranslation("defaultWidth", Translator.OPTION_JDIALOG),
 				width);
 		unitWidth.setContent(Config.PERSON_WIDTH);
-		final EntryField unitHeight = new EntryField("defaultHeight", width);
+		final EntryField unitHeight = new EntryField(Main.getTranslator().getTranslation("defaultHeight", Translator.OPTION_JDIALOG), width);
 		unitHeight.setContent(Config.PERSON_HEIGHT);
 		unitWidth.addDocumentListener(new DocumentListener(){
 
