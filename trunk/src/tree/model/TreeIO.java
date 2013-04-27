@@ -43,7 +43,7 @@ public class TreeIO {
 			objIn = new ObjectInputStream(input);
 			Object obj = objIn.readObject();
 			if(!(obj instanceof MainNode)){
-				throw new IOException("Ungültiger Datensatz");
+				throw new IOException("Ungï¿½ltiger Datensatz");
 			}
 			MainNode node = (MainNode) obj;
 			
@@ -51,7 +51,7 @@ public class TreeIO {
 		}catch(IOException e){
 			throw e;
 		} catch (ClassNotFoundException e) {
-			throw new IOException("Ungültiger Datensatz");
+			throw new IOException("Ungï¿½ltiger Datensatz");
 		}finally{
 			if(objIn != null){
 				objIn.close();
@@ -220,6 +220,10 @@ public class TreeIO {
 			output.close();
 		
 		}
+	}
+	
+	public MainNode loadGEDCOM5(File file){
+		return null;
 	}
 	
 }
