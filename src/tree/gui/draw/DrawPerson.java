@@ -136,8 +136,20 @@ public class DrawPerson extends AbstractDraw {
 		// determine line end
 		if ((this.person.getFather() != null && this.person.getFather().isVisible()) || //not null and visible!
 				(this.person.getMother() != null && this.person.getMother().isVisible())) {
-
-			int upperYmarging = (int) (y - scaling * heightUnit * 0.3);
+			int parenty = 0;
+			int parentGeneration = 0;
+			
+			if(this.person.getFather() != null)
+				parentGeneration = person.getFather().getGeneration() + 1;
+			else
+				parentGeneration =person.getMother().getGeneration()+1;
+			
+			
+			
+			
+			parenty =(int) (parentGeneration * scaling * heightUnit * 1.3 )+ DEFAULT_MARGING;
+			
+			int upperYmarging = (int) (parenty - scaling * heightUnit * 0.3);
 			if (this.person.hasTwoParents()
 					|| (this.person.getMother() != null && this.person
 							.getMother().hasOrHadPartner())
@@ -146,7 +158,28 @@ public class DrawPerson extends AbstractDraw {
 				upperYmarging += (int) Math.ceil(DEFAULT_MARGING * scaling);
 			}
 			
+			
+			if(Config.TREE_ORDERING_MODE == OptionList.TREE_ORDERING_YOUNGEST_ON_TOP){
+				
+				lowYmarging = (int) (y + scaling * heightUnit );
+				upperYmarging =(int) (parenty - scaling * heightUnit * 1.3);
+				if(this.person.hasOrHadPartner())
+					lowYmarging += (int) Math.ceil(DEFAULT_MARGING * scaling);
+				
+				
+				if (this.person.hasTwoParents()
+						|| (this.person.getMother() != null && this.person
+								.getMother().hasOrHadPartner())
+						|| (this.person.getFather() != null && this.person
+								.getFather().hasOrHadPartner())) {
+				
+				upperYmarging -= (int) Math.ceil(DEFAULT_MARGING * scaling);
+				}
+			}
+			
 			//draw connections
+				
+			
 			if (Config.CONNECTION_MODE.equals(OptionList.DIAGONAL_CONNECTION)) {
 				g.drawLine(parentx, upperYmarging, (int) (x + scaling
 						* widthUnit * half), lowYmarging);
@@ -287,7 +320,8 @@ public class DrawPerson extends AbstractDraw {
 
 	@Override
 	public void setRelativeYCoordinate(int y) {
-		// do nothing because the generation is set automatically
+		if(Config.Y_POSITIONING_MODE==OptionList.Y_MANUAL_POSITIONING)
+			person.setGeneration(y);
 	}
 
 	/**

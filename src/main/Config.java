@@ -69,6 +69,10 @@ public final class Config {
 	
 	static public String ADDITIONAL_LOOK_AND_FEEL = "javax.swing.plaf.metal.MetalLookAndFeel";
 	
+	static public OptionList Y_POSITIONING_MODE = OptionList.Y_AUTO_POSITIONING;
+	
+	static public OptionList TREE_ORDERING_MODE = OptionList.TREE_ORDERING_OLDEST_ON_TOP;
+	
 	static public String DEFAULT_PATH="./";
 	/**
 	 * contains the last path which was used
@@ -140,6 +144,8 @@ public final class Config {
 						MOUSE_MODE = readOption(line,MOUSE_MODE.getConfigName(),MOUSE_MODE);
 						KEYBOARD_MODE = readOption(line,KEYBOARD_MODE.getConfigName(),KEYBOARD_MODE);
 						LOOK_AND_FEEL_MODE = readOption(line,LOOK_AND_FEEL_MODE.getConfigName(),LOOK_AND_FEEL_MODE);
+						Y_POSITIONING_MODE = readOption(line,Y_POSITIONING_MODE.getConfigName(),Y_POSITIONING_MODE);
+						TREE_ORDERING_MODE = readOption(line,TREE_ORDERING_MODE.getConfigName(),TREE_ORDERING_MODE);
 					}
 					}catch (IllegalArgumentException illArg){
 						System.out.println(line);
@@ -218,7 +224,8 @@ public final class Config {
 			out.write(KEYBOARD_MODE);
 			out.write(LOOK_AND_FEEL_MODE);
 			out.write("additionalLookAndFeel=" + ADDITIONAL_LOOK_AND_FEEL + LINE_SEPARATOR);
-			
+			out.write(Y_POSITIONING_MODE);
+			out.write(TREE_ORDERING_MODE);
 			out.close();
 		} catch (IOException e) {
 			
@@ -257,6 +264,8 @@ public final class Config {
 			
 		}
 	}
+	
+	
 	
 	public static void setLookAndFeel(OptionList lookAndFeel){
 		LOOK_AND_FEEL_MODE = lookAndFeel;

@@ -32,6 +32,7 @@ import tree.gui.field.EntryField;
 import tree.gui.field.ModifiedJSlider;
 import tree.gui.util.GUIUtils;
 import tree.gui.util.GroupSize;
+import tree.model.Utils;
 
 public class OptionDialog extends JDialog{
 	
@@ -106,6 +107,11 @@ public class OptionDialog extends JDialog{
 		DropDownField<OptionList> lookAndFeelMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("lookAndFeelMode", Translator.OPTION_JDIALOG), 
 				width);
 		
+		DropDownField<OptionList> yPositioningMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("ypositioning", Translator.OPTION_JDIALOG), 
+				width);
+		
+		DropDownField<OptionList> treeOrderingMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("treeOrderingMode", Translator.OPTION_JDIALOG), 
+				width);
 		
 		
 		final DropDownField<LookAndFeelInfo> additionalLookAndFeel = new DropDownField<LookAndFeelInfo>("", width);
@@ -144,12 +150,52 @@ public class OptionDialog extends JDialog{
 					break;
 				case OptionList.TYPE_LOOK_AND_FEEL:
 					lookAndFeelMode.add(dispMode);
+					break;
+				case OptionList.TYPE_Y_POSITIONING_MODE:
+					yPositioningMode.add(dispMode);
+					break;
+				case OptionList.TYPE_TREE_ORDERING_MODE:
+					treeOrderingMode.add(dispMode);
+					break;
 				default: //do nothing
 			}
 			
 
 		}
 		
+		treeOrderingMode.setSelectedItem(Config.TREE_ORDERING_MODE);
+		
+		treeOrderingMode.addItemListener(new ItemListener(){
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED && e.getItem() instanceof OptionList){
+					OptionList item = (OptionList) e.getItem();
+					if(Config.TREE_ORDERING_MODE != item){
+					Config.TREE_ORDERING_MODE = item;
+		
+					Main.getMainFrame().getCanvas().repaint();
+					}
+				}
+				
+			}
+			
+		});
+		
+		yPositioningMode.setSelectedItem(Config.Y_POSITIONING_MODE);
+		
+		yPositioningMode.addItemListener(new ItemListener(){
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange()==ItemEvent.SELECTED && e.getItem() instanceof OptionList){
+					OptionList item = (OptionList) e.getItem();
+					Config.Y_POSITIONING_MODE = item;
+				}
+				
+			}
+			
+		});
 		
 		
 		mode.setSelectedItem(Config.ORIENTATION_MODE);
@@ -370,6 +416,8 @@ public class OptionDialog extends JDialog{
 		panel.add(dataPositioningMode);
 		panel.add(mouseMode);
 		panel.add(keyboardMode);
+		panel.add(yPositioningMode);
+		panel.add(treeOrderingMode);
 		panel.add(lookAndFeelMode);
 		panel.add(additionalLookAndFeel);
 		panel.add(filePath);

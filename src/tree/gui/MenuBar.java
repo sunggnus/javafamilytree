@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
@@ -29,9 +30,13 @@ import tree.gui.window.EditNoteDialog;
 import tree.gui.window.EditPersonDialog;
 import tree.gui.window.Help;
 import tree.gui.window.OptionDialog;
+import tree.model.AgeException;
 import tree.model.ComponentPrinter;
+import tree.model.LineageException;
 import tree.model.MainNode;
+import tree.model.Person;
 import tree.model.TreeIO;
+import tree.model.Utils;
 
 public class MenuBar extends JMenuBar{
 	
@@ -247,6 +252,34 @@ public class MenuBar extends JMenuBar{
 			}
 		},
 		/**
+		 * opens a Dialog to import a tree from a GEDCOM5 file
+		 */
+		IMPORT_TREE_FROM_GEDCOM5(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser = new JFileChooser(Config.LAST_PATH);
+				int val = chooser.showOpenDialog(chooser);
+				if(val == JFileChooser.APPROVE_OPTION){
+					try{
+					String filePath = chooser.getSelectedFile().getAbsolutePath();
+					Config.LAST_PATH = chooser.getSelectedFile().getParent();
+					TreeIO loader = new TreeIO();
+					List<Person> persons = loader.loadGEDCOM5(filePath);
+				
+					MainNode node = new MainNode(persons.get(0));
+					node.addAll(persons);
+					Utils.determineTreeGenerations(persons.get(0));
+					Utils.basicXPositioning(persons.get(0));
+					Main.setMainNode(node);
+					Main.getMainFrame().revalidateTree();
+					}catch(IOException | AgeException | LineageException e){
+						javax.swing.JOptionPane.
+						showMessageDialog(null,e.getMessage());
+					}
+				}
+			}
+		},
+		/**
 		 * save the tree as an image (png or jpeg)
 		 */
 		EXPORT_AS_IMAGE(){
@@ -333,7 +366,24 @@ public class MenuBar extends JMenuBar{
 				Main.getMainFrame().getCanvas().repaint();
 			}
 			
-		};
+		},
+		CALCULATE_Y_POSITION(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Utils.determineTreeGenerations(Main.getMainNode().getPerson());
+				
+				Main.getMainFrame().getCanvas().repaint();
+			}
+		},
+		INVERT_ORDERING(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Utils.changeOrderingMode(Main.getMainNode().getPerson());
+				
+				Main.getMainFrame().getCanvas().repaint();
+			}
+		}
+		;
 		
 		static private void loadLanguage(String lang, String country){
 			Main.getTranslator().loadLocale(lang, country);
@@ -418,6 +468,11 @@ public class MenuBar extends JMenuBar{
 		JMenuItem loadTree = new JMenuItem(Main.getTranslator().getTranslation("loadTree",Translator.MAIN_FRAME));
 		loadTree.addActionListener(MenuBarListener.LOAD_TREE);
 		file.add(loadTree);
+		
+		//import Tree from GEDCOM5
+		JMenuItem importTreeGEDCOM = new JMenuItem(Main.getTranslator().getTranslation("importTreeGedcom", Translator.MAIN_FRAME));
+		importTreeGEDCOM.addActionListener(MenuBarListener.IMPORT_TREE_FROM_GEDCOM5);
+		file.add(importTreeGEDCOM);
 		
 		//jpeg exportieren
 		JMenu exportAs = new JMenu(Main.getTranslator().getTranslation("exportAs",Translator.MAIN_FRAME));
@@ -510,6 +565,17 @@ public class MenuBar extends JMenuBar{
 		redrawBackground.addActionListener(MenuBarListener.REDRAW_BACKGROUND);
 		
 		extras.add(redrawBackground);
+		
+		//recalculate y position
+		JMenuItem recalculateY = new JMenuItem(Main.getTranslator().getTranslation("calculatey",Translator.MAIN_FRAME));
+		recalculateY.addActionListener(MenuBarListener.CALCULATE_Y_POSITION);
+		extras.add(recalculateY);
+		
+		//invert ordering
+		JMenuItem invertOrdering = new JMenuItem(Main.getTranslator().getTranslation("invertOrdering", Translator.MAIN_FRAME));
+		invertOrdering.addActionListener(MenuBarListener.INVERT_ORDERING);
+		extras.add(invertOrdering);
+		
 		
 		
 	}

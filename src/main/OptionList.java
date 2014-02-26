@@ -25,7 +25,13 @@ public enum OptionList {
 	KEYBOARD_INACTIVE("Tastatureingaben inaktiv", OptionList.TYPE_KEYBOARD_MODE),
 	JAVA_LOOK_AND_FEEL("Java Look and Feel,", OptionList.TYPE_LOOK_AND_FEEL),
 	NATIVE_LOOK_AND_FEEL("System Look and Feel", OptionList.TYPE_LOOK_AND_FEEL),
-	ADDITIONAL_LOOK_AND_FEEL("weitere Look and Feels", OptionList.TYPE_LOOK_AND_FEEL); 
+	ADDITIONAL_LOOK_AND_FEEL("weitere Look and Feels", OptionList.TYPE_LOOK_AND_FEEL),
+	Y_AUTO_POSITIONING("automatische y-Positionierung", OptionList.TYPE_Y_POSITIONING_MODE),
+	Y_MANUAL_POSITIONING("manuelle y-Positionierung", OptionList.TYPE_Y_POSITIONING_MODE),
+	TREE_ORDERING_OLDEST_ON_TOP("Vorfahren vor Nachfahren", OptionList.TYPE_TREE_ORDERING_MODE),
+	TREE_ORDERING_YOUNGEST_ON_TOP("Nachfahren vor Vorfahren", OptionList.TYPE_TREE_ORDERING_MODE)
+	; 
+	
 	
 	static public final int TYPE_TEXT_LAYOUT = 0;
 	static public final int TYPE_CONNECTION_MODE = 1;
@@ -35,6 +41,8 @@ public enum OptionList {
 	static public final int TYPE_MOUSE_MODE = 5;
 	static public final int TYPE_KEYBOARD_MODE = 6;
 	static public final int TYPE_LOOK_AND_FEEL = 7;
+	static public final int TYPE_Y_POSITIONING_MODE = 8;
+	static public final int TYPE_TREE_ORDERING_MODE = 9;
 	
 	private String description;
 	
@@ -69,6 +77,12 @@ public enum OptionList {
 			break;
 		case TYPE_LOOK_AND_FEEL:
 			configName = "lookandfeelmode=";
+			break;
+		case TYPE_Y_POSITIONING_MODE:
+			configName = "ypositioningmode=";
+			break;
+		case TYPE_TREE_ORDERING_MODE:
+			configName = "treeorderingmode=";
 			break;
 		default:
 			configName = "noName=";
