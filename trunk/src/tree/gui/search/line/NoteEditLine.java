@@ -60,6 +60,7 @@ public class NoteEditLine extends AbstractLine{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Main.getMainNode().removeNote(note);
+					Main.getMainFrame().getCanvas().generateDrawStuff();
 					view.filterView();
 				}
 				

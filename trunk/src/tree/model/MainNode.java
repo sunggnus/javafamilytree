@@ -110,5 +110,9 @@ public class MainNode implements Serializable{
 			person.setVisible(visible);
 		}
 	}
+	
+	public void addAll(List<Person> persons){
+		createdPersons.addAll(persons);
+	}
 
 }

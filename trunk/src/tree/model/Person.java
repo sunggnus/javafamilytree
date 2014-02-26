@@ -1,6 +1,5 @@
 package tree.model;
 
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,14 +14,16 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-
-
 public class Person implements Serializable{
 	
 	/**
 	 * unique class id for serialization
 	 */
 	private static final long serialVersionUID = 6986513043854273482L;
+	/**
+	 * contains the id for the next person that will be created
+	 */
+	public static long NEXT_ID=0;
 
 	static public final Person NULL = new Person("", "", false);
 	
@@ -44,8 +45,8 @@ public class Person implements Serializable{
 	
 	static public final int PARTNER_DISTANCE = 1;
 	
+
 	
-	static private int smallestGeneration=0;
 	
 
 	/**
@@ -134,18 +135,15 @@ public class Person implements Serializable{
 	 * contains a picture of the person
 	 */
 	private transient BufferedImage picture;
-	/**
-	 * this boolean contains necessary information for the oedipus algorithm
-	 */
-	private boolean visited;
-	/**
-	 * this boolean contains necessary information for the oedipus algorithm
-	 */
-	private boolean trulyVisited;
-	/**
-	 * this Person contains necessary information for the oedipus algorithm
-	 */
-	private Person noCall;
+	
+
+	
+	
+	private long ID;
+	
+	
+	private LinkedList<ConnectionListener> listeners = new LinkedList<ConnectionListener>();
+	
 	
 	/**
 	 * 
@@ -287,10 +285,13 @@ public class Person implements Serializable{
 	}
 	
 	private void additonalConstructorStuff(){
+		this.setID(NEXT_ID);
+		NEXT_ID++;
 		this.generation = NO_GENERATION;
 		this.children = new LinkedList<Person>();
 		this.partners = new LinkedList<Person>();
 		this.setPicture(null);
+		this.listeners.add(new RefreshTreeLayoutListener());
 	}
 	
 	/**
@@ -301,28 +302,8 @@ public class Person implements Serializable{
 	 * one
 	 */
 	public void setGeneration(int gen){
-		if(this.generation != gen){
+		//TODO implement
 		this.generation = gen;
-		if(this.getMother()!=null){
-			this.getMother().setGeneration(this.generation -1);
-		}
-		if(this.getFather()!= null){
-			this.getFather().setGeneration(this.generation -1);
-		}
-		//if there is no father or mother check that the generation starts
-		//with one
-		if(this.getMother()==null&&this.getFather()==null&&this.generation <1){
-			this.generation=1;
-		}
-		for(Person partner : this.partners){
-				partner.setGeneration(this.generation);
-		}
-		
-		for(Person child : this.getChildren()){
-			child.setGeneration(this.generation+1);
-		}
-		
-		}
 	}
 	/**
 	 * returns the generation of this person
@@ -411,6 +392,9 @@ public class Person implements Serializable{
 		if(father==null||father.isMale()){
 			if(this.father!=null){
 				this.father.removeChild(this);
+				if(this.mother==null){
+
+				}
 			}
 			this.father = father;
 			if(this.father!=null){
@@ -425,7 +409,7 @@ public class Person implements Serializable{
 	private void setParent(Person person) throws LineageException, InvalidSexException, AgeException{
 		person.addChild(this);
 		
-		if(this.isACircleStructure()||this.isOedipusStructure()){
+		if((this.isACircleStructure())){
 			person.removeChild(this);
 			if(person.isFemale()){
 				this.setMother(null);
@@ -435,22 +419,7 @@ public class Person implements Serializable{
 			}
 			throw new LineageException("Something is wrong with the lineage!");
 		}
-		
-		int gen = person.getGeneration();
-		
-		if(gen+1>this.getGeneration()){
-			this.setGeneration(gen+1);
-		}
-		else{
-			person.setGeneration(this.getGeneration()-1);
-		}
-		for(Person child : this.getChildren()){
-			child.setGeneration(this.getGeneration()+1);
-		}
-		//to calculate smallestGeneration
-		this.isOedipusStructure();
-		this.setGeneration(this.getGeneration()-smallestGeneration+1);
-		
+	
 		if(this.hasTwoParents()){
 			this.getMother().addPartner(this.getFather());
 		}
@@ -469,6 +438,9 @@ public class Person implements Serializable{
 		if(mother==null||mother.isFemale()){
 			if(this.mother!=null){
 				this.mother.removeChild(this);
+				if(this.father==null){
+
+				}
 			}
 			this.mother = mother;
 			
@@ -486,9 +458,17 @@ public class Person implements Serializable{
 		this.birthdate = new GregorianCalendar(year,month,day);
 	}
 	
+	public void setBirthdate(GregorianCalendar birth){
+		this.birthdate = birth;
+	}
+	
 	public void setDeathdate(int day, int month, int year){
 		month--;
 		this.deathdate = new GregorianCalendar(year,month,day);
+	}
+	
+	public void setDeathdate(GregorianCalendar death){
+		this.deathdate = death;
 	}
 	
 	public GregorianCalendar getBirthdate(){
@@ -591,6 +571,7 @@ public class Person implements Serializable{
 				
 					//Do nothing because this cannot happen
 				}
+			this.notifyChangeListener();
 			}
 			
 		
@@ -604,9 +585,9 @@ public class Person implements Serializable{
 	 */
 	public boolean addPartner(Person partner){
 		if(!this.partners.contains(partner)){
-		partner.setGeneration(this.generation);
 		addPersons(this.partners,partner);
 		partner.addPartner(this);
+		this.notifyChangeListener();
 		return true;
 		}
 		return false;
@@ -770,50 +751,8 @@ public class Person implements Serializable{
 		return false;
 	}
 	
-	
-	private boolean isOedipusStructure(){
-		smallestGeneration = this.getGeneration();
-		//the visit status change during every run
-		this.visited = !this.visited;
-		for(Person child : this.children){
-			
-			if(child.isOedipusStructure(this,this,this.visited)){
-				
-				this.erazeNoCall();
-				return true;
-			}
-		}
-		
-		List<Person> siblings = this.getSiblings(true);
-		for(Person sib : siblings){
-			sib.noCall = this.getFather();
-		}
-		
-		if(this.getMother()!=null&&
-				this.getMother().isOedipusStructure(this, this, this.visited)){
-			this.erazeNoCall();
-			return true;
-		}
-		
-		for(Person sib : siblings){
-			sib.noCall = this.getMother();
-		}
-		
-		if(this.getFather()!=null&&
-				this.getFather().isOedipusStructure(this, this, this.visited)){
-			this.erazeNoCall();
-			return true;
-		}
-		
-		this.erazeNoCall();
-		return false;
-	}
-	private void erazeNoCall(){
-		List<Person> siblings = this.getSiblings(true);
-		for(Person sib : siblings){
-			sib.noCall = null;
-		}
-	}
+
+
 	
 	/**
 	 * disconnects this person from any other persons via family structures
@@ -853,67 +792,11 @@ public class Person implements Serializable{
 		
 	}
 	
+
 	/**
-	 * decides whether this is a oedipusstructure or not
-	 * and recalculates the oldest generation
-	 * @param sex
-	 * @param person
-	 * @param caller
-	 * @param smallestGeneration
+	 * check that someone is not his own parent
 	 * @return
 	 */
-	private boolean isOedipusStructure(Person person, Person caller, boolean visitStatus){
-		if(this.getGeneration()<smallestGeneration){
-			smallestGeneration = this.getGeneration();
-		}	
-		if(person==this){
-			return true;
-		}
-		if(visitStatus==this.visited){
-			return false;
-		}
-		//TODO it seems to work now but code is a little bit complicate maybe it is possible
-		//to simplify it
-		this.visited=visitStatus;
-		List<Person> siblings = this.getSiblings(true);
-		for(Person sib : siblings){
-			sib.setTrulyVisited(sib.getVisited());
-		}
-		if(caller==this.getMother()||caller==this.getFather()){
-			for(Person sib : siblings){
-				sib.setVisited(visitStatus);
-			}
-		}
-		for(Person child : this.children){
-			if(child == caller){
-				continue;
-			}
-			if(child.isOedipusStructure(person, this, visitStatus)){
-				return true;
-			}
-			
-		}
-		
-			if(this.getFather()!=null&&
-					this.getFather()!=this.noCall&&
-					this.getFather()!=caller&&
-					this.getFather().isOedipusStructure(person,this,visitStatus)){
-				return true;
-			}
-		
-			if(this.getMother()!=null&&
-					this.getMother()!=this.noCall&&
-					this.getMother()!=caller&&
-					this.getMother().isOedipusStructure( person,this,visitStatus)){
-				return true;
-			}
-		
-			for(Person sib : siblings){
-				sib.setVisited(sib.getTrulyVisited()); // to reopen second search way
-			}
-		
-		return false;
-	}
 	
 	public boolean isACircleStructure(){
 		boolean result = false;
@@ -927,7 +810,10 @@ public class Person implements Serializable{
 	}
 	
 	
-	
+	/**
+	 * check that someone is not his own parent
+	 * @return
+	 */
 	private boolean isACircleStructure(Person person){
 		if(person==null){
 			return false;
@@ -944,21 +830,7 @@ public class Person implements Serializable{
 		return false;
 	}
 	
-	private void setVisited(boolean visited){
-		this.visited = visited;
-	}
-	
-	private boolean getVisited(){
-		return this.visited;
-	}
-	
-	private boolean getTrulyVisited(){
-		return this.trulyVisited;
-	}
-	
-	private void setTrulyVisited(boolean trulyVisited){
-		this.trulyVisited = trulyVisited;
-	}
+
 	
 	/**
 	 * for writing the image
@@ -1082,4 +954,29 @@ public class Person implements Serializable{
 	}
 
 
+	public long getID() {
+		return ID;
+	}
+
+
+	public void setID(long iD) {
+		ID = iD;
+	}
+	
+	private void notifyChangeListener(){
+		if(listeners == null){
+			listeners = new LinkedList<>();
+			listeners.add(new RefreshTreeLayoutListener());
+		}
+		
+		for(ConnectionListener listener : listeners){
+			listener.connectionChanged(this);
+		}
+	}
+
+
+
+
+
 }
+

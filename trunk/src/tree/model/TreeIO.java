@@ -1,13 +1,18 @@
 package tree.model;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -222,8 +227,186 @@ public class TreeIO {
 		}
 	}
 	
-	public MainNode loadGEDCOM5(File file){
+	public List<Person> loadGEDCOM5(String path) throws IOException, AgeException, LineageException{
+		return loadGEDCOM5(new File(path));
+	}
+	
+	/**
+	 * reads a GEDCOM file with version 5.5.1
+	 * @version 5.5.1
+	 * @param file
+	 * @return
+	 * @throws IOException 
+	 * @throws LineageException 
+	 * @throws AgeException 
+	 */
+	public List<Person> loadGEDCOM5(File file) throws IOException, AgeException, LineageException{
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+                new FileInputStream(file), "ISO-8859-1"));
+		
+		LinkedList<Person> list = new LinkedList<Person>();
+//		int listSize = 0;
+		try{
+		if(in.ready()){
+		String line = in.readLine().trim();
+		
+		while(in.ready()){
+			
+				
+			if(line.contains("HEAD")){
+				while(!line.trim().startsWith("0")){
+					line = in.readLine();
+				}
+			}
+			if(line.trim().startsWith("0") && line.contains("INDI")
+					&& line.contains("@")){
+				Person loadedPerson = new Person("not", "named", false);
+				long id = this.extractID(line);
+				loadedPerson.setID(id);
+				if(in.ready()){
+					line = in.readLine();
+				}
+				boolean birth = false;
+				boolean death = false;
+				while(in.ready()&&!line.trim().startsWith("0")){
+					
+					
+					//determine name
+					if(line.contains("NAME")){
+						line = this.removeNumber(line);
+						line = line.replace("NAME","");
+						if(line.contains("/")){
+							// "ISO-8859-1""UTF-8"
+					
+							//line  = new String(line.getBytes("UTF-8"), "ISO-8859-1");
+							//line  = new String(line.getBytes("ISO-8859-1"), "UTF-8");
+					//		System.out.println(line);
+							String[] fullname = line.split("/");
+							loadedPerson.setGivenName(fullname[0].trim());
+							loadedPerson.setFamilyName(fullname[1].trim());
+						}else{
+							loadedPerson.setGivenName(line.trim());
+							loadedPerson.setFamilyName("");
+						}
+					}
+					//determine sex
+					else if(line.contains("SEX")){
+						if(line.contains("F")){
+							loadedPerson.setSex(Person.FEMALE);
+						}
+						else if(line.contains("M")){
+							loadedPerson.setSex(Person.MALE);
+						}
+					}
+					//determine birth date
+					else if(line.contains("BIRT")){
+						birth = true;
+						death = false;					
+					}
+					//determine death date
+					else if(line.contains("DEAT")){
+						birth = false;
+						death = true;
+					}
+					//determine a date
+					else if(line.contains("DATE")){
+						line = this.removeNumber(line);
+						line = line.replace("DATE", "");
+						GregorianCalendar date = Utils.stringToCalendar(line);
+						if(birth){
+							loadedPerson.setBirthdate(date);
+						}else if(death){
+							loadedPerson.setDeathdate(date);
+						}
+						birth = false;
+						death = false;
+					}
+					
+					line = in.readLine().trim();
+				}
+				list.add(loadedPerson);
+				//System.out.println("Listsize=" + listSize++);
+			}else if(line.startsWith("0") && line.contains("@") &&
+					line.contains("FAM")){
+				while(!(line.contains("HUSB") || 
+						line.contains("WIFE") || 
+						line.contains("CHILD"))){
+						line = in.readLine();
+				}
+				long id = this.extractID(line);
+			//	System.out.println(line + " ID " +id );
+				Person toConnect = this.getPersonByID(id, list);
+			//	System.out.println(line + " ID " +id + " Name " + toConnect.toString());
+				Person partner = null;
+				while(in.ready()&&!line.startsWith("0")){
+					line = in.readLine();
+					if(line.contains("@I")){
+						id=this.extractID(line);
+						if(line.contains("HUSB") || line.contains("WIFE")){
+							partner = this.getPersonByID(id, list);
+					//		System.out.println("Partner ID " + id +partner.toString());
+							toConnect.addPartner(partner);
+							
+						}else if(line.contains("CHIL")){
+					//		System.out.println("CHILD ID " + id );
+							Person child = this.getPersonByID(id, list);
+					//		System.out.println("CHILD ID " + id +child.toString());
+							toConnect.addChild(child);
+							if(partner!=null){
+								partner.addChild(child);
+							}
+						}
+					}
+				}
+			}else if(in.ready()){
+				line = in.readLine();
+			}
+			
+		}
+		
+		}
+		
+		//do some basic x positioning
+		int x = 2;
+		for(Person person : list){
+			person.setXPosition(x, false);
+			x += 2;
+		}
+
+		return list;
+		}catch(NumberFormatException e){
+			throw new IOException("Invalid Data" + e.getMessage());
+		}finally{
+			in.close();
+		}
+		
+	}
+	
+	private String removeNumber(String str){
+		for(int i=0; i<10; i++){
+			if(str.trim().startsWith((String.valueOf(i)))){
+					str = str.replaceFirst(String.valueOf(i), "");
+			}
+		}
+		return str;
+	}
+	
+	private long extractID(String line){
+		String[] strID = line.split("@");
+		long id = Long.parseLong(strID[1].trim().replace("I", "").trim());
+		return id;
+	}
+	
+	private Person getPersonByID(long id, List<Person> persons){
+		for(Person person : persons){
+			if(person.getID()==id){
+				return person;
+			}
+		}
 		return null;
 	}
+	
+	
 	
 }

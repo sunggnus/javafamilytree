@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.Main;
@@ -29,6 +30,8 @@ public class PersonOverview extends AbstractOverview{
 	
 	private List<Person> persons;
 	
+	private JLabel hits;
+	
 	/**
 	 * 
 	 * @param persons list of persons which should be showed
@@ -42,6 +45,7 @@ public class PersonOverview extends AbstractOverview{
 			boolean showAddPerson){
 		
 		super(factory,filter);
+		hits = new JLabel();
 		this.persons = persons;
 		
 		
@@ -104,6 +108,7 @@ public class PersonOverview extends AbstractOverview{
 			this.getNorth().add(allVisible);
 			this.getNorth().add(allInvisible);
 		}
+		this.getNorth().add(hits);
 		//north panel
 		
 		this.getAddButton().setText(Main.getTranslator().getTranslation("generatePerson", Translator.OVERVIEW_JDIALOG));
@@ -132,7 +137,7 @@ public class PersonOverview extends AbstractOverview{
 	public void filterView(){
 		getCenter().removeAll();
 		getCenter().setLayout(new BoxLayout(getCenter(),BoxLayout.Y_AXIS));
-		
+		int hit = 0;
 		for(Person person : this.persons){
 			if(getFilter().filter(person,this.getFilterText().getText())){
 				AbstractLine edit = getFactory().createOverviewLine(person,this);
@@ -142,10 +147,11 @@ public class PersonOverview extends AbstractOverview{
 				edit.setMainSize(90);		
 				getCenter().add(edit);
 				setpSize((int)edit.getPreferredSize().getHeight());
-				
+				hit++;
 				
 			}
 		}
+		hits.setText(String.valueOf(hit));
 		if(this.isVisible()){
 			this.actualizeSize();
 		}
