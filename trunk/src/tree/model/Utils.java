@@ -204,14 +204,14 @@ public class Utils {
 			subTree =  generateSubTree(caller,null,direction);
 		}else if(direction == TREE_DOWN){
 			subTree.add(caller);
-			for(Person partner : caller.getPartners()){
+			for(Person partner : getPartnerConnections(caller)){
 				subTree.add(partner);
 			}
 			subTree = generateSubTree(caller,subTree, direction);
 		}
 		
 		subTree.remove(caller);
-		for(Person partner : caller.getPartners()){
+		for(Person partner : getPartnerConnections(caller)){
 			if(subTree.contains(partner)){
 				subTree.remove(partner);
 			}
@@ -267,7 +267,7 @@ public class Utils {
 				generateSubTree(child,subTree,TREE_SEARCH);
 			}
 		}
-		for(Person partner : caller.getPartners()){
+		for(Person partner : getPartnerConnections(caller)){
 			if(!subTree.contains(partner)){
 				subTree.add(partner);
 				generateSubTree(partner,subTree,TREE_SEARCH);
@@ -275,7 +275,10 @@ public class Utils {
 		}
 	}
 	
-	
+	/**
+	 * calculate the Y-Position of a person
+	 * @param person
+	 */
 	static public void determineTreeGenerations(Person person){
 		List<Person> everyPerson = getTreeAsList(person);
 
@@ -288,6 +291,9 @@ public class Utils {
 		if(!inTree.hasParents())
 			incGen(inTree);
 		}
+		
+		//close gaps
+		normalizeYPosition(everyPerson);
 		
 		if(Config.TREE_ORDERING_MODE == OptionList.TREE_ORDERING_YOUNGEST_ON_TOP){
 			int depth = 0;
@@ -316,9 +322,56 @@ public class Utils {
 		
 	}
 	
+	static private void normalizeYPosition(List<Person> list){
+		for(Person person : list){
+			//mother part
+			if(person.getMother() != null){
+				if(person.getGeneration()-1 > person.getMother().getGeneration()){
+					List<Person> subtree = generateSubTree(person,TREE_UP);
+					if(!(!person.getChildren().isEmpty() && subtree.contains(person.getChildren().get(0)) )){
+						int diff = person.getGeneration()-1-person.getMother().getGeneration();
+						for(Person inSub : subtree){
+							inSub.setGeneration(inSub.getGeneration()+diff);
+						}
+					}
+				}
+			}
+			//father part analog
+			if(person.getFather() != null){
+				if(person.getGeneration()-1 > person.getFather().getGeneration()){
+					List<Person> subtree = generateSubTree(person,TREE_UP);
+					if(!(!person.getChildren().isEmpty() && subtree.contains(person.getChildren().get(0)) ) ){
+						int diff = person.getGeneration()-1-person.getFather().getGeneration();
+						for(Person inSub : subtree){
+							inSub.setGeneration(inSub.getGeneration()+diff);
+						}
+					}
+				}
+			}
+			
+			
+			
+		}
+		int gen = 0;
+		if(!list.isEmpty())
+			gen = list.get(0).getGeneration();
+		for(Person person : list){
+			if(gen > person.getGeneration())
+				gen = person.getGeneration();
+		}
+		if(gen > 1){
+			int diff = gen - 1;
+			diff = 0 - diff;
+			for(Person person : list){
+				person.setGeneration(person.getGeneration() + diff);
+			}
+		}
+		
+	}
+	
 	static private void incGen(Person person){
 		
-		List<Person> partners = person.getPartners();
+		List<Person> partners = getPartnerConnections(person);
 		int maxGen = person.getGeneration();
 		for(Person partner : partners){
 			if(partner.getGeneration() > maxGen)
@@ -375,11 +428,12 @@ public class Utils {
 		}
 	}
 	
+	
 	/**
 	 * return every partner to partner to partner etc connection
 	 * @return
 	 */
-	static private List<Person> getPartnerConnections(Person person){
+	static protected List<Person> getPartnerConnections(Person person){
 		LinkedList<Person> connectives = new LinkedList<>();
 
 		for(Person partner : person.getPartners()){

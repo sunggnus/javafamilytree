@@ -4,6 +4,7 @@ package tree.gui.window;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -250,7 +251,7 @@ public class MainFrame extends JFrame{
 	    slider.setName(String.valueOf(slider.getValue()));
 		
 		slider.addChangeListener(new ChangeListener(){
-			private int oldValue;
+			private int oldValue=100;
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				if(arg0.getSource() instanceof JSlider){
@@ -258,12 +259,20 @@ public class MainFrame extends JFrame{
 					int val = slider.getValue();
 					if(oldValue != val){
 					
+					Point viewPoint = pane.getViewport().getViewPosition();
+					Point newView = new Point(( (val * viewPoint.x) / oldValue),
+							(val * viewPoint.y) / oldValue);
+					
 					oldValue = val;
+					//pane.getVisibleRect()
 					double percent = ((double)( val) /( 100.0));
 					canvas.setScaling(percent);
 					canvas.repaint();
 
 					canvas.refreshBounds();
+					
+					
+					pane.getViewport().setViewPosition(newView);
 					pane.getViewport().revalidate();
 					}
 				}
@@ -292,6 +301,7 @@ public class MainFrame extends JFrame{
 		map = new MainFrameKeyInputMap((JComponent)this.getContentPane());
 		map.deactivateKeyBindings();
 		map.setDefaultKeyBindings();
+		pane.revalidate();
 		this.pack();
 		this.setVisible(true);
 	}
@@ -325,6 +335,10 @@ public class MainFrame extends JFrame{
 	
 	public void refreshSlider(){
 		slider.setUI(new CustomSliderUI(slider));
+	}
+	
+	public JScrollPane getTreeScrollPane(){
+		return pane;
 	}
 
 }

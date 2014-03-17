@@ -177,6 +177,8 @@ public class MainFrameKeyInputMap {
 		this.addKeyAction(KeyEvent.VK_P, NO_MODIFIERS, MenuBar.MenuBarListener.ADD_PERSON);
 		//create note m
 		this.addKeyAction(KeyEvent.VK_M, NO_MODIFIERS, MenuBar.MenuBarListener.ADD_NOTE);
+		//one x step
+		this.addKeyAction(KeyEvent.VK_X, NO_MODIFIERS, MenuBar.MenuBarListener.CALCULATE_X_POSITION);
 		
 		
 	}

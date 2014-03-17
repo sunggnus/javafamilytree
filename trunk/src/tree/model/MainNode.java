@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import main.Config;
+import main.OptionList;
+
 public class MainNode implements Serializable{
 	
 	/**
@@ -98,7 +101,15 @@ public class MainNode implements Serializable{
 	private void readObject( ObjectInputStream s ) throws IOException, 
     ClassNotFoundException {
 		s.defaultReadObject();
-		this.refreshGeneration();
+	//	this.refreshGeneration();
+		if(Config.Y_POSITIONING_MODE == OptionList.Y_AUTO_POSITIONING && this.getPerson() != null)
+			Utils.determineTreeGenerations(this.getPerson());
+		
+		for(Person person : this.createdPersons){
+			if(person.getGeneration() < 1){
+				person.setGeneration(1);
+			}
+		}
 		
 		if(this.notes==null){
 			this.notes =new LinkedList<Note>();

@@ -32,6 +32,7 @@ import tree.gui.window.Help;
 import tree.gui.window.OptionDialog;
 import tree.model.AgeException;
 import tree.model.ComponentPrinter;
+import tree.model.ForceXPosition;
 import tree.model.LineageException;
 import tree.model.MainNode;
 import tree.model.Person;
@@ -375,6 +376,15 @@ public class MenuBar extends JMenuBar{
 				Main.getMainFrame().getCanvas().repaint();
 			}
 		},
+		CALCULATE_X_POSITION(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ForceXPosition.forceXPositioning();
+				
+				Main.getMainFrame().getCanvas().repaint();
+			}
+		}
+		,
 		INVERT_ORDERING(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -570,6 +580,11 @@ public class MenuBar extends JMenuBar{
 		JMenuItem recalculateY = new JMenuItem(Main.getTranslator().getTranslation("calculatey",Translator.MAIN_FRAME));
 		recalculateY.addActionListener(MenuBarListener.CALCULATE_Y_POSITION);
 		extras.add(recalculateY);
+		
+		//calculate x position
+		JMenuItem calculateX = new JMenuItem(Main.getTranslator().getTranslation("calculatex",Translator.MAIN_FRAME));
+		calculateX.addActionListener(MenuBarListener.CALCULATE_X_POSITION);
+		extras.add(calculateX);
 		
 		//invert ordering
 		JMenuItem invertOrdering = new JMenuItem(Main.getTranslator().getTranslation("invertOrdering", Translator.MAIN_FRAME));

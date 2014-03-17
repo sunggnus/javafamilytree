@@ -118,10 +118,14 @@ public class TreeCanvas extends JPanel implements ExportImage{
 		this.prefY = 10;
 		for (AbstractDraw person : toDraw) {
 			person.calculateBounds(widthUnit, heightUnit, scaling);
+			
+
+			
 			this.increasePrefX(person.getMaxX());
 			this.increasePrefY(person.getMaxY());
 		}
 
+		
 		this.setPreferredSize(new Dimension(this.prefX, this.prefY));
 		if (this.isVisible()) {
 			this.repaint();
@@ -138,7 +142,7 @@ public class TreeCanvas extends JPanel implements ExportImage{
 	 * returns the {@link #heightUnit } of the TreeCanvas
 	 * @return
 	 */
-	protected int getHeightUnit() {
+	public int getHeightUnit() {
 		return this.heightUnit;
 	}
 	
@@ -146,7 +150,7 @@ public class TreeCanvas extends JPanel implements ExportImage{
 	 * returns the {@link #widthUnit} of the TreeCanvas
 	 * @return
 	 */
-	protected int getWidthUnit() {
+	public int getWidthUnit() {
 		return this.widthUnit;
 	}
 	
@@ -154,7 +158,7 @@ public class TreeCanvas extends JPanel implements ExportImage{
 	 * returns the {@link #scaling} factor of the TreeCanvas
 	 * @return
 	 */
-	protected double getScaling() {
+	public double getScaling() {
 		return this.scaling;
 	}
 	
