@@ -128,7 +128,7 @@ public class PersonOverview extends AbstractOverview{
 		
 		
 		
-		this.setSize(800, 300);
+		this.setSize(900, 300);
 		this.setVisible(true);
 		
 	}

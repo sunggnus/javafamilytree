@@ -32,7 +32,7 @@ import tree.gui.field.EntryField;
 import tree.gui.field.ModifiedJSlider;
 import tree.gui.util.GUIUtils;
 import tree.gui.util.GroupSize;
-import tree.model.Utils;
+
 
 public class OptionDialog extends JDialog{
 	
