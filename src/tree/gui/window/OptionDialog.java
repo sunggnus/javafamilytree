@@ -1,28 +1,44 @@
 package tree.gui.window;
 
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.MouseInputAdapter;
+
 
 import main.Config;
 import main.Main;
 import main.OptionList;
 import translator.Translator;
+import tree.gui.draw.DrawPerson;
+import tree.gui.draw.DrawPerson.Ordering;
 import tree.gui.draw.backgrounds.BackgroundFactory;
 import tree.gui.draw.backgrounds.DrawBackgroundImage;
 import tree.gui.field.AbstractField;
@@ -45,10 +61,16 @@ public class OptionDialog extends JDialog{
 	
 	public static final int OPTION_WIDTH = 600;
 	
+	/**
+	 * contains the textual data ordering
+	 */
+	private JList<DrawPerson.Ordering> ordering;
+	
 	
 	public OptionDialog(){
 		this.constructOptions();
 		}
+	
 	
 	
 	private void constructOptions(){
@@ -71,25 +93,25 @@ public class OptionDialog extends JDialog{
 		};
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		DropDownField<OptionList> mode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranslation("displayMode", Translator.OPTION_JDIALOG),
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("displayMode", Translator.LanguageFile.OPTION_DIALOG),
 						width);
 		
 		DropDownField<OptionList> lineDrawMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranslation("lineMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("lineMode", Translator.LanguageFile.OPTION_DIALOG), 
 						width);
 		
 		DropDownField<OptionList> backgroundMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranslation("backgroundMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("backgroundMode", Translator.LanguageFile.OPTION_DIALOG), 
 						width);
 		
 		final ModifiedJSlider xBackgroundPosition = 
-				new ModifiedJSlider(Main.getTranslator().getTranslation("xSlider", Translator.OPTION_JDIALOG),width);
+				new ModifiedJSlider(Main.getTranslator().getTranslation("xSlider", Translator.LanguageFile.OPTION_DIALOG),width);
 		final ModifiedJSlider yBackgroundPosition = 
-				new ModifiedJSlider(Main.getTranslator().getTranslation("ySlider", Translator.OPTION_JDIALOG),width);
+				new ModifiedJSlider(Main.getTranslator().getTranslation("ySlider", Translator.LanguageFile.OPTION_DIALOG),width);
 		initSliders(xBackgroundPosition, yBackgroundPosition);
 		
 		DropDownField<OptionList> lineBreakMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranslation("lineBreakMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("lineBreakMode", Translator.LanguageFile.OPTION_DIALOG), 
 						width);
 		//text ist still lineBreakMode
 		DropDownField<OptionList> dataPositioningMode = 
@@ -98,19 +120,19 @@ public class OptionDialog extends JDialog{
 		
 		
 		DropDownField<OptionList> mouseMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranslation("mouseMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("mouseMode", Translator.LanguageFile.OPTION_DIALOG), 
 						width);
 		
 		DropDownField<OptionList> keyboardMode = 
-				new DropDownField<OptionList>(Main.getTranslator().getTranslation("keyboardMode", Translator.OPTION_JDIALOG), 
+				new DropDownField<OptionList>(Main.getTranslator().getTranslation("keyboardMode", Translator.LanguageFile.OPTION_DIALOG), 
 						width);
-		DropDownField<OptionList> lookAndFeelMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("lookAndFeelMode", Translator.OPTION_JDIALOG), 
+		DropDownField<OptionList> lookAndFeelMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("lookAndFeelMode", Translator.LanguageFile.OPTION_DIALOG), 
 				width);
 		
-		DropDownField<OptionList> yPositioningMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("ypositioning", Translator.OPTION_JDIALOG), 
+		DropDownField<OptionList> yPositioningMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("ypositioning", Translator.LanguageFile.OPTION_DIALOG), 
 				width);
 		
-		DropDownField<OptionList> treeOrderingMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("treeOrderingMode", Translator.OPTION_JDIALOG), 
+		DropDownField<OptionList> treeOrderingMode = new DropDownField<OptionList>(Main.getTranslator().getTranslation("treeOrderingMode", Translator.LanguageFile.OPTION_DIALOG), 
 				width);
 		
 		
@@ -347,10 +369,10 @@ public class OptionDialog extends JDialog{
 			
 		});
 		
-		final EntryField unitWidth = new EntryField(Main.getTranslator().getTranslation("defaultWidth", Translator.OPTION_JDIALOG),
+		final EntryField unitWidth = new EntryField(Main.getTranslator().getTranslation("defaultWidth", Translator.LanguageFile.OPTION_DIALOG),
 				width);
 		unitWidth.setContent(Config.PERSON_WIDTH);
-		final EntryField unitHeight = new EntryField(Main.getTranslator().getTranslation("defaultHeight", Translator.OPTION_JDIALOG), width);
+		final EntryField unitHeight = new EntryField(Main.getTranslator().getTranslation("defaultHeight", Translator.LanguageFile.OPTION_DIALOG), width);
 		unitHeight.setContent(Config.PERSON_HEIGHT);
 		unitWidth.addDocumentListener(new DocumentListener(){
 
@@ -404,7 +426,45 @@ public class OptionDialog extends JDialog{
 			
 		});
 		
+			
 		EnterFilePathField filePath = new EnterFilePathField();
+		
+		final DefaultListModel<DrawPerson.Ordering> lmodel = new DefaultListModel<>();
+		ordering = new JList<DrawPerson.Ordering>(lmodel);
+		for(int i=0; i < Config.ORDERING.length; i++){
+			lmodel.addElement(Config.ORDERING[i]);
+		}
+	
+		 ordering.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	        
+	    MouseInputAdapter mouseHandler = new MouseInputAdapter() {
+	        private Ordering draggedObject;
+	        private int fromIndex;
+	        public void mousePressed(final MouseEvent evt) {
+	            draggedObject = ordering.getSelectedValue();
+	            fromIndex = ordering.getSelectedIndex();
+	        
+	        }
+	        public void mouseDragged(final MouseEvent evt) {
+	        	
+	            int toIndex = ordering.locationToIndex(evt.getPoint());
+	            if (toIndex != fromIndex) {
+	            
+	            	lmodel.removeElementAt(fromIndex);
+	            	lmodel.insertElementAt(draggedObject, toIndex);
+	            	
+	                fromIndex = toIndex;
+	            }
+	           
+	        }
+	    };
+	    ordering.addMouseListener(mouseHandler);
+	    ordering.addMouseMotionListener(mouseHandler);
+	    
+	    JPanel ord = new JPanel();
+	    ord.setLayout(new FlowLayout(FlowLayout.LEADING));
+	    ord.add(new JLabel(Main.getTranslator().getTranslation("orderingHead", Translator.LanguageFile.OPTION_DIALOG)), BorderLayout.NORTH);
+	    ord.add(ordering);
 		panel.add(Box.createVerticalStrut(20));
 		GroupSize size = new GroupSize();
 		panel.add(mode);
@@ -423,7 +483,9 @@ public class OptionDialog extends JDialog{
 		panel.add(filePath);
 		panel.add(unitWidth);
 		panel.add(unitHeight);
+		panel.add(ord);
 		panel.add(Box.createGlue());
+		
 		
 		size.addPanel(panel);
 		
@@ -497,7 +559,18 @@ public class OptionDialog extends JDialog{
 	}
 	
 	
-	
+	@Override
+	public void dispose(){
+		
+		for(int i=0; i < Config.ORDERING.length; i++){
+			Object val = ordering.getModel().getElementAt(i);
+			if(val instanceof DrawPerson.Ordering){
+				Config.ORDERING[i] = (DrawPerson.Ordering)val;
+			}
+		}
+		Main.getMainFrame().getCanvas().repaint();
+		super.dispose();
+	}
 	
 
 }

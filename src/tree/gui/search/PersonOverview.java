@@ -80,8 +80,8 @@ public class PersonOverview extends AbstractOverview{
 		
 		
 		//all visible / invisible button
-		JButton allVisible = new JButton(Main.getTranslator().getTranslation("allVisible", Translator.OVERVIEW_JDIALOG));
-		JButton allInvisible = new JButton(Main.getTranslator().getTranslation("allInvisible", Translator.OVERVIEW_JDIALOG));
+		JButton allVisible = new JButton(Main.getTranslator().getTranslation("allVisible", Translator.LanguageFile.OVERVIEW_DIALOG));
+		JButton allInvisible = new JButton(Main.getTranslator().getTranslation("allInvisible", Translator.LanguageFile.OVERVIEW_DIALOG));
 		
 		allVisible.addActionListener(new ActionListener(){
 			@Override
@@ -111,7 +111,7 @@ public class PersonOverview extends AbstractOverview{
 		this.getNorth().add(hits);
 		//north panel
 		
-		this.getAddButton().setText(Main.getTranslator().getTranslation("generatePerson", Translator.OVERVIEW_JDIALOG));
+		this.getAddButton().setText(Main.getTranslator().getTranslation("generatePerson", Translator.LanguageFile.OVERVIEW_DIALOG));
 		
 		
 		

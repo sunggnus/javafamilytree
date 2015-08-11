@@ -38,7 +38,7 @@ public class PersonChooseLine extends AbstractPersonLine{
 		super(person, view);
 		this.setMulti(this.getMulti()+1);
 		
-		choose = new JButton(Main.getTranslator().getTranslation("choose", Translator.OVERVIEW_JDIALOG));
+		choose = new JButton(Main.getTranslator().getTranslation("choose", Translator.LanguageFile.OVERVIEW_DIALOG));
 		
 		choose.addActionListener(new ActionListener(){
 
@@ -67,19 +67,19 @@ public class PersonChooseLine extends AbstractPersonLine{
 				}catch(InvalidSexException e){
 					if(mode==MODE_FATHER){
 					javax.swing.JOptionPane.showMessageDialog(null, 
-							Main.getTranslator().getTranslation("InvalidSexExceptionMale", Translator.OVERVIEW_JDIALOG));
+							Main.getTranslator().getTranslation("InvalidSexExceptionMale", Translator.LanguageFile.OVERVIEW_DIALOG));
 					}
 					else{
 						javax.swing.JOptionPane.showMessageDialog(null, 
-								Main.getTranslator().getTranslation("InvalidSexExceptionFemale", Translator.OVERVIEW_JDIALOG));
+								Main.getTranslator().getTranslation("InvalidSexExceptionFemale", Translator.LanguageFile.OVERVIEW_DIALOG));
 					
 					}
 				}catch(LineageException e){
 					javax.swing.JOptionPane.showMessageDialog(null, 
-							Main.getTranslator().getTranslation("LineageException", Translator.OVERVIEW_JDIALOG));
+							Main.getTranslator().getTranslation("LineageException", Translator.LanguageFile.OVERVIEW_DIALOG));
 				}catch(AgeException e){
 					javax.swing.JOptionPane.showMessageDialog(null, 
-							Main.getTranslator().getTranslation("AgeException", Translator.OVERVIEW_JDIALOG));
+							Main.getTranslator().getTranslation("AgeException", Translator.LanguageFile.OVERVIEW_DIALOG));
 				}
 				
 			}

@@ -77,7 +77,7 @@ public class MainFrame extends JFrame{
 	
 		
 		
-		this.setTitle(Main.getTranslator().getTranslation("title",Translator.MAIN_FRAME));
+		this.setTitle(Main.getTranslator().getTranslation("title",Translator.LanguageFile.MAIN_FRAME));
 		this.setJMenuBar(new MenuBar());
 		canvas = new TreeCanvas(Config.PERSON_HEIGHT, Config.PERSON_WIDTH, Config.SCALING);
 		pane = new JScrollPane();
@@ -99,11 +99,11 @@ public class MainFrame extends JFrame{
 		
 		
 		
-		widthUnit = new EntryField(Main.getTranslator().getTranslation("defaultWidth",Translator.MAIN_FRAME),
+		widthUnit = new EntryField(Main.getTranslator().getTranslation("defaultWidth",Translator.LanguageFile.MAIN_FRAME),
 				AbstractField.DEFAULT_LABEL_WIDTH,width);
 		widthUnit.setContent(String.valueOf(Config.PERSON_WIDTH));
 		
-		heightUnit = new EntryField(Main.getTranslator().getTranslation("defaultHeight",Translator.MAIN_FRAME),
+		heightUnit = new EntryField(Main.getTranslator().getTranslation("defaultHeight",Translator.LanguageFile.MAIN_FRAME),
 				AbstractField.DEFAULT_LABEL_WIDTH,width);
 		heightUnit.setContent(String.valueOf(Config.PERSON_HEIGHT));
 		
@@ -319,9 +319,9 @@ public class MainFrame extends JFrame{
 	public void changeLanguage(){
 		this.setJMenuBar(new MenuBar());
 		size.unlockPrefSize();
-		this.setTitle(Main.getTranslator().getTranslation("title",Translator.MAIN_FRAME));
-		this.heightUnit.setLabelText(Main.getTranslator().getTranslation("defaultHeight",Translator.MAIN_FRAME));
-		this.widthUnit.setLabelText(Main.getTranslator().getTranslation("defaultWidth",Translator.MAIN_FRAME));
+		this.setTitle(Main.getTranslator().getTranslation("title",Translator.LanguageFile.MAIN_FRAME));
+		this.heightUnit.setLabelText(Main.getTranslator().getTranslation("defaultHeight",Translator.LanguageFile.MAIN_FRAME));
+		this.widthUnit.setLabelText(Main.getTranslator().getTranslation("defaultWidth",Translator.LanguageFile.MAIN_FRAME));
 		size.refreshSize();
 		this.revalidate();
 		

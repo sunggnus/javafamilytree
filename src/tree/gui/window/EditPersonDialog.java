@@ -53,6 +53,16 @@ public class EditPersonDialog extends JDialog{
 	
 	private EntryField commentOne;
 	
+	/**
+	 * this field is used for the birth village
+	 */
+	private EntryField location;
+	
+	/**
+	 * this field is used for trade of the person
+	 */
+	private EntryField trade;
+	
 	private EntryField xPosition;
 	
 	private EntryField dateOfBirth;
@@ -98,8 +108,8 @@ public class EditPersonDialog extends JDialog{
 		this.isNewPerson = false;
 		if(!addPerson){
 			this.editablePerson = (Person) javax.swing.JOptionPane.showInputDialog(this
-					, Main.getTranslator().getTranslation("choosePerson", Translator.EDIT_PERSON_JDIALOG)
-					, Main.getTranslator().getTranslation("editPerson", Translator.EDIT_PERSON_JDIALOG), 
+					, Main.getTranslator().getTranslation("choosePerson", Translator.LanguageFile.EDIT_PERSON_DIALOG)
+					, Main.getTranslator().getTranslation("editPerson", Translator.LanguageFile.EDIT_PERSON_DIALOG), 
 					javax.swing.JOptionPane.NO_OPTION, 
 					null, Main.getMainNode().getPersons().toArray()
 					, new JComboBox<Person>());
@@ -120,32 +130,37 @@ public class EditPersonDialog extends JDialog{
 		};
 		
 		
-		givenName = new EntryField(Main.getTranslator().getTranslation("givenName", Translator.EDIT_PERSON_JDIALOG)
+		givenName = new EntryField(Main.getTranslator().getTranslation("givenName", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		familyName = new EntryField(Main.getTranslator().getTranslation("familyName", Translator.EDIT_PERSON_JDIALOG)
+		familyName = new EntryField(Main.getTranslator().getTranslation("familyName", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		birthName = new EntryField(Main.getTranslator().getTranslation("birthName", Translator.EDIT_PERSON_JDIALOG)
+		birthName = new EntryField(Main.getTranslator().getTranslation("birthName", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				, AbstractField.DEFAULT_LABEL_WIDTH);
-		commentOne = new EntryField(Main.getTranslator().getTranslation("comment", Translator.EDIT_PERSON_JDIALOG)
+		location = new EntryField(Main.getTranslator().getTranslation("location", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				, AbstractField.DEFAULT_LABEL_WIDTH);
-		xPosition = new EntryField(Main.getTranslator().getTranslation("relX", Translator.EDIT_PERSON_JDIALOG)
+		trade = new EntryField(Main.getTranslator().getTranslation("trade", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				, AbstractField.DEFAULT_LABEL_WIDTH);
-		xPosition.setToolTip(Main.getTranslator().getTranslation("relX_tool", Translator.EDIT_PERSON_JDIALOG));
-		dateOfBirth = new EntryField(Main.getTranslator().getTranslation("dateOfBirth", Translator.EDIT_PERSON_JDIALOG)
+		
+		commentOne = new EntryField(Main.getTranslator().getTranslation("comment", Translator.LanguageFile.EDIT_PERSON_DIALOG)
+				, AbstractField.DEFAULT_LABEL_WIDTH);
+		xPosition = new EntryField(Main.getTranslator().getTranslation("relX", Translator.LanguageFile.EDIT_PERSON_DIALOG)
+				, AbstractField.DEFAULT_LABEL_WIDTH);
+		xPosition.setToolTip(Main.getTranslator().getTranslation("relX_tool", Translator.LanguageFile.EDIT_PERSON_DIALOG));
+		dateOfBirth = new EntryField(Main.getTranslator().getTranslation("dateOfBirth", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		dateOfDeath = new EntryField(Main.getTranslator().getTranslation("dateOfDeath", Translator.EDIT_PERSON_JDIALOG)
+		dateOfDeath = new EntryField(Main.getTranslator().getTranslation("dateOfDeath", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		sex = new DropDownField<String>(Main.getTranslator().getTranslation("sex", Translator.EDIT_PERSON_JDIALOG)
+		sex = new DropDownField<String>(Main.getTranslator().getTranslation("sex", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
-		sex.add(Main.getTranslator().getTranslation("male", Translator.EDIT_PERSON_JDIALOG));
-		sex.add(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG));
+		sex.add(Main.getTranslator().getTranslation("male", Translator.LanguageFile.EDIT_PERSON_DIALOG));
+		sex.add(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG));
 		sex.addItemListener(new ItemListener(){
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED && e.getItem() instanceof String){
 					editablePerson.setSex(((String) sex.getSelectedItem()).
-							equals(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE);
+							equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Person.FEMALE:Person.MALE);
 			
 				}
 				
@@ -154,15 +169,15 @@ public class EditPersonDialog extends JDialog{
 		});
 		
 		
-		alive = new ModifiedCheckBox(Main.getTranslator().getTranslation("alive", Translator.EDIT_PERSON_JDIALOG)
+		alive = new ModifiedCheckBox(Main.getTranslator().getTranslation("alive", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
 		
-		visible = new ModifiedCheckBox(Main.getTranslator().getTranslation("visible", Translator.EDIT_PERSON_JDIALOG)
+		visible = new ModifiedCheckBox(Main.getTranslator().getTranslation("visible", Translator.LanguageFile.EDIT_PERSON_DIALOG)
 				,AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		mother = new PersonEditField(editablePerson, PersonEditField.MODE_MOTHER);
 		father = new PersonEditField(editablePerson,PersonEditField.MODE_FATHER);
-		accept = new JButton(Main.getTranslator().getTranslation("generatePerson", Translator.EDIT_PERSON_JDIALOG));
+		accept = new JButton(Main.getTranslator().getTranslation("generatePerson", Translator.LanguageFile.EDIT_PERSON_DIALOG));
 		
 		
 		
@@ -185,6 +200,8 @@ public class EditPersonDialog extends JDialog{
 		panel.add(givenName);
 		panel.add(familyName);
 		panel.add(birthName);
+		panel.add(location);
+		panel.add(trade);
 		panel.add(commentOne);
 		panel.add(xPosition);
 		panel.add(sex);
@@ -213,9 +230,9 @@ public class EditPersonDialog extends JDialog{
 		JPanel picturePanel = new JPanel();
 		
 	
-		ModifiedJButton loadImage = new ModifiedJButton(Main.getTranslator().getTranslation("loadImage", Translator.EDIT_PERSON_JDIALOG),
+		ModifiedJButton loadImage = new ModifiedJButton(Main.getTranslator().getTranslation("loadImage", Translator.LanguageFile.EDIT_PERSON_DIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
-		ModifiedJButton deleteImage = new ModifiedJButton(Main.getTranslator().getTranslation("removeImage", Translator.EDIT_PERSON_JDIALOG),
+		ModifiedJButton deleteImage = new ModifiedJButton(Main.getTranslator().getTranslation("removeImage", Translator.LanguageFile.EDIT_PERSON_DIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		
@@ -239,7 +256,7 @@ public class EditPersonDialog extends JDialog{
 		
 		//visibility stuff added to picture stuff
 		ModifiedJButton visibleParents = new ModifiedJButton(Main.getTranslator().
-				getTranslation("visibleParents", Translator.EDIT_PERSON_JDIALOG),
+				getTranslation("visibleParents", Translator.LanguageFile.EDIT_PERSON_DIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		visibleParents.getJButton().addActionListener(new ActionListener(){
@@ -251,7 +268,7 @@ public class EditPersonDialog extends JDialog{
 		});
 		
 		ModifiedJButton invisibleParents = new ModifiedJButton(Main.getTranslator().
-				getTranslation("invisibleParents", Translator.EDIT_PERSON_JDIALOG),
+				getTranslation("invisibleParents", Translator.LanguageFile.EDIT_PERSON_DIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		invisibleParents.getJButton().addActionListener(new ActionListener(){
@@ -263,7 +280,7 @@ public class EditPersonDialog extends JDialog{
 		});
 		
 		ModifiedJButton visibleChildren = new ModifiedJButton(Main.getTranslator().
-				getTranslation("visibleChildren", Translator.EDIT_PERSON_JDIALOG),
+				getTranslation("visibleChildren", Translator.LanguageFile.EDIT_PERSON_DIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		visibleChildren.getJButton().addActionListener(new ActionListener(){
@@ -275,7 +292,7 @@ public class EditPersonDialog extends JDialog{
 		});
 		
 		ModifiedJButton invisibleChildren = new ModifiedJButton(Main.getTranslator().
-				getTranslation("invisibleChildren", Translator.EDIT_PERSON_JDIALOG),
+				getTranslation("invisibleChildren", Translator.LanguageFile.EDIT_PERSON_DIALOG),
 				-10, AbstractField.DEFAULT_LABEL_WIDTH);
 		
 		invisibleChildren.getJButton().addActionListener(new ActionListener(){
@@ -356,7 +373,7 @@ public class EditPersonDialog extends JDialog{
 			this.isNewPerson = true;
 			this.editablePerson =new Person(givenName.getContent(), 
 					familyName.getContent(), ((String) sex.getSelectedItem()).
-					equals(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE
+					equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Person.FEMALE:Person.MALE
 					);
 		}
 		
@@ -380,7 +397,7 @@ public class EditPersonDialog extends JDialog{
 		
 		String[] birth = txt.split("\\.");
 		InvalidInputException exp = new InvalidInputException(
-				Main.getTranslator().getTranslation("invalidInput", Translator.EDIT_PERSON_JDIALOG));
+				Main.getTranslator().getTranslation("invalidInput", Translator.LanguageFile.EDIT_PERSON_DIALOG));
 		
 		if(birth.length!=3){
 			throw exp;
@@ -408,9 +425,11 @@ public class EditPersonDialog extends JDialog{
 		editablePerson.setGivenName(givenName.getContent());
 		editablePerson.setFamilyName(familyName.getContent());
 		editablePerson.setBirthName(birthName.getContent());
+		editablePerson.setTrade(trade.getContent());
+		editablePerson.setLocation(location.getContent());
 		editablePerson.setCommentOne(commentOne.getContent());
 		editablePerson.setSex(((String) sex.getSelectedItem()).
-					equals(Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG))?Person.FEMALE:Person.MALE);
+					equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Person.FEMALE:Person.MALE);
 		if(!Config.XAUTO_POSITIONING){
 			int xpos = Integer.parseInt(xPosition.getContent());
 			editablePerson.setXPosition(xpos, false);
@@ -443,7 +462,7 @@ public class EditPersonDialog extends JDialog{
 			javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
 		}catch(NumberFormatException k){
 			javax.swing.JOptionPane.showMessageDialog(this,
-					Main.getTranslator().getTranslation("validX", Translator.EDIT_PERSON_JDIALOG));
+					Main.getTranslator().getTranslation("validX", Translator.LanguageFile.EDIT_PERSON_DIALOG));
 		}
 	}
 	
@@ -454,6 +473,8 @@ public class EditPersonDialog extends JDialog{
 		this.givenName.setContent(this.editablePerson.getGivenName());
 		this.familyName.setContent(this.editablePerson.getFamilyName());
 		this.birthName.setContent(this.editablePerson.getBirthName());
+		this.trade.setContent(this.editablePerson.getTrade());
+		this.location.setContent(this.editablePerson.getLocation());
 		this.commentOne.setContent(this.editablePerson.getCommentOne());
 		this.dateOfBirth.setContent(Utils.calendarToSimpleString(
 				this.editablePerson.getBirthdate()));
@@ -462,7 +483,7 @@ public class EditPersonDialog extends JDialog{
 		this.alive.setSelected(this.editablePerson.isAlive());
 		this.visible.setSelected(this.editablePerson.isVisible());
 		this.sex.setSelectedItem(this.editablePerson.isFemale()?
-				Main.getTranslator().getTranslation("female", Translator.EDIT_PERSON_JDIALOG):Main.getTranslator().getTranslation("male", Translator.EDIT_PERSON_JDIALOG));
+				Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG):Main.getTranslator().getTranslation("male", Translator.LanguageFile.EDIT_PERSON_DIALOG));
 		this.father.setOwner(this.editablePerson);
 		this.mother.setOwner(this.editablePerson);
 		this.xPosition.setContent(String.valueOf(this.editablePerson.getXPosition()));
