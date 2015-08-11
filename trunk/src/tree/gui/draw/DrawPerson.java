@@ -2,6 +2,7 @@ package tree.gui.draw;
 
 import java.awt.Graphics2D;
 
+
 import main.Config;
 import main.Main;
 import main.OptionList;
@@ -10,6 +11,90 @@ import tree.model.Person;
 import tree.model.Utils;
 
 public class DrawPerson extends AbstractDraw {
+	
+	public enum Ordering{
+		NAME(){
+			@Override
+			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+				if (Config.LINE_BREAK_MODE.equals(OptionList.NAME_NO_LINE_BREAK)) { //depending on mode draws given name
+					draw.drawString(												//and family name in one line or
+							person.getGivenName() + " "
+									+ person.getFamilyName(), g, innerX);
+				} else if (Config.LINE_BREAK_MODE.equals(OptionList.NAME_LINE_BREAK)) {	//in two lines
+					draw.drawString(person.getGivenName(), g, innerX);
+					draw.drawString(person.getFamilyName(), g, innerX);
+				}
+			}
+		},
+		BIRTH_NAME(){
+			@Override
+			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+				draw.drawString(
+						Main.getTranslator().getTranslation("birth",
+								Translator.LanguageFile.EDIT_PERSON_DIALOG),
+								person.getBirthName(), g, innerX);
+			}
+		},
+		BIRTH_LOCATION(){
+			@Override
+			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+				draw.drawString(
+						Main.getTranslator().getTranslation("location",
+								Translator.LanguageFile.EDIT_PERSON_DIALOG),
+								person.getLocation(), g, innerX);
+			}
+		},
+		TRADE(){
+			@Override
+			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+				draw.drawString(person.getTrade(), g, innerX);
+			}
+		},
+		COMMENT(){
+			@Override
+			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+				draw.drawString(person.getCommentOne(), g, innerX);
+			}
+		},
+		BIRTH_DATE(){
+			@Override
+			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+				if (person.getBirthdate() != null) {
+					g.drawString(
+							"* "
+									+ Utils.calendarToSimpleString(person
+											.getBirthdate()), innerX, draw.nextRow());
+				}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
+					draw.nextRow(); // if the data positions are fixed draw empty line if no data exists
+				}
+			}
+		},
+		DEATH_DATE(){
+			@Override
+			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+				if (person.getDeathdate() != null) {
+					g.drawString(
+							"\u2020  "
+									+ Utils.calendarToSimpleString(person
+											.getDeathdate()), innerX, draw.nextRow());
+				}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
+					draw.nextRow(); // if the data positions are fixed draw empty line if no data exists
+				}
+			}
+		};
+		
+		abstract public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX);
+		
+		public String getTranslation(){
+			return Main.getTranslator().getTranslation(name(),Translator.LanguageFile.OPTION_DIALOG);
+		}
+		@Override
+		public String toString(){
+			return this.getTranslation();
+		}
+	
+	
+	}
 
 	private Person person;
 
@@ -227,43 +312,11 @@ public class DrawPerson extends AbstractDraw {
 		} else {
 			this.nextRow();
 		}
-		if (Config.LINE_BREAK_MODE.equals(OptionList.NAME_NO_LINE_BREAK)) { //depending on mode draws given name
-			this.drawString(												//and family name in one line or
-					this.person.getGivenName() + " "
-							+ this.person.getFamilyName(), g, innerX);
-		} else if (Config.LINE_BREAK_MODE.equals(OptionList.NAME_LINE_BREAK)) {	//in two lines
-			this.drawString(this.person.getGivenName(), g, innerX);
-			this.drawString(this.person.getFamilyName(), g, innerX);
-		}
 		
-		if (this.person.getBirthName() != null
-				&& !this.person.getBirthName().isEmpty()) {
-			g.drawString(
-					Main.getTranslator().getTranslation("birth",
-							Translator.EDIT_PERSON_JDIALOG)
-							+ this.person.getBirthName(), innerX,
-					this.nextRow());
-		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
-			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
-		}
-
-		this.drawString(this.person.getCommentOne(), g, innerX);
-
-		if (this.person.getBirthdate() != null) {
-			g.drawString(
-					"* "
-							+ Utils.calendarToSimpleString(this.person
-									.getBirthdate()), innerX, this.nextRow());
-		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
-			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
-		}
-		if (this.person.getDeathdate() != null) {
-			g.drawString(
-					"\u2020  "
-							+ Utils.calendarToSimpleString(this.person
-									.getDeathdate()), innerX, this.nextRow());
-		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
-			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
+		
+		//start writing of textual data
+		for(Ordering text : Config.ORDERING){
+			text.writeData(this, person, g, innerX);
 		}
 
 		if (drawXPosition) {
@@ -272,6 +325,8 @@ public class DrawPerson extends AbstractDraw {
 			g.drawString("Y: " + this.person.getGeneration(), innerX,
 					this.nextRow());
 		}
+		
+		//finish writing of textual data
 
 		// draws the picture in the lower half if the mode is set
 		if (Config.ORIENTATION_MODE.equals(OptionList.IMAGE_SOUTH_TEXT_NORTH)) {
@@ -280,6 +335,14 @@ public class DrawPerson extends AbstractDraw {
 
 		this.finishDraw(g);
 
+	}
+	
+	private void drawString(String pre, String str, Graphics2D g, int innerX){
+		if (str != null && !str.isEmpty()) {
+			g.drawString(pre + str, innerX, this.nextRow());
+		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
+			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
+		}
 	}
 
 	private void drawString(String str, Graphics2D g, int innerX) {

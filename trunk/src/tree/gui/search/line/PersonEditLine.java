@@ -40,13 +40,13 @@ public class PersonEditLine extends AbstractPersonLine{
 	public PersonEditLine(final Person person, final AbstractOverview view){
 		super(person,view);
 		this.setMulti(this.getMulti()+4);
-		delete = new JButton(Main.getTranslator().getTranslation("remove", Translator.OVERVIEW_JDIALOG));
-		edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.OVERVIEW_JDIALOG));
-		visible =  new JButton(Main.getTranslator().getTranslation("makeVisible", Translator.OVERVIEW_JDIALOG));
-		focus = new JButton(Main.getTranslator().getTranslation("focus", Translator.OVERVIEW_JDIALOG));
+		delete = new JButton(Main.getTranslator().getTranslation("remove", Translator.LanguageFile.OVERVIEW_DIALOG));
+		edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.LanguageFile.OVERVIEW_DIALOG));
+		visible =  new JButton(Main.getTranslator().getTranslation("makeVisible", Translator.LanguageFile.OVERVIEW_DIALOG));
+		focus = new JButton(Main.getTranslator().getTranslation("focus", Translator.LanguageFile.OVERVIEW_DIALOG));
 		
 		if(person.isVisible()){
-			visible.setText(Main.getTranslator().getTranslation("makeInvisible", Translator.OVERVIEW_JDIALOG));
+			visible.setText(Main.getTranslator().getTranslation("makeInvisible", Translator.LanguageFile.OVERVIEW_DIALOG));
 		}
 		
 		final PersonEditLine thisLine = this;
@@ -106,9 +106,9 @@ public class PersonEditLine extends AbstractPersonLine{
 				person.setVisible(!person.isVisible());
 				
 				if(person.isVisible()){
-					visible.setText(Main.getTranslator().getTranslation("makeInvisible", Translator.OVERVIEW_JDIALOG));
+					visible.setText(Main.getTranslator().getTranslation("makeInvisible", Translator.LanguageFile.OVERVIEW_DIALOG));
 				}else{
-					visible.setText(Main.getTranslator().getTranslation("makeVisible", Translator.OVERVIEW_JDIALOG));
+					visible.setText(Main.getTranslator().getTranslation("makeVisible", Translator.LanguageFile.OVERVIEW_DIALOG));
 				}
 				
 				Main.getMainFrame().getCanvas().repaint();

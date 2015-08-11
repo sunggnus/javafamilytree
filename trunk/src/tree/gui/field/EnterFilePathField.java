@@ -34,7 +34,7 @@ public class EnterFilePathField extends AbstractField{
 	
 	public EnterFilePathField(){
 		
-		defaultSearch = new JLabel(Main.getTranslator().getTranslation("defaultSearch", Translator.OPTION_JDIALOG));
+		defaultSearch = new JLabel(Main.getTranslator().getTranslation("defaultSearch", Translator.LanguageFile.OPTION_DIALOG));
 		
 		text = new JTextField();
 		text.setText(Config.DEFAULT_PATH);
@@ -61,23 +61,23 @@ public class EnterFilePathField extends AbstractField{
 		});
 		text.setEditable(false);
 		
-		edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.OPTION_JDIALOG));
+		edit = new JButton(Main.getTranslator().getTranslation("edit", Translator.LanguageFile.OPTION_DIALOG));
 		edit.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				text.setEditable(!text.isEditable());
 				if(text.isEditable()){
-					edit.setText(Main.getTranslator().getTranslation("save", Translator.OPTION_JDIALOG));
+					edit.setText(Main.getTranslator().getTranslation("save", Translator.LanguageFile.OPTION_DIALOG));
 				}
 				else{
-					edit.setText(Main.getTranslator().getTranslation("edit", Translator.OPTION_JDIALOG));
+					edit.setText(Main.getTranslator().getTranslation("edit", Translator.LanguageFile.OPTION_DIALOG));
 				}
 			}
 			
 		});
 		
-		search = new JButton(Main.getTranslator().getTranslation("search", Translator.OPTION_JDIALOG));
+		search = new JButton(Main.getTranslator().getTranslation("search", Translator.LanguageFile.OPTION_DIALOG));
 		search.addActionListener(new ActionListener(){
 
 			@Override
@@ -114,7 +114,7 @@ public class EnterFilePathField extends AbstractField{
 		firstLine.add(defaultSearch);
 		firstLine.add(Box.createGlue());
 		
-		JButton toDetermineMinEdit = new JButton(Main.getTranslator().getTranslation("save", Translator.OPTION_JDIALOG));
+		JButton toDetermineMinEdit = new JButton(Main.getTranslator().getTranslation("save", Translator.LanguageFile.OPTION_DIALOG));
 		if(toDetermineMinEdit.getMinimumSize().getWidth()>edit.getMinimumSize().getWidth()){
 			edit.setMinimumSize(toDetermineMinEdit.getMinimumSize());
 		}

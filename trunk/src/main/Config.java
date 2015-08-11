@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import tree.gui.TreeCanvasMouseListener;
+import tree.gui.draw.DrawPerson;
 import tree.gui.util.GUIUtils;
 
 
@@ -73,6 +74,8 @@ public final class Config {
 	
 	static public OptionList TREE_ORDERING_MODE = OptionList.TREE_ORDERING_OLDEST_ON_TOP;
 	
+	static public DrawPerson.Ordering[] ORDERING = DrawPerson.Ordering.values();
+	
 	static public String DEFAULT_PATH="./";
 	/**
 	 * contains the last path which was used
@@ -134,6 +137,22 @@ public final class Config {
 					}
 					else if(line.contains("additionalLookAndFeel=")){
 						ADDITIONAL_LOOK_AND_FEEL = line.replace("additionalLookAndFeel=", "").trim();
+					}
+					else if(line.contains("ordering=")){
+						String[] order = line.replace("ordering=", "").trim().split(";");
+						if(order.length > ORDERING.length){
+							javax.swing.JOptionPane.showMessageDialog(null, "Warnung: Folgende config.ini Zeile fehlerhaft (zuviele Argumente): " +line);
+							
+						}
+						for(int i=0; i < order.length && i < ORDERING.length; i++){
+							try{
+								DrawPerson.Ordering add = DrawPerson.Ordering.valueOf(order[i]);
+								ORDERING[i] = add;
+							}catch(IllegalArgumentException e){
+								System.out.println(line);
+								javax.swing.JOptionPane.showMessageDialog(null, "Warnung: Folgende config.ini Zeile fehlerhaft: " +line);
+							}
+						}
 					}
 					else{ 
 						ORIENTATION_MODE = readOption(line,ORIENTATION_MODE.getConfigName(),ORIENTATION_MODE);
@@ -226,6 +245,12 @@ public final class Config {
 			out.write("additionalLookAndFeel=" + ADDITIONAL_LOOK_AND_FEEL + LINE_SEPARATOR);
 			out.write(Y_POSITIONING_MODE);
 			out.write(TREE_ORDERING_MODE);
+			//write ordering:
+			out.write("ordering=");
+			for(DrawPerson.Ordering order : ORDERING){
+				out.write(order.name());
+				out.write(";");
+			}
 			out.close();
 		} catch (IOException e) {
 			

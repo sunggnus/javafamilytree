@@ -71,7 +71,7 @@ public class NoteOverview extends AbstractOverview{
 		
 		this.constructOverview(true);
 		
-		this.getAddButton().setText(Main.getTranslator().getTranslation("generateNote", Translator.OVERVIEW_JDIALOG));
+		this.getAddButton().setText(Main.getTranslator().getTranslation("generateNote", Translator.LanguageFile.OVERVIEW_DIALOG));
 		
 		this.getAddButton().addActionListener(new ActionListener(){
 

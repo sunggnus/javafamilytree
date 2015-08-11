@@ -99,7 +99,7 @@ public enum OptionList {
 	
 	public static void translate(){
 		for(OptionList b : OptionList.values()){
-			b.description = Main.getTranslator().getTranslation(b.name(), Translator.OPTION_JDIALOG);
+			b.description = Main.getTranslator().getTranslation(b.name(), Translator.LanguageFile.OPTION_DIALOG);
 		}
 	}
 	

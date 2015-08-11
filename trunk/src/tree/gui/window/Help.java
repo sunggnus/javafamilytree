@@ -121,7 +121,7 @@ public class Help extends JDialog{
 	}
 	
 	private String getTranslation(String key){
-		return Main.getTranslator().getTranslation(key, Translator.HELP);
+		return Main.getTranslator().getTranslation(key, Translator.LanguageFile.HELP);
 	}
 
 }

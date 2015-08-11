@@ -63,6 +63,15 @@ public class Person implements Serializable{
 	private String birthName;
 	
 	/**
+	 * contains the location where this person is born
+	 */
+	private String location;
+	
+	/**
+	 * contains the trade of the person
+	 */
+	private String trade;
+	/**
 	 * contains comments
 	 */
 	private String commentOne;
@@ -972,6 +981,26 @@ public class Person implements Serializable{
 		for(ConnectionListener listener : listeners){
 			listener.connectionChanged(this);
 		}
+	}
+
+
+	public String getLocation() {
+		return location;
+	}
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+
+	public String getTrade() {
+		return trade;
+	}
+
+
+	public void setTrade(String trade) {
+		this.trade = trade;
 	}
 
 
