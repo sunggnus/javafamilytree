@@ -26,7 +26,7 @@ public class MainFrameKeyInputMap {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MenuBar.MenuBarListener.REDRAW_BACKGROUND.actionPerformed(arg0);
+				MenuBarListener.REDRAW_BACKGROUND.actionPerformed(arg0);
 				
 			}
 			
@@ -40,7 +40,7 @@ public class MainFrameKeyInputMap {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuBar.MenuBarListener.SHOW_HELP.actionPerformed(e);
+				MenuBarListener.SHOW_HELP.actionPerformed(e);
 			}
 			
 		}),
@@ -142,9 +142,9 @@ public class MainFrameKeyInputMap {
 		//help on f1
 		this.addKeyAction(KeyEvent.VK_F1,NO_MODIFIERS,KeyActions.HELP);
 		//impressum on f2
-		this.addKeyAction(KeyEvent.VK_F2,NO_MODIFIERS,MenuBar.MenuBarListener.SHOW_IMPRESSUM);
+		this.addKeyAction(KeyEvent.VK_F2,NO_MODIFIERS,MenuBarListener.SHOW_IMPRESSUM);
 		//options on f3
-		this.addKeyAction(KeyEvent.VK_F3,NO_MODIFIERS,MenuBar.MenuBarListener.OPEN_OPTIONS);
+		this.addKeyAction(KeyEvent.VK_F3,NO_MODIFIERS,MenuBarListener.OPEN_OPTIONS);
 		//visible marked on v
 		this.addKeyAction(KeyEvent.VK_V,NO_MODIFIERS,KeyActions.VISIBLE_MARKED);
 		//invisible marked on i
@@ -154,31 +154,31 @@ public class MainFrameKeyInputMap {
 		//invisible all on ctrl-i
 		this.addKeyAction(KeyEvent.VK_I,KeyEvent.CTRL_DOWN_MASK, KeyActions.INVISIBLE_ALL);
 		//save dialog ctrl-s
-		this.addKeyAction(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.SAVE_TREE);
+		this.addKeyAction(KeyEvent.VK_S,KeyEvent.CTRL_DOWN_MASK, MenuBarListener.SAVE_TREE);
 		//load dialog ctrl-l
-		this.addKeyAction(KeyEvent.VK_L,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.LOAD_TREE);
+		this.addKeyAction(KeyEvent.VK_L,KeyEvent.CTRL_DOWN_MASK, MenuBarListener.LOAD_TREE);
 		//open person overview o
-		this.addKeyAction(KeyEvent.VK_O, NO_MODIFIERS, MenuBar.MenuBarListener.PERSON_OVERVIEW);
+		this.addKeyAction(KeyEvent.VK_O, NO_MODIFIERS, MenuBarListener.PERSON_OVERVIEW);
 		//open note overview n
-		this.addKeyAction(KeyEvent.VK_N, NO_MODIFIERS, MenuBar.MenuBarListener.NOTE_OVERVIEW);
+		this.addKeyAction(KeyEvent.VK_N, NO_MODIFIERS, MenuBarListener.NOTE_OVERVIEW);
 		//show / hide coordinates c
-		this.addKeyAction(KeyEvent.VK_C,NO_MODIFIERS,MenuBar.MenuBarListener.DRAW_X_Y_POSITION);
+		this.addKeyAction(KeyEvent.VK_C,NO_MODIFIERS, MenuBarListener.DRAW_X_Y_POSITION);
 		//print ctrl-p
-		this.addKeyAction(KeyEvent.VK_P,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.PRINT_TREE);
+		this.addKeyAction(KeyEvent.VK_P,KeyEvent.CTRL_DOWN_MASK, MenuBarListener.PRINT_TREE);
 		//export tree as jpeg ctrl-j
-		this.addKeyAction(KeyEvent.VK_J,KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_AS_JPEG);
+		this.addKeyAction(KeyEvent.VK_J,KeyEvent.CTRL_DOWN_MASK, MenuBarListener.EXPORT_AS_JPEG);
 		//export tree background as jpeg alt-j
-		this.addKeyAction(KeyEvent.VK_J, KeyEvent.ALT_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_BACKGROUND_AS_JPEG);
+		this.addKeyAction(KeyEvent.VK_J, KeyEvent.ALT_DOWN_MASK, MenuBarListener.EXPORT_BACKGROUND_AS_JPEG);
 		//export tree as png ctrl-k
-		this.addKeyAction(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_AS_PNG);
+		this.addKeyAction(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK, MenuBarListener.EXPORT_AS_PNG);
 		//export tree background as png alt-k
-		this.addKeyAction(KeyEvent.VK_K, KeyEvent.ALT_DOWN_MASK, MenuBar.MenuBarListener.EXPORT_BACKGROUND_AS_PNG);
+		this.addKeyAction(KeyEvent.VK_K, KeyEvent.ALT_DOWN_MASK, MenuBarListener.EXPORT_BACKGROUND_AS_PNG);
 		//create person p
-		this.addKeyAction(KeyEvent.VK_P, NO_MODIFIERS, MenuBar.MenuBarListener.ADD_PERSON);
+		this.addKeyAction(KeyEvent.VK_P, NO_MODIFIERS, MenuBarListener.ADD_PERSON);
 		//create note m
-		this.addKeyAction(KeyEvent.VK_M, NO_MODIFIERS, MenuBar.MenuBarListener.ADD_NOTE);
+		this.addKeyAction(KeyEvent.VK_M, NO_MODIFIERS, MenuBarListener.ADD_NOTE);
 		//one x step
-		this.addKeyAction(KeyEvent.VK_X, NO_MODIFIERS, MenuBar.MenuBarListener.CALCULATE_X_POSITION);
+		this.addKeyAction(KeyEvent.VK_X, NO_MODIFIERS, MenuBarListener.CALCULATE_X_POSITION);
 		
 		
 	}
@@ -186,7 +186,7 @@ public class MainFrameKeyInputMap {
 	private void addKeyAction(int eventKey, int modifiers, KeyActions action){
 		this.addKeyAction(eventKey, modifiers, action.getAction());
 	}
-	private void addKeyAction(int eventKey, int modifiers, MenuBar.MenuBarListener listener){
+	private void addKeyAction(int eventKey, int modifiers, MenuBarListener listener){
 		this.addKeyAction(eventKey, modifiers, listener.getAction());
 	}
 	private void addKeyAction(int eventKey, int modifiers, AbstractAction action){
