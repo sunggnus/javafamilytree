@@ -20,6 +20,7 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
 
 import tree.gui.ExportImage;
+import tree.model.Person.Sex;
 
 
 public class TreeIO {
@@ -48,7 +49,7 @@ public class TreeIO {
 			objIn = new ObjectInputStream(input);
 			Object obj = objIn.readObject();
 			if(!(obj instanceof MainNode)){
-				throw new IOException("Ung�ltiger Datensatz");
+				throw new IOException("Invalid data");
 			}
 			MainNode node = (MainNode) obj;
 			
@@ -56,7 +57,7 @@ public class TreeIO {
 		}catch(IOException e){
 			throw e;
 		} catch (ClassNotFoundException e) {
-			throw new IOException("Ung�ltiger Datensatz");
+			throw new IOException("Invalid data");
 		}finally{
 			if(objIn != null){
 				objIn.close();
@@ -261,7 +262,7 @@ public class TreeIO {
 			}
 			if(line.trim().startsWith("0") && line.contains("INDI")
 					&& line.contains("@")){
-				Person loadedPerson = new Person("not", "named", false);
+				Person loadedPerson = new Person("not", "named", Sex.MALE);
 				long id = this.extractID(line);
 				loadedPerson.setID(id);
 				if(in.ready()){
@@ -293,10 +294,10 @@ public class TreeIO {
 					//determine sex
 					else if(line.contains("SEX")){
 						if(line.contains("F")){
-							loadedPerson.setSex(Person.FEMALE);
+							loadedPerson.setSex(Sex.FEMALE);
 						}
 						else if(line.contains("M")){
-							loadedPerson.setSex(Person.MALE);
+							loadedPerson.setSex(Sex.MALE);
 						}
 					}
 					//determine birth date

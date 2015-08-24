@@ -34,6 +34,7 @@ import tree.gui.field.PersonEditField;
 import tree.gui.util.GUIUtils;
 import tree.gui.util.ImageLoaderDialog;
 import tree.model.Person;
+import tree.model.Person.Sex;
 import tree.model.Utils;
 
 public class EditPersonDialog extends JDialog{
@@ -160,7 +161,7 @@ public class EditPersonDialog extends JDialog{
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange()==ItemEvent.SELECTED && e.getItem() instanceof String){
 					editablePerson.setSex(((String) sex.getSelectedItem()).
-							equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Person.FEMALE:Person.MALE);
+							equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Sex.FEMALE:Sex.MALE);
 			
 				}
 				
@@ -373,7 +374,7 @@ public class EditPersonDialog extends JDialog{
 			this.isNewPerson = true;
 			this.editablePerson =new Person(givenName.getContent(), 
 					familyName.getContent(), ((String) sex.getSelectedItem()).
-					equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Person.FEMALE:Person.MALE
+					equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Sex.FEMALE:Sex.MALE
 					);
 		}
 		
@@ -429,7 +430,7 @@ public class EditPersonDialog extends JDialog{
 		editablePerson.setLocation(location.getContent());
 		editablePerson.setCommentOne(commentOne.getContent());
 		editablePerson.setSex(((String) sex.getSelectedItem()).
-					equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Person.FEMALE:Person.MALE);
+					equals(Main.getTranslator().getTranslation("female", Translator.LanguageFile.EDIT_PERSON_DIALOG))?Sex.FEMALE:Sex.MALE);
 		if(!Config.XAUTO_POSITIONING){
 			int xpos = Integer.parseInt(xPosition.getContent());
 			editablePerson.setXPosition(xpos, false);

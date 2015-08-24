@@ -17,6 +17,7 @@ import main.Config;
 import main.Main;
 import main.OptionList;
 import translator.Translator;
+import translator.Translator.LanguageFile;
 import tree.gui.draw.DrawImage;
 import tree.gui.draw.backgrounds.BackgroundFactory;
 import tree.gui.draw.backgrounds.DrawBackgroundImage;
@@ -155,7 +156,7 @@ public class MenuBar extends JMenuBar{
 					try {
 						if(!saver.writeImageAs(filePath,mode, BackgroundFactory.getBufferedBackground(), false)){
 							int override = javax.swing.JOptionPane.
-									showConfirmDialog(null, "Die Datei existiert bereits, soll sie �berschrieben werden?");
+									showConfirmDialog(null, Main.getTranslator().getTranslation("fileExists", LanguageFile.MAIN_FRAME));
 							if(override == javax.swing.JOptionPane.YES_OPTION){
 								saver.writeImageAs(filePath,mode, BackgroundFactory.getBufferedBackground(), true);
 							}
@@ -216,7 +217,7 @@ public class MenuBar extends JMenuBar{
 					try {
 						if(!saver.writeTree(Main.getMainNode(), filePath)){
 							int override = javax.swing.JOptionPane.
-									showConfirmDialog(null, "Die Datei existiert bereits, soll sie �berschrieben werden?");
+									showConfirmDialog(null, Main.getTranslator().getTranslation("fileExists", LanguageFile.MAIN_FRAME));
 							if(override == javax.swing.JOptionPane.YES_OPTION){
 								saver.writeTree(Main.getMainNode(), filePath,true);
 							}
@@ -293,7 +294,7 @@ public class MenuBar extends JMenuBar{
 					try {
 						if(!saver.writeImageAs(filePath,mode, Main.getMainFrame().getCanvas(), false)){
 							int override = javax.swing.JOptionPane.
-									showConfirmDialog(null, "Die Datei existiert bereits, soll sie �berschrieben werden?");
+									showConfirmDialog(null, Main.getTranslator().getTranslation("fileExists", LanguageFile.MAIN_FRAME));
 							if(override == javax.swing.JOptionPane.YES_OPTION){
 								saver.writeImageAs(filePath,mode, Main.getMainFrame().getCanvas(), true);
 							}

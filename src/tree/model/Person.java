@@ -25,11 +25,18 @@ public class Person implements Serializable{
 	 */
 	public static long NEXT_ID=0;
 
-	static public final Person NULL = new Person("", "", false);
+	static public final Person NULL = new Person("", "", Sex.MALE);
+	/**
+	 * enumeration to determine the sex of the person
+	 * @author Stefan
+	 *
+	 */
+	static public enum Sex{
+		MALE,
+		FEMALE
+	}
 	
-	static public final boolean FEMALE = true;
 	
-	static public final boolean MALE = !FEMALE;
 	
 	static public final int IS_YOUNGER_THAN=-1;
 	
@@ -80,9 +87,9 @@ public class Person implements Serializable{
 	 */
 	private boolean alive;
 	/**
-	 * true if the person is female
+	 * sex of the person
 	 */
-	private boolean sex;
+	private Sex sex;
 	
 	/**
 	 * if the father is null, he is unknown
@@ -110,14 +117,14 @@ public class Person implements Serializable{
 	 * the birth date of a person
 	 */
 	
-	private GregorianCalendar birthdate;
+	private GregorianCalendar birthDate;
 	
 	/**
 	 * the death date of a person
 	 * it is null if the person is still alive or it is not known
 	 */
 	
-	private GregorianCalendar deathdate;
+	private GregorianCalendar deathDate;
 	
 	/**
 	 * contains the generation in which this person was born
@@ -158,9 +165,9 @@ public class Person implements Serializable{
 	 * 
 	 * @param givenName the given name of the person
 	 * @param familyName the family name of the person
-	 * @param sex is true if the Person is female use the public constants FEMALE and MALE
+	 * @param sex of the person can be FEMALE or MALE
 	 */
-	public Person(String givenName, String familyName, boolean sex){
+	public Person(String givenName, String familyName, Sex sex){
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.sex = sex;
@@ -175,7 +182,7 @@ public class Person implements Serializable{
 	 * @param givenName the given name of the person
 	 * @param familyName the family name of the person
 	 * @param alive is true if the Person is still alive
-	 * @param sex is true if the Person is female use the public constants FEMALE and MALE
+	 * @param sex of the person can be FEMALE or MALE
 	 * @param father contains the father of the person
 	 * @param mother contains the mother of the person
 	 * @param birthdate as a {@link GregorianCalendar}
@@ -184,7 +191,7 @@ public class Person implements Serializable{
 	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
-			boolean alive, boolean sex, Person father, Person mother,
+			boolean alive, Sex sex, Person father, Person mother,
 			GregorianCalendar birthdate) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
 		this.familyName = familyName;
@@ -192,7 +199,7 @@ public class Person implements Serializable{
 		this.sex = sex;
 		this.setFather(father);
 		this.setMother(mother);
-		this.birthdate = birthdate;
+		this.birthDate = birthdate;
 		
 		this.additonalConstructorStuff();
 		
@@ -203,7 +210,7 @@ public class Person implements Serializable{
 	 * @param givenName the given name of the person
 	 * @param familyName the family name of the person
 	 * @param alive is true if the Person is still alive
-	 * @param sex is true if the Person is female use the public constants FEMALE and MALE
+	 * @param sex of the person can be FEMALE or MALE
 	 * @param father contains the father of the person
 	 * @param mother contains the mother of the person
 	 * @param birthdate as a {@link GregorianCalendar}
@@ -213,7 +220,7 @@ public class Person implements Serializable{
 	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
-			boolean alive, boolean sex, Person father, Person mother,
+			boolean alive, Sex sex, Person father, Person mother,
 			GregorianCalendar birthdate, GregorianCalendar deathdate) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
 		this.familyName = familyName;
@@ -221,8 +228,8 @@ public class Person implements Serializable{
 		this.sex = sex;
 		this.setFather(father);
 		this.setMother(mother);
-		this.birthdate = birthdate;
-		this.deathdate = deathdate;
+		this.birthDate = birthdate;
+		this.deathDate = deathdate;
 		
 		this.additonalConstructorStuff();
 		
@@ -233,7 +240,7 @@ public class Person implements Serializable{
 	 * @param givenName the given name of the person
 	 * @param familyName the family name of the person
 	 * @param alive is true if the Person is still alive
-	 * @param sex is true if the Person is female use the public constants FEMALE and MALE
+	 * @param sex of the person can be FEMALE or MALE
 	 * @param father contains the father of the person
 	 * @param mother contains the mother of the person
 	 * @param birthday the day of birth
@@ -244,7 +251,7 @@ public class Person implements Serializable{
 	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
-			boolean alive, boolean sex, Person father, Person mother,
+			boolean alive, Sex sex, Person father, Person mother,
 			int birthday, int birthmonth, int birthyear) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
 		this.familyName = familyName;
@@ -263,7 +270,7 @@ public class Person implements Serializable{
 	 * @param givenName the given name of the person
 	 * @param familyName the family name of the person
 	 * @param alive is true if the Person is still alive
-	 * @param sex is true if the Person is female use the public constants FEMALE and MALE
+	 * @param sex of the person can be FEMALE or MALE
 	 * @param father contains the father of the person
 	 * @param mother contains the mother of the person
 	 * @param birthday the day of birth
@@ -277,7 +284,7 @@ public class Person implements Serializable{
 	 * @throws LineageException 
 	 */
 	public Person(String givenName, String familyName,
-			boolean alive, boolean sex, Person father, Person mother,
+			boolean alive, Sex sex, Person father, Person mother,
 			int birthday, int birthmonth, int birthyear,
 			int deathday, int deathmonth, int deathyear) throws InvalidSexException, AgeException, LineageException{
 		this.givenName = givenName;
@@ -351,7 +358,7 @@ public class Person implements Serializable{
 		
 	}
 	/**
-	 * true if the person has parents
+	 * true if the person has parents saved in the data structure
 	 * @return
 	 */
 	public boolean isChild(){
@@ -464,28 +471,28 @@ public class Person implements Serializable{
 	
 	public void setBirthdate(int day, int month, int year){
 		month--;
-		this.birthdate = new GregorianCalendar(year,month,day);
+		this.birthDate = new GregorianCalendar(year,month,day);
 	}
 	
 	public void setBirthdate(GregorianCalendar birth){
-		this.birthdate = birth;
+		this.birthDate = birth;
 	}
 	
 	public void setDeathdate(int day, int month, int year){
 		month--;
-		this.deathdate = new GregorianCalendar(year,month,day);
+		this.deathDate = new GregorianCalendar(year,month,day);
 	}
 	
 	public void setDeathdate(GregorianCalendar death){
-		this.deathdate = death;
+		this.deathDate = death;
 	}
 	
 	public GregorianCalendar getBirthdate(){
-		return this.birthdate;
+		return this.birthDate;
 	}
 	
 	public GregorianCalendar getDeathdate(){
-		return this.deathdate;
+		return this.deathDate;
 	}
 	
 	public boolean isAlive(){
@@ -496,18 +503,18 @@ public class Person implements Serializable{
 		this.alive = alive;
 	}
 	
-	public void setSex(boolean sex){
+	public void setSex(Sex sex){
 		this.sex = sex;
 	}
 	
 	public boolean isFemale(){
-		return this.sex == FEMALE;
+		return this.sex == Sex.FEMALE;
 	}
 	
 	public boolean isMale(){
-		return this.sex == MALE;
+		return this.sex == Sex.MALE;
 	}
-	public boolean getSex(){
+	public Sex getSex(){
 		return this.sex;
 	}
 	
