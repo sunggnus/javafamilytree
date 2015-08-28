@@ -4,74 +4,68 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Note implements Serializable{
-	
+public class Note implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2377237475665023276L;
 
 	private List<String> comments;
-	
+
 	private int x;
-	
+
 	private int y;
-	
+
 	private int fontSize;
-	
+
 	private boolean visible;
-	
+
 	/**
-	 * moves the text within the note rectangle 
-	 * horizontally
-	 * should be between 0 and 1
+	 * moves the text within the note rectangle horizontally should be between 0
+	 * and 1
 	 */
 	private double smoothY;
 	/**
-	 * moves the text within the note rectangle
-	 * vertically
-	 * should be between 0 and 1
+	 * moves the text within the note rectangle vertically should be between 0
+	 * and 1
 	 */
 	private double smoothX;
-	
-	public Note(){
+
+	public Note() {
 		super();
 		comments = new LinkedList<String>();
 		this.setSmoothX(1.0);
 		this.setSmoothY(1.0);
 		this.setFontSize(11);
 	}
-	
-	public void addLine(String str){
+
+	public void addLine(String str) {
 		comments.add(str);
 	}
-	
-	public void setComments(List<String> comments){
+
+	public void setComments(List<String> comments) {
 		this.comments = comments;
 	}
-	
-	public boolean removeLine(String str){
+
+	public boolean removeLine(String str) {
 		return comments.remove(str);
 	}
-	
-	public void removeLineNum(int i){
+
+	public void removeLineNum(int i) {
 		comments.remove(i);
 	}
-	
-	public List<String> getComments(){
+
+	public List<String> getComments() {
 		return this.comments;
 	}
-	
-	
-	
-	
 
 	public int getX() {
 		return x;
 	}
-	
-	public double getHalfX(){
-		return x/2.0;
+
+	public double getHalfX() {
+		return x / 2.0;
 	}
 
 	public void setX(int x) {

@@ -23,12 +23,10 @@ public class DefaultFilter implements Filter {
 			String birthday = "";
 			String deathday = "";
 			if (person.getBirthdate() != null) {
-				birthday = Utils.calendarToSimpleString(person
-						.getBirthdate());
+				birthday = Utils.calendarToSimpleString(person.getBirthdate());
 			}
 			if (person.getDeathdate() != null) {
-				deathday = Utils.calendarToSimpleString(person
-						.getDeathdate());
+				deathday = Utils.calendarToSimpleString(person.getDeathdate());
 			}
 			toSearch = person.getGivenName() + " " + person.getFamilyName()
 					+ " " + person.getBirthName() + " " + birthday + " "

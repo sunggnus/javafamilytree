@@ -7,15 +7,15 @@ import tree.gui.search.line.PersonEditLine;
 import tree.model.Note;
 import tree.model.Person;
 
-public class EditLineFactory extends AbstractOverviewLineFactory{
+public class EditLineFactory extends AbstractOverviewLineFactory {
 
-	public EditLineFactory(){
+	public EditLineFactory() {
 		super();
 	}
-	
+
 	@Override
 	public AbstractLine createOverviewLine(Person person, AbstractOverview view) {
-		return new PersonEditLine(person,view);
+		return new PersonEditLine(person, view);
 	}
 
 	@Override

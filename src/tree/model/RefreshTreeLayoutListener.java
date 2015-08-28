@@ -3,7 +3,7 @@ package tree.model;
 import main.Config;
 import main.OptionList;
 
-public class RefreshTreeLayoutListener implements ConnectionListener{
+public class RefreshTreeLayoutListener implements ConnectionListener {
 
 	/**
 	 * 
@@ -12,7 +12,7 @@ public class RefreshTreeLayoutListener implements ConnectionListener{
 
 	@Override
 	public void connectionChanged(Person person) {
-		if(Config.Y_POSITIONING_MODE == OptionList.Y_AUTO_POSITIONING)
+		if (Config.Y_POSITIONING_MODE == OptionList.Y_AUTO_POSITIONING)
 			Utils.determineTreeGenerations(person);
 	}
 

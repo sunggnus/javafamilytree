@@ -1,6 +1,5 @@
 package tree.gui.window;
 
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,106 +22,111 @@ import tree.gui.field.TextAreaField;
 import tree.gui.util.GUIUtils;
 import tree.model.Note;
 
-public class EditNoteDialog extends JDialog{
+public class EditNoteDialog extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3585799795490081086L;
-	
+
 	private Note editableNote;
-	
+
 	private ModifiedCheckBox visible;
-	
+
 	private TextAreaField textArea;
-	
+
 	private EntryField xCoord;
-	
+
 	private EntryField yCoord;
-	
+
 	private EntryField fontSize;
-	
-	public EditNoteDialog(Note editableNote){
+
+	public EditNoteDialog(Note editableNote) {
 		this.editableNote = editableNote;
-		if(editableNote==null){
+		if (editableNote == null) {
 			this.editableNote = new Note();
 		}
 		GUIUtils.assignIcon(this);
 		this.setModalityType(ModalityType.APPLICATION_MODAL);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+
 		JPanel panel = new JPanel();
-		
-		
-		
-		
-		textArea = new TextAreaField(Main.getTranslator().getTranslation("note", Translator.LanguageFile.EDIT_NOTE_DIALOG) ,
-				TextAreaField.DEFAULT_LABEL_WIDTH, 
+
+		textArea = new TextAreaField(Main.getTranslator().getTranslation(
+				"note", Translator.LanguageFile.EDIT_NOTE_DIALOG),
+				TextAreaField.DEFAULT_LABEL_WIDTH,
 				TextAreaField.EMPTY_TEXT_FIELD_WIDTH);
-		
-		xCoord = new EntryField(Main.getTranslator().getTranslation("xCoord", Translator.LanguageFile.EDIT_NOTE_DIALOG),
+
+		xCoord = new EntryField(Main.getTranslator().getTranslation("xCoord",
+				Translator.LanguageFile.EDIT_NOTE_DIALOG),
 				EntryField.DEFAULT_LABEL_WIDTH);
-		yCoord = new EntryField(Main.getTranslator().getTranslation("yCoord", Translator.LanguageFile.EDIT_NOTE_DIALOG), 
+		yCoord = new EntryField(Main.getTranslator().getTranslation("yCoord",
+				Translator.LanguageFile.EDIT_NOTE_DIALOG),
 				EntryField.DEFAULT_LABEL_WIDTH);
-		fontSize = new EntryField(Main.getTranslator().getTranslation("fontSize", Translator.LanguageFile.EDIT_NOTE_DIALOG)
-				, EntryField.DEFAULT_LABEL_WIDTH);
-		
-		
-		visible = new ModifiedCheckBox(Main.getTranslator().getTranslation("visible", Translator.LanguageFile.EDIT_PERSON_DIALOG),
+		fontSize = new EntryField(Main.getTranslator().getTranslation(
+				"fontSize", Translator.LanguageFile.EDIT_NOTE_DIALOG),
+				EntryField.DEFAULT_LABEL_WIDTH);
+
+		visible = new ModifiedCheckBox(Main.getTranslator().getTranslation(
+				"visible", Translator.LanguageFile.EDIT_PERSON_DIALOG),
 				EntryField.DEFAULT_LABEL_WIDTH);
 		visible.setSelected(this.editableNote.isVisible());
-		
+
 		JSlider smoothX = new JSlider();
-		smoothX.setToolTipText(Main.getTranslator().getTranslation("smoothX_tool", Translator.LanguageFile.EDIT_NOTE_DIALOG));
-		
+		smoothX.setToolTipText(Main.getTranslator().getTranslation(
+				"smoothX_tool", Translator.LanguageFile.EDIT_NOTE_DIALOG));
+
 		smoothX.setMaximum(100);
-		smoothX.setValue((int) Math.ceil(this.editableNote.getSmoothX()*smoothX.getMaximum()));
-		
-		
+		smoothX.setValue((int) Math.ceil(this.editableNote.getSmoothX()
+				* smoothX.getMaximum()));
+
 		final EditNoteDialog self = this;
-		
-		smoothX.addChangeListener(new ChangeListener(){
+
+		smoothX.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				if(arg0.getSource() instanceof JSlider){
+				if (arg0.getSource() instanceof JSlider) {
 					JSlider slide = (JSlider) arg0.getSource();
-					if(!slide.getValueIsAdjusting()){
-						
+					if (!slide.getValueIsAdjusting()) {
+
 						int val = slide.getValue();
-						double percent = ((double)val / 100.0);
+						double percent = ((double) val / 100.0);
 						self.editableNote.setSmoothX(percent);
 					}
 				}
 			}
-			
+
 		});
-		
+
 		JSlider smoothY = new JSlider();
-		smoothY.setToolTipText(Main.getTranslator().getTranslation("smoothY_tool", Translator.LanguageFile.EDIT_NOTE_DIALOG));
+		smoothY.setToolTipText(Main.getTranslator().getTranslation(
+				"smoothY_tool", Translator.LanguageFile.EDIT_NOTE_DIALOG));
 		smoothY.setMaximum(100);
-		smoothY.setValue((int) Math.ceil(this.editableNote.getSmoothY()*smoothY.getMaximum()));
-		
-		smoothY.addChangeListener(new ChangeListener(){
+		smoothY.setValue((int) Math.ceil(this.editableNote.getSmoothY()
+				* smoothY.getMaximum()));
+
+		smoothY.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				if(arg0.getSource() instanceof JSlider){
+				if (arg0.getSource() instanceof JSlider) {
 					JSlider slide = (JSlider) arg0.getSource();
-					if(!slide.getValueIsAdjusting()){
-						
+					if (!slide.getValueIsAdjusting()) {
+
 						int val = slide.getValue();
-						double percent = ((double)val / 100.0);
+						double percent = ((double) val / 100.0);
 						self.editableNote.setSmoothY(percent);
 					}
 				}
 			}
-			
+
 		});
-		
-		JButton accept = new JButton(Main.getTranslator().getTranslation("saveNote", Translator.LanguageFile.EDIT_NOTE_DIALOG));
-		
-		accept.addActionListener(new ActionListener(){
+
+		JButton accept = new JButton(Main.getTranslator().getTranslation(
+				"saveNote", Translator.LanguageFile.EDIT_NOTE_DIALOG));
+
+		accept.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -130,14 +134,14 @@ public class EditNoteDialog extends JDialog{
 				int x;
 				int y;
 				int fSize;
-				try{
+				try {
 					x = Integer.parseInt(xCoord.getContent());
 					y = Integer.parseInt(yCoord.getContent());
 					fSize = Integer.parseInt(fontSize.getContent());
-				}catch(NumberFormatException e){
-					x=1;
-					y=1;
-					fSize=11;
+				} catch (NumberFormatException e) {
+					x = 1;
+					y = 1;
+					fSize = 11;
 				}
 				self.editableNote.setX(x);
 				self.editableNote.setY(y);
@@ -147,12 +151,13 @@ public class EditNoteDialog extends JDialog{
 				Main.getMainFrame().revalidateTree();
 				self.dispose();
 			}
-			
+
 		});
-		
-		JButton delete = new JButton(Main.getTranslator().getTranslation("removeNote", Translator.LanguageFile.EDIT_NOTE_DIALOG));
-		
-		delete.addActionListener(new ActionListener(){
+
+		JButton delete = new JButton(Main.getTranslator().getTranslation(
+				"removeNote", Translator.LanguageFile.EDIT_NOTE_DIALOG));
+
+		delete.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -160,9 +165,9 @@ public class EditNoteDialog extends JDialog{
 				Main.getMainFrame().revalidateTree();
 				self.dispose();
 			}
-			
+
 		});
-		
+
 		panel.add(visible);
 		panel.add(Box.createVerticalStrut(10));
 		panel.add(xCoord);
@@ -180,16 +185,15 @@ public class EditNoteDialog extends JDialog{
 		panel.add(accept);
 		panel.add(Box.createVerticalStrut(10));
 		panel.add(delete);
-		
-		
-		BoxLayout box = new BoxLayout(panel,BoxLayout.Y_AXIS);
+
+		BoxLayout box = new BoxLayout(panel, BoxLayout.Y_AXIS);
 		panel.setLayout(box);
-		
+
 		this.setLayout(new FlowLayout());
 		this.add(panel);
-		
-		//load stuff:
-		
+
+		// load stuff:
+
 		xCoord.setContent(this.editableNote.getX());
 		yCoord.setContent(this.editableNote.getY());
 		fontSize.setContent(this.editableNote.getFontSize());
@@ -197,7 +201,5 @@ public class EditNoteDialog extends JDialog{
 		this.pack();
 		this.setVisible(true);
 	}
-	
-	
 
 }

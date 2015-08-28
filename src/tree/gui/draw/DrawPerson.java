@@ -2,7 +2,6 @@ package tree.gui.draw;
 
 import java.awt.Graphics2D;
 
-
 import main.Config;
 import main.Main;
 import main.OptionList;
@@ -11,89 +10,110 @@ import tree.model.Person;
 import tree.model.Utils;
 
 public class DrawPerson extends AbstractDraw {
-	
-	public enum Ordering{
-		NAME(){
+
+	public enum Ordering {
+		NAME() {
 			@Override
-			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
-				if (Config.LINE_BREAK_MODE.equals(OptionList.NAME_NO_LINE_BREAK)) { //depending on mode draws given name
-					draw.drawString(												//and family name in one line or
+			public void writeData(DrawPerson draw, Person person, Graphics2D g,
+					int innerX) {
+				if (Config.LINE_BREAK_MODE
+						.equals(OptionList.NAME_NO_LINE_BREAK)) { // depending
+																	// on mode
+																	// draws
+																	// given
+																	// name
+					draw.drawString( // and family name in one line or
 							person.getGivenName() + " "
 									+ person.getFamilyName(), g, innerX);
-				} else if (Config.LINE_BREAK_MODE.equals(OptionList.NAME_LINE_BREAK)) {	//in two lines
+				} else if (Config.LINE_BREAK_MODE
+						.equals(OptionList.NAME_LINE_BREAK)) { // in two lines
 					draw.drawString(person.getGivenName(), g, innerX);
 					draw.drawString(person.getFamilyName(), g, innerX);
 				}
 			}
 		},
-		BIRTH_NAME(){
+		BIRTH_NAME() {
 			@Override
-			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+			public void writeData(DrawPerson draw, Person person, Graphics2D g,
+					int innerX) {
 				draw.drawString(
 						Main.getTranslator().getTranslation("birth",
 								Translator.LanguageFile.EDIT_PERSON_DIALOG),
-								person.getBirthName(), g, innerX);
+						person.getBirthName(), g, innerX);
 			}
 		},
-		BIRTH_LOCATION(){
+		BIRTH_LOCATION() {
 			@Override
-			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+			public void writeData(DrawPerson draw, Person person, Graphics2D g,
+					int innerX) {
 				draw.drawString(
 						Main.getTranslator().getTranslation("location",
 								Translator.LanguageFile.EDIT_PERSON_DIALOG),
-								person.getLocation(), g, innerX);
+						person.getLocation(), g, innerX);
 			}
 		},
-		TRADE(){
+		TRADE() {
 			@Override
-			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+			public void writeData(DrawPerson draw, Person person, Graphics2D g,
+					int innerX) {
 				draw.drawString(person.getTrade(), g, innerX);
 			}
 		},
-		COMMENT(){
+		COMMENT() {
 			@Override
-			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+			public void writeData(DrawPerson draw, Person person, Graphics2D g,
+					int innerX) {
 				draw.drawString(person.getCommentOne(), g, innerX);
 			}
 		},
-		BIRTH_DATE(){
+		BIRTH_DATE() {
 			@Override
-			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+			public void writeData(DrawPerson draw, Person person, Graphics2D g,
+					int innerX) {
 				if (person.getBirthdate() != null) {
 					g.drawString(
 							"* "
 									+ Utils.calendarToSimpleString(person
-											.getBirthdate()), innerX, draw.nextRow());
-				}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
-					draw.nextRow(); // if the data positions are fixed draw empty line if no data exists
+											.getBirthdate()), innerX,
+							draw.nextRow());
+				} else if (Config.DATA_POSITIONING_MODE
+						.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)) {
+					draw.nextRow(); // if the data positions are fixed draw
+									// empty line if no data exists
 				}
 			}
 		},
-		DEATH_DATE(){
+		DEATH_DATE() {
 			@Override
-			public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX){
+			public void writeData(DrawPerson draw, Person person, Graphics2D g,
+					int innerX) {
 				if (person.getDeathdate() != null) {
 					g.drawString(
 							"\u2020  "
 									+ Utils.calendarToSimpleString(person
-											.getDeathdate()), innerX, draw.nextRow());
-				}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
-					draw.nextRow(); // if the data positions are fixed draw empty line if no data exists
+											.getDeathdate()), innerX,
+							draw.nextRow());
+				} else if (Config.DATA_POSITIONING_MODE
+						.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)) {
+					draw.nextRow(); // if the data positions are fixed draw
+									// empty line if no data exists
 				}
 			}
 		};
-		
-		abstract public void writeData(DrawPerson draw, Person person, Graphics2D g, int innerX);
-		
-		public String getTranslation(){
-			return Main.getTranslator().getTranslation(name(),Translator.LanguageFile.OPTION_DIALOG);
+
+		abstract public void writeData(DrawPerson draw, Person person,
+				Graphics2D g, int innerX);
+
+		public String getTranslation() {
+			return Main.getTranslator().getTranslation(name(),
+					Translator.LanguageFile.OPTION_DIALOG);
 		}
+
 		@Override
-		public String toString(){
+		public String toString() {
 			return this.getTranslation();
 		}
-	
-	
+
 	}
 
 	private Person person;
@@ -142,9 +162,9 @@ public class DrawPerson extends AbstractDraw {
 	@Override
 	public void draw(Graphics2D g, int widthUnit, int heightUnit,
 			double scaling, boolean drawXPosition) {
-		
-		if(!this.person.isVisible()){
-			return; //the person will not be drawn if she is not visible
+
+		if (!this.person.isVisible()) {
+			return; // the person will not be drawn if she is not visible
 		}
 
 		this.setScaling(scaling);
@@ -165,14 +185,14 @@ public class DrawPerson extends AbstractDraw {
 		int motherx = 0;
 		int parentx = 0;
 		double half = 0.5;
-		
-		
-		
-		if (this.person.getFather() != null && this.person.getFather().isVisible() ) {
+
+		if (this.person.getFather() != null
+				&& this.person.getFather().isVisible()) {
 			fatherx = (int) (this.person.getFather().getHalfXPosition()
 					* scaling * widthUnit * 1.1);
 		}
-		if (this.person.getMother() != null && this.person.getMother().isVisible()) {
+		if (this.person.getMother() != null
+				&& this.person.getMother().isVisible()) {
 			motherx = (int) (this.person.getMother().getHalfXPosition()
 					* scaling * widthUnit * 1.1);
 		}
@@ -194,11 +214,12 @@ public class DrawPerson extends AbstractDraw {
 			int maxX = ownX;
 			int minX = ownX;
 			for (Person partner : this.person.getPartners()) {
-				
-				if(!partner.isVisible()){
-					continue; //only visible partners are relevant for the calculation
+
+				if (!partner.isVisible()) {
+					continue; // only visible partners are relevant for the
+								// calculation
 				}
-				
+
 				int personX = (int) (partner.getHalfXPosition() * scaling
 						* widthUnit * 1.1);
 				if (personX > maxX) {
@@ -219,21 +240,21 @@ public class DrawPerson extends AbstractDraw {
 		}
 
 		// determine line end
-		if ((this.person.getFather() != null && this.person.getFather().isVisible()) || //not null and visible!
-				(this.person.getMother() != null && this.person.getMother().isVisible())) {
+		if ((this.person.getFather() != null && this.person.getFather()
+				.isVisible()) || // not null and visible!
+				(this.person.getMother() != null && this.person.getMother()
+						.isVisible())) {
 			int parenty = 0;
 			int parentGeneration = 0;
-			
-			if(this.person.getFather() != null)
+
+			if (this.person.getFather() != null)
 				parentGeneration = person.getFather().getGeneration() + 1;
 			else
-				parentGeneration =person.getMother().getGeneration()+1;
-			
-			
-			
-			
-			parenty =(int) (parentGeneration * scaling * heightUnit * 1.3 )+ DEFAULT_MARGING;
-			
+				parentGeneration = person.getMother().getGeneration() + 1;
+
+			parenty = (int) (parentGeneration * scaling * heightUnit * 1.3)
+					+ DEFAULT_MARGING;
+
 			int upperYmarging = (int) (parenty - scaling * heightUnit * 0.3);
 			if (this.person.hasTwoParents()
 					|| (this.person.getMother() != null && this.person
@@ -242,29 +263,26 @@ public class DrawPerson extends AbstractDraw {
 							.getFather().hasOrHadPartner())) {
 				upperYmarging += (int) Math.ceil(DEFAULT_MARGING * scaling);
 			}
-			
-			
-			if(Config.TREE_ORDERING_MODE == OptionList.TREE_ORDERING_YOUNGEST_ON_TOP){
-				
-				lowYmarging = (int) (y + scaling * heightUnit );
-				upperYmarging =(int) (parenty - scaling * heightUnit * 1.3);
-				if(this.person.hasOrHadPartner())
+
+			if (Config.TREE_ORDERING_MODE == OptionList.TREE_ORDERING_YOUNGEST_ON_TOP) {
+
+				lowYmarging = (int) (y + scaling * heightUnit);
+				upperYmarging = (int) (parenty - scaling * heightUnit * 1.3);
+				if (this.person.hasOrHadPartner())
 					lowYmarging += (int) Math.ceil(DEFAULT_MARGING * scaling);
-				
-				
+
 				if (this.person.hasTwoParents()
 						|| (this.person.getMother() != null && this.person
 								.getMother().hasOrHadPartner())
 						|| (this.person.getFather() != null && this.person
 								.getFather().hasOrHadPartner())) {
-				
-				upperYmarging -= (int) Math.ceil(DEFAULT_MARGING * scaling);
+
+					upperYmarging -= (int) Math.ceil(DEFAULT_MARGING * scaling);
 				}
 			}
-			
-			//draw connections
-				
-			
+
+			// draw connections
+
 			if (Config.CONNECTION_MODE.equals(OptionList.DIAGONAL_CONNECTION)) {
 				g.drawLine(parentx, upperYmarging, (int) (x + scaling
 						* widthUnit * half), lowYmarging);
@@ -312,10 +330,9 @@ public class DrawPerson extends AbstractDraw {
 		} else {
 			this.nextRow();
 		}
-		
-		
-		//start writing of textual data
-		for(Ordering text : Config.ORDERING){
+
+		// start writing of textual data
+		for (Ordering text : Config.ORDERING) {
 			text.writeData(this, person, g, innerX);
 		}
 
@@ -325,8 +342,8 @@ public class DrawPerson extends AbstractDraw {
 			g.drawString("Y: " + this.person.getGeneration(), innerX,
 					this.nextRow());
 		}
-		
-		//finish writing of textual data
+
+		// finish writing of textual data
 
 		// draws the picture in the lower half if the mode is set
 		if (Config.ORIENTATION_MODE.equals(OptionList.IMAGE_SOUTH_TEXT_NORTH)) {
@@ -336,20 +353,24 @@ public class DrawPerson extends AbstractDraw {
 		this.finishDraw(g);
 
 	}
-	
-	private void drawString(String pre, String str, Graphics2D g, int innerX){
+
+	private void drawString(String pre, String str, Graphics2D g, int innerX) {
 		if (str != null && !str.isEmpty()) {
 			g.drawString(pre + str, innerX, this.nextRow());
-		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
-			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
+		} else if (Config.DATA_POSITIONING_MODE
+				.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)) {
+			this.nextRow(); // if the data positions are fixed draw empty line
+							// if no data exists
 		}
 	}
 
 	private void drawString(String str, Graphics2D g, int innerX) {
 		if (str != null && !str.isEmpty()) {
 			g.drawString(str, innerX, this.nextRow());
-		}else if(Config.DATA_POSITIONING_MODE.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)){
-			this.nextRow(); // if the data positions are fixed draw empty line if no data exists
+		} else if (Config.DATA_POSITIONING_MODE
+				.equals(OptionList.FIXED_PERSON_DATA_POSITIONS)) {
+			this.nextRow(); // if the data positions are fixed draw empty line
+							// if no data exists
 		}
 	}
 
@@ -383,7 +404,7 @@ public class DrawPerson extends AbstractDraw {
 
 	@Override
 	public void setRelativeYCoordinate(int y) {
-		if(Config.Y_POSITIONING_MODE==OptionList.Y_MANUAL_POSITIONING)
+		if (Config.Y_POSITIONING_MODE == OptionList.Y_MANUAL_POSITIONING)
 			person.setGeneration(y);
 	}
 
@@ -408,12 +429,12 @@ public class DrawPerson extends AbstractDraw {
 			// TODO draw default image
 		}
 	}
-	
-	public boolean isVisible(){
+
+	public boolean isVisible() {
 		return this.person.isVisible();
 	}
-	
-	public void setVisible(boolean visible){
+
+	public void setVisible(boolean visible) {
 		this.person.setVisible(visible);
 	}
 

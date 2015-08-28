@@ -20,67 +20,56 @@ import translator.Translator;
 import tree.gui.search.line.factory.AbstractOverviewLineFactory;
 import tree.gui.util.GUIUtils;
 
-
-
-public abstract class AbstractOverview extends JDialog{
+public abstract class AbstractOverview extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1080814803414028806L;
-	
-	
+
 	private AbstractOverviewLineFactory factory;
-	
-	public AbstractOverview(AbstractOverviewLineFactory factory, Filter filter){
+
+	public AbstractOverview(AbstractOverviewLineFactory factory, Filter filter) {
 		GUIUtils.assignIcon(this);
 		this.setFactory(factory);
 		this.setFilter(filter);
-		
+
 		setFilterText(new JTextField());
-		getFilterText().setPreferredSize(new Dimension(100,25));
-		
-		getFilterText().getDocument().addDocumentListener(new DocumentListener(){
+		getFilterText().setPreferredSize(new Dimension(100, 25));
 
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				filterView();		
-			}
+		getFilterText().getDocument().addDocumentListener(
+				new DocumentListener() {
 
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				filterView();	
-			}
+					@Override
+					public void changedUpdate(DocumentEvent arg0) {
+						filterView();
+					}
 
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				filterView();	
-			}
-			
-		});
-		
-		
-		
+					@Override
+					public void insertUpdate(DocumentEvent arg0) {
+						filterView();
+					}
+
+					@Override
+					public void removeUpdate(DocumentEvent arg0) {
+						filterView();
+					}
+
+				});
+
 	}
-
 
 	private JPanel center;
 
-
 	private JScrollPane pane;
-
 
 	private int pSize;
 
-
 	private JTextField filterText;
-
 
 	private Filter filter;
 
-
 	private JPanel north;
-
 
 	private JButton addButton;
 
@@ -98,7 +87,7 @@ public abstract class AbstractOverview extends JDialog{
 
 	protected void setCenter(JPanel center) {
 		this.center = center;
-		this.center.setLayout(new BoxLayout(this.center,BoxLayout.Y_AXIS));
+		this.center.setLayout(new BoxLayout(this.center, BoxLayout.Y_AXIS));
 	}
 
 	protected JScrollPane getPane() {
@@ -119,18 +108,18 @@ public abstract class AbstractOverview extends JDialog{
 
 	public void actualizeSize() {
 		int pCounter = this.getCenter().getComponentCount();
-		getCenter().setPreferredSize(new Dimension(300,pCounter*(getpSize()+5)));
+		getCenter().setPreferredSize(
+				new Dimension(300, pCounter * (getpSize() + 5)));
 		getCenter().setMinimumSize(getCenter().getPreferredSize());
-		
-		
+
 		this.revalidate();
 		getPane().getViewport().revalidate();
-		
+
 		this.revalidate();
 		getPane().getViewport().repaint();
-		
+
 	}
-	
+
 	abstract public void filterView();
 
 	protected JTextField getFilterText() {
@@ -148,42 +137,42 @@ public abstract class AbstractOverview extends JDialog{
 	protected void setFilter(Filter filter) {
 		this.filter = filter;
 	}
+
 	/**
 	 * should be only called by constructors of AbstractOverview subclasses
 	 */
-	protected void constructOverview(boolean showAddButton){
+	protected void constructOverview(boolean showAddButton) {
 		int pCounter = getCenter().getComponentCount();
-		getCenter().setPreferredSize(new Dimension(300,pCounter*(getpSize()+5)));
-		
+		getCenter().setPreferredSize(
+				new Dimension(300, pCounter * (getpSize() + 5)));
+
 		setPane(new JScrollPane());
 		getPane().setViewportView(getCenter());
-		
+
 		this.add(getPane());
-		
+
 		setNorth(new JPanel());
 		getNorth().setLayout(new FlowLayout());
-		
-		
-		
+
 		this.setAddButton(new JButton());
-		
-		if(showAddButton){
+
+		if (showAddButton) {
 			getNorth().add(this.getAddButton());
 		}
-			getNorth().add(new JLabel(Main.getTranslator().getTranslation("search", Translator.LanguageFile.OVERVIEW_DIALOG)));
-			getNorth().add(getFilterText());
-			
-			this.add(getNorth(),BorderLayout.NORTH);
-			
-			this.setModalityType(ModalityType.APPLICATION_MODAL);
-			this.pack();
-			//the request focus does not work before the dialog is visible without calling pack first
-			this.getFilterText().requestFocus();
-		
-		
+		getNorth().add(
+				new JLabel(Main.getTranslator().getTranslation("search",
+						Translator.LanguageFile.OVERVIEW_DIALOG)));
+		getNorth().add(getFilterText());
+
+		this.add(getNorth(), BorderLayout.NORTH);
+
+		this.setModalityType(ModalityType.APPLICATION_MODAL);
+		this.pack();
+		// the request focus does not work before the dialog is visible without
+		// calling pack first
+		this.getFilterText().requestFocus();
+
 	}
-	
-	
 
 	protected JPanel getNorth() {
 		return north;

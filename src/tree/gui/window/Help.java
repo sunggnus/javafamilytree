@@ -22,10 +22,7 @@ import main.Main;
 import translator.Translator;
 import tree.gui.util.GUIUtils;
 
-
-
-public class Help extends JDialog{
-
+public class Help extends JDialog {
 
 	/**
 	 * 
@@ -42,26 +39,28 @@ public class Help extends JDialog{
 		this.assignIcon();
 
 	}
+
 	/**
 	 * loads the icon
 	 */
-	private void assignIcon()
-	{
+	private void assignIcon() {
 		GUIUtils.assignIcon(this);
 	}
-	
+
 	/**
 	 * reads the html-help or the about us file and show it in the help window.
-	 * @param boolean helpOrImp decides whether to show the help file or the about file true=help false=aboutUs
+	 * 
+	 * @param boolean helpOrImp decides whether to show the help file or the
+	 *        about file true=help false=aboutUs
 	 */
 	public void showHelp(final boolean helpOrImp) {
-		
-		
-		
+
 		JScrollPane helpContentPane = new JScrollPane();
-		setTitle(helpOrImp?this.getTranslation("help"):this.getTranslation("about"));
-		String path = helpOrImp?Main.getTranslator().getHelpPath():Main.getTranslator().getAboutPath();
-		
+		setTitle(helpOrImp ? this.getTranslation("help") : this
+				.getTranslation("about"));
+		String path = helpOrImp ? Main.getTranslator().getHelpPath() : Main
+				.getTranslator().getAboutPath();
+
 		JPanel undergroundPanel = new JPanel();
 
 		helpContentPane.setBackground(new Color(0, 100, 100));
@@ -86,7 +85,8 @@ public class Help extends JDialog{
 									Desktop.getDesktop().browse(
 											e.getURL().toURI());
 								} catch (URISyntaxException e1) {
-									javax.swing.JOptionPane.showMessageDialog(null,getTranslation("noBrowser"));
+									javax.swing.JOptionPane.showMessageDialog(
+											null, getTranslation("noBrowser"));
 								}
 							}
 						} else {
@@ -94,7 +94,9 @@ public class Help extends JDialog{
 
 						}
 					} catch (IOException e1) {
-						javax.swing.JOptionPane.showMessageDialog(null, (helpOrImp?getTranslation("noHelp"):getTranslation("noAbout")) );
+						javax.swing.JOptionPane.showMessageDialog(null,
+								(helpOrImp ? getTranslation("noHelp")
+										: getTranslation("noAbout")));
 					}
 				}
 			}
@@ -106,7 +108,9 @@ public class Help extends JDialog{
 			System.out.println(location.toExternalForm());
 			theHelpText.setPage(location);
 		} catch (IOException e) {
-			javax.swing.JOptionPane.showMessageDialog(null,(helpOrImp?getTranslation("noHelp"):getTranslation("noAbout")));
+			javax.swing.JOptionPane.showMessageDialog(null,
+					(helpOrImp ? getTranslation("noHelp")
+							: getTranslation("noAbout")));
 		}
 
 		GridLayout grid = new GridLayout(1, 1);
@@ -117,11 +121,12 @@ public class Help extends JDialog{
 		add(undergroundPanel);
 
 		setVisible(true);
-		
+
 	}
-	
-	private String getTranslation(String key){
-		return Main.getTranslator().getTranslation(key, Translator.LanguageFile.HELP);
+
+	private String getTranslation(String key) {
+		return Main.getTranslator().getTranslation(key,
+				Translator.LanguageFile.HELP);
 	}
 
 }

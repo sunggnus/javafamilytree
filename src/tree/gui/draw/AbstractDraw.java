@@ -3,19 +3,16 @@ package tree.gui.draw;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-
-
 public abstract class AbstractDraw {
-	
-static public final int STRING_HEIGHT=15;
-	
-	static public final int STRING_MARGING=4;
-	
-	static public final int DEFAULT_MARGING=5;
-	
+
+	static public final int STRING_HEIGHT = 15;
+
+	static public final int STRING_MARGING = 4;
+
+	static public final int DEFAULT_MARGING = 5;
 
 	private double scaling;
-	
+
 	protected double getScaling() {
 		return scaling;
 	}
@@ -24,61 +21,64 @@ static public final int STRING_HEIGHT=15;
 
 	private int maxX;
 
-	private  int maxY;
+	private int maxY;
 
-	private  int minX;
+	private int minX;
 
-	private  int minY;
-	
+	private int minY;
+
 	private boolean marked;
-	
-	protected AbstractDraw(){
+
+	protected AbstractDraw() {
 
 		this.setScaling(1.0);
 		this.setMarked(false);
 	}
-	
-	protected int nextRow(){
+
+	protected int nextRow() {
 		int row = this.row;
 		this.row += STRING_HEIGHT;
 		return row;
 	}
-	
-	public int getRow(){
+
+	public int getRow() {
 		return this.row;
 	}
-	
-	protected void setScaling(double scaling){
+
+	protected void setScaling(double scaling) {
 		this.scaling = scaling;
 	}
-	
 
-	
-	protected void setRow(int row){
+	protected void setRow(int row) {
 		this.row = row;
 	}
+
 	/**
-	 * should be executed by subclasses before
-	 * executing the draw body
+	 * should be executed by subclasses before executing the draw body
+	 * 
 	 * @param g
 	 */
-	public void startDraw(Graphics2D g){
-		if(this.isMarked()){
+	public void startDraw(Graphics2D g) {
+		if (this.isMarked()) {
 			g.setColor(Color.BLUE);
 		}
 	}
+
 	/**
-	 * should be executed by subclasses before
-	 * after the draw body has been executed
+	 * should be executed by subclasses before after the draw body has been
+	 * executed
+	 * 
 	 * @param g
 	 */
-	public void finishDraw(Graphics2D g){
+	public void finishDraw(Graphics2D g) {
 		g.setColor(Color.BLACK);
 	}
-	
-	public abstract void calculateBounds(int widthUnit, int heightUnit, double scaling);
-	
-	public abstract void draw(Graphics2D g,   int widthUnit, int heightUnit, double scaling,boolean drawX);
+
+	public abstract void calculateBounds(int widthUnit, int heightUnit,
+			double scaling);
+
+	public abstract void draw(Graphics2D g, int widthUnit, int heightUnit,
+			double scaling, boolean drawX);
 
 	public int getMaxX() {
 		return this.maxX;
@@ -113,15 +113,16 @@ static public final int STRING_HEIGHT=15;
 	}
 
 	public boolean containsCoordinates(int x, int y) {
-		
-		if(this instanceof DrawPerson){
-			if(!((DrawPerson) this).isVisible()){
-				return false; //so mouse only reacts if the person is visible
+
+		if (this instanceof DrawPerson) {
+			if (!((DrawPerson) this).isVisible()) {
+				return false; // so mouse only reacts if the person is visible
 			}
-			
+
 		}
-	
-		return (this.getMinX() < x && x < this.getMaxX() && this.getMinY() < y && y < this.getMaxY());
+
+		return (this.getMinX() < x && x < this.getMaxX() && this.getMinY() < y && y < this
+				.getMaxY());
 	}
 
 	public boolean isMarked() {
@@ -131,21 +132,20 @@ static public final int STRING_HEIGHT=15;
 	public void setMarked(boolean marked) {
 		this.marked = marked;
 	}
+
 	/**
 	 * sets the content visibility
 	 */
 	abstract public void setVisible(boolean visible);
-	
-	abstract public void setNewContentXCoordinate(int x);
-	
-	abstract public void addDistanceToXCoordinate(int dist);
-	
-	abstract public int getRelativeXCoordinate();
-	
-	abstract public int getRelativeYCoordinate();
-	
-	abstract public void setRelativeYCoordinate(int y);
-	
 
+	abstract public void setNewContentXCoordinate(int x);
+
+	abstract public void addDistanceToXCoordinate(int dist);
+
+	abstract public int getRelativeXCoordinate();
+
+	abstract public int getRelativeYCoordinate();
+
+	abstract public void setRelativeYCoordinate(int y);
 
 }

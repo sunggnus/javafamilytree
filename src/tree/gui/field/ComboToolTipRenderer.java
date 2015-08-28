@@ -21,10 +21,10 @@ public class ComboToolTipRenderer extends DefaultListCellRenderer {
 
 		if (value != null) {
 			comp.setToolTipText(String.valueOf(value));
-			if(value instanceof LookAndFeelInfo){
-            	LookAndFeelInfo item = (LookAndFeelInfo)value;
-                setText( item.getName() );
-            	}
+			if (value instanceof LookAndFeelInfo) {
+				LookAndFeelInfo item = (LookAndFeelInfo) value;
+				setText(item.getName());
+			}
 		} else {
 			comp.setToolTipText(null);
 		}

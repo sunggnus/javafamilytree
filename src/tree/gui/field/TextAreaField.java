@@ -16,8 +16,9 @@ public class TextAreaField extends AbstractField {
 	 * 
 	 */
 	private static final long serialVersionUID = 4751078272198894857L;
-	
+
 	private static int DEFAULT_JTEXTAREA_LINE_HEIGHT = 18;
+
 	/**
 	 * 
 	 * @param name
@@ -28,34 +29,35 @@ public class TextAreaField extends AbstractField {
 
 		super(name, labelWidth, new JTextArea());
 		final JTextArea content = this.getField();
-		content.setPreferredSize(new Dimension((int) areaWidth,
-				(int) content.getPreferredSize().getHeight()));
+		content.setPreferredSize(new Dimension((int) areaWidth, (int) content
+				.getPreferredSize().getHeight()));
 		content.setLineWrap(true);
 		final TextAreaField thisField = this;
-		
+
 		content.getDocument().addDocumentListener(new DocumentListener() {
 
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
 				Dimension pref = content.getPreferredSize();
-				int newHeight = (content.getLineCount()*DEFAULT_JTEXTAREA_LINE_HEIGHT)+4;
-				content.setPreferredSize(new Dimension((int)pref.getWidth(),newHeight));
-				
+				int newHeight = (content.getLineCount() * DEFAULT_JTEXTAREA_LINE_HEIGHT) + 4;
+				content.setPreferredSize(new Dimension((int) pref.getWidth(),
+						newHeight));
+
 				thisField.setPreferredSize(new Dimension((int) thisField
 						.getPreferredSize().getWidth(), newHeight
 						+ AbstractField.Y_OFFSET_SIZE));
 				thisField.setMaximumSize(thisField.getPreferredSize());
-				
-				if(thisField.getParent()!=null){
+
+				if (thisField.getParent() != null) {
 					int height = 0;
-					for(Component comp : thisField.getParent().getComponents()){
+					for (Component comp : thisField.getParent().getComponents()) {
 						height += (int) comp.getPreferredSize().getHeight();
 					}
 					Dimension dim = thisField.getParent().getPreferredSize();
-					Dimension newDimension = new Dimension((int)dim.getWidth(),height+20);
+					Dimension newDimension = new Dimension(
+							(int) dim.getWidth(), height + 20);
 					thisField.getParent().setPreferredSize(newDimension);
-					
-				
+
 				}
 			}
 
@@ -77,8 +79,6 @@ public class TextAreaField extends AbstractField {
 		return (JTextArea) super.getFieldComponent();
 	}
 
-	
-
 	public List<String> getContent() {
 
 		LinkedList<String> content = new LinkedList<String>();
@@ -94,23 +94,23 @@ public class TextAreaField extends AbstractField {
 
 			}
 		} catch (BadLocationException ble) {
-	
+
 		}
-		for(String str : content){
+		for (String str : content) {
 			System.out.println(str);
 		}
-		
+
 		return content;
 	}
-	
-	public void setContent(List<String> content){
+
+	public void setContent(List<String> content) {
 		JTextArea area = this.getField();
-	
-		for(String str : content){
-			
-				area.append(str);
-			
+
+		for (String str : content) {
+
+			area.append(str);
+
 		}
-		
+
 	}
 }
