@@ -82,9 +82,10 @@ public class Person implements Serializable {
 	 */
 	private boolean alive;
 	/**
-	 * sex of the person
+	 * sex of the person 
+	 * (this would be an enum normally but for backwards compatibility with serialization this is still a boolean)
 	 */
-	private Sex sex;
+	private boolean sex;
 
 	/**
 	 * if the father is null, he is unknown the father must be male
@@ -160,7 +161,7 @@ public class Person implements Serializable {
 	public Person(String givenName, String familyName, Sex sex) {
 		this.givenName = givenName;
 		this.familyName = familyName;
-		this.sex = sex;
+		this.setSex(sex);
 
 		this.additonalConstructorStuff();
 
@@ -193,7 +194,7 @@ public class Person implements Serializable {
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
-		this.sex = sex;
+		this.setSex(sex);
 		this.setFather(father);
 		this.setMother(mother);
 		this.birthDate = birthdate;
@@ -233,7 +234,7 @@ public class Person implements Serializable {
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
-		this.sex = sex;
+		this.setSex(sex);
 		this.setFather(father);
 		this.setMother(mother);
 		this.birthDate = birthdate;
@@ -276,7 +277,7 @@ public class Person implements Serializable {
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
-		this.sex = sex;
+		this.setSex(sex);
 		this.setFather(father);
 		this.setMother(mother);
 		this.setBirthdate(birthyear, birthmonth, birthday);
@@ -324,7 +325,7 @@ public class Person implements Serializable {
 		this.givenName = givenName;
 		this.familyName = familyName;
 		this.alive = alive;
-		this.sex = sex;
+		this.setSex(sex);
 		this.setFather(father);
 		this.setMother(mother);
 		this.setBirthdate(birthyear, birthmonth, birthday);
@@ -548,19 +549,25 @@ public class Person implements Serializable {
 	}
 
 	public void setSex(Sex sex) {
-		this.sex = sex;
+		this.sex = (sex == Sex.FEMALE);
 	}
 
 	public boolean isFemale() {
-		return this.sex == Sex.FEMALE;
+		return this.getSex() == Sex.FEMALE;
 	}
 
 	public boolean isMale() {
-		return this.sex == Sex.MALE;
+		return this.getSex() == Sex.MALE;
 	}
 
 	public Sex getSex() {
-		return this.sex;
+		if(this.sex){
+			return Sex.FEMALE;
+		}
+		else{
+			return Sex.MALE;
+		}
+		
 	}
 
 	/**
@@ -930,6 +937,7 @@ public class Person implements Serializable {
 	 */
 	private void readObject(ObjectInputStream s) throws IOException,
 			ClassNotFoundException {
+		
 		s.defaultReadObject();
 		ArrayList<Byte> byteImage = new ArrayList<Byte>(2000);
 		while (s.available() > 0) {
