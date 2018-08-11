@@ -1,4 +1,4 @@
-package tree.model;
+package tree.model.io;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -18,8 +18,14 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
+import javax.xml.stream.XMLStreamException;
 
 import tree.gui.ExportImage;
+import tree.model.AgeException;
+import tree.model.LineageException;
+import tree.model.MainNode;
+import tree.model.Person;
+import tree.model.Utils;
 import tree.model.Person.Sex;
 
 public class TreeIO {
@@ -145,9 +151,15 @@ public class TreeIO {
 			stream = new FileOutputStream(file);
 			objOut = new ObjectOutputStream(stream);
 			objOut.writeObject(node);
+			
+			String xmlFile = file.getAbsolutePath().replace(".sbt", ".xml");
+			XmlBuilder.writeXMLTree(xmlFile, node.getPersonsReference(), node.getNotesReference());
 
 		} catch (IOException e) {
 			throw e;
+		} catch (XMLStreamException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (objOut != null) {
 				objOut.flush();

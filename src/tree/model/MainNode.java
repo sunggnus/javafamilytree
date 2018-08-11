@@ -127,5 +127,14 @@ public class MainNode implements Serializable {
 	public void addAll(List<Person> persons) {
 		createdPersons.addAll(persons);
 	}
+	
+	public void normalizeIDs(){
+		long id = 0;
+		for(Person s :this.createdPersons){
+			s.setID(id);
+			id++;
+		}
+		Person.NEXT_ID = id;
+	}
 
 }

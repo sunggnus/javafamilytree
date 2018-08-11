@@ -18,8 +18,8 @@ import tree.model.AgeException;
 import tree.model.LineageException;
 import tree.model.MainNode;
 import tree.model.Person;
-import tree.model.TreeIO;
 import tree.model.Utils;
+import tree.model.io.TreeIO;
 
 public class SaveLoadActions {
 
