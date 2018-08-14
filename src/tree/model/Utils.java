@@ -37,6 +37,14 @@ public class Utils {
 		return calendarToString(time, terminlayout);
 
 	}
+	
+	static public String calendarToReadableString(GregorianCalendar time) {
+		SimpleDateFormat terminlayout = new SimpleDateFormat();
+
+		terminlayout.applyPattern("dd MMM yyyy");
+
+		return calendarToString(time, terminlayout);
+	}
 
 	static public String calendarToSimpleString(GregorianCalendar time) {
 		SimpleDateFormat terminlayout = new SimpleDateFormat();
@@ -487,7 +495,13 @@ public class Utils {
 	}
 	
 	public static byte[] hexStringToByteArray(String s) {
+		s = s.trim();
 	    int len = s.length();
+	    
+	    if(len % 2 == 1){
+	    	len -= 1;
+	    }
+	    
 	    byte[] data = new byte[len / 2];
 	    for (int i = 0; i < len; i += 2) {
 	        data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)

@@ -41,6 +41,13 @@ public class TreeIO {
 	public MainNode loadTree(String path) throws IOException {
 		return loadTree(new File(path));
 	}
+	
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
 
 	/**
 	 * loads a tree
@@ -51,6 +58,8 @@ public class TreeIO {
 	 * @throws IOException
 	 */
 	public MainNode loadTree(File file) throws IOException {
+		
+		if(getFileExtension(file).equals("sbt")){
 		FileInputStream input = null;
 		ObjectInputStream objIn = null;
 		try {
@@ -75,6 +84,21 @@ public class TreeIO {
 				input.close();
 			}
 		}
+	}
+		if(getFileExtension(file).equals("xml")){
+			XmlReader reader = new XmlReader();
+		
+				MainNode node = reader.readXmlTree(file.getAbsolutePath());
+				return node;
+			
+		}
+		
+		
+		
+			return null;
+		
+		
+		
 
 	}
 
@@ -144,6 +168,8 @@ public class TreeIO {
 		if (file.exists() && !override) {
 			return false;
 		}
+		node.normalizeIDs();
+		
 		if (file.exists()) {
 			file.delete();
 		}

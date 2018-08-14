@@ -12,8 +12,9 @@ public class RefreshTreeLayoutListener implements ConnectionListener {
 
 	@Override
 	public void connectionChanged(Person person) {
-		if (Config.Y_POSITIONING_MODE == OptionList.Y_AUTO_POSITIONING)
+		if (Config.Y_POSITIONING_MODE == OptionList.Y_AUTO_POSITIONING){
 			Utils.determineTreeGenerations(person);
+		}
 	}
 
 }

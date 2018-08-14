@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Stack;
 
 import javax.imageio.ImageIO;
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
@@ -31,7 +32,7 @@ public class XmlBuilder {
 
 	private int indention;
 	
-	private Stack<String> openNodes;
+	private Stack<QName> openNodes;
 	
 	private class ImageStruct{
 		
@@ -47,14 +48,15 @@ public class XmlBuilder {
 	public XmlBuilder(String path) throws FileNotFoundException, XMLStreamException{
 		this.indention = 0;
 		this.lineStart = true;
-		this.openNodes = new Stack<String>();
+		this.openNodes = new Stack<QName>();
 		this.images = new LinkedList<XmlBuilder.ImageStruct>();
 		
 		// create an XMLOutputFactory
 	    XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+	    outputFactory.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, true);
 	    // create XMLEventWriter
 	    this.eventWriter = outputFactory
-	            .createXMLEventWriter(new FileOutputStream(path));
+	            .createXMLEventWriter(new FileOutputStream(path), "UTF-8");
 
 	}
 	
@@ -88,30 +90,30 @@ public class XmlBuilder {
 	    this.lineStart = true;
 	}
 	
-	private void openNode(String name) throws XMLStreamException{
+	private void openNode(XmlNodes name) throws XMLStreamException{
 		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 	    // create Start node
-	    StartElement sElement = eventFactory.createStartElement("", "", name);
+	    StartElement sElement = eventFactory.createStartElement(name.getQName(), null, null);
 	    lineBreak();
 	    indention();
 	    eventWriter.add(sElement);
-	    this.openNodes.push(name);
+	    this.openNodes.push(name.getQName());
 	    this.increaseIndention();
 	    
 	}
 	
 	private void closeNode() throws XMLStreamException{
-		String n = this.openNodes.pop();
+		QName n = this.openNodes.pop();
 		
 		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-	    EndElement eElement = eventFactory.createEndElement("", "", n);
+	    EndElement eElement = eventFactory.createEndElement(n, null);
 	    this.decreaseIndention();
 	    this.indention();
 	    eventWriter.add(eElement);
 	    
 	}
 	
-	private void addCompleteSubNode(String name, String value) throws XMLStreamException{
+	private void addCompleteSubNode(XmlNodes name, String value) throws XMLStreamException{
 		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
     
 		openNode(name);
@@ -122,25 +124,25 @@ public class XmlBuilder {
 	    closeNode();
 	}
 
-	private void addCompleteSubNode(String name, long value) throws XMLStreamException{
+	private void addCompleteSubNode(XmlNodes name, long value) throws XMLStreamException{
 	
 		addCompleteSubNode(name, String.valueOf(value));
 	}
 
-	private void addCompleteSubNode(String name, double value) throws XMLStreamException{
+	private void addCompleteSubNode(XmlNodes name, double value) throws XMLStreamException{
 	
 		addCompleteSubNode(name, String.valueOf(value));
 	}
 
-	private void addCompleteSubNode(String name, boolean value) throws XMLStreamException{
+	private void addCompleteSubNode(XmlNodes name, boolean value) throws XMLStreamException{
 		addCompleteSubNode( name, String.valueOf(value));
 	}
 
-	private void addCompleteSubNode(String name, GregorianCalendar value) throws XMLStreamException{
-		addCompleteSubNode(name, Utils.calendarToSimpleString(value));
+	private void addCompleteSubNode(XmlNodes name, GregorianCalendar value) throws XMLStreamException{
+		addCompleteSubNode(name, Utils.calendarToReadableString(value));
 	}
 
-	private void addCompleteSubNode( String name, Person value) throws XMLStreamException{
+	private void addCompleteSubNode( XmlNodes name, Person value) throws XMLStreamException{
 	if(value == null){
 		addCompleteSubNode(name, "");
 	}
@@ -151,7 +153,7 @@ public class XmlBuilder {
 	
 	
 }
-	private void addCompleteSubNode(String name, BufferedImage image) throws XMLStreamException{
+	private void addCompleteSubNode(XmlNodes name, BufferedImage image) throws XMLStreamException{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		if (image != null) {
 			try {
@@ -167,9 +169,9 @@ public class XmlBuilder {
 	
 	private void writeXMLImages() throws XMLStreamException{
 		for(ImageStruct s : images){
-			openNode("image");
-			addCompleteSubNode( "ID", s.id);
-			addCompleteSubNode("data", s.image);
+			openNode(XmlNodes.IMAGE);
+			addCompleteSubNode( XmlNodes.ID, s.id);
+			addCompleteSubNode( XmlNodes.DATA, s.image);
 			lineBreak();
 			closeNode();
 		}
@@ -178,29 +180,29 @@ public class XmlBuilder {
 	
 	private void writeXMLPerson(Person person) throws XMLStreamException{
 	    
-		openNode("person");
-	    addCompleteSubNode( "ID", person.getID());
-	    addCompleteSubNode( "givenName", person.getGivenName());
-	    addCompleteSubNode( "familyName", person.getFamilyName());
-	    addCompleteSubNode( "birthName", person.getBirthName());
-	    addCompleteSubNode( "alive", person.isAlive());
-	    addCompleteSubNode( "sex", person.getSex().name());
-	    addCompleteSubNode( "birthDate", person.getBirthdate());
-	    addCompleteSubNode( "deathDate", person.getDeathdate());
-	    addCompleteSubNode( "father", person.getFather());
-	    addCompleteSubNode( "mother", person.getMother());
+		openNode(XmlNodes.PERSON);
+	    addCompleteSubNode( XmlNodes.ID, person.getID());
+	    addCompleteSubNode( XmlNodes.GENERATION, person.getGeneration());
+	    addCompleteSubNode( XmlNodes.GIVEN_NAME, person.getGivenName());
+	    addCompleteSubNode( XmlNodes.FAMILY_NAME, person.getFamilyName());
+	    addCompleteSubNode( XmlNodes.BIRTH_NAME, person.getBirthName());
+	    addCompleteSubNode( XmlNodes.ALIVE, person.isAlive());
+	    addCompleteSubNode( XmlNodes.SEX, person.getSex().name());
+	    addCompleteSubNode( XmlNodes.BIRTH_DATE, person.getBirthdate());
+	    addCompleteSubNode( XmlNodes.DEATH_DATE, person.getDeathdate());
+	    addCompleteSubNode( XmlNodes.FATHER, person.getFather());
+	    addCompleteSubNode( XmlNodes.MOTHER, person.getMother());
 	    for(Person p : person.getPartners()){
-	    	addCompleteSubNode( "partner", p);
+	    	addCompleteSubNode( XmlNodes.PARTNER, p);
 	    }
 	    for(Person p : person.getChildren()){
-	    	addCompleteSubNode( "child", p);
+	    	addCompleteSubNode( XmlNodes.CHILD, p);
 	    }
-	    addCompleteSubNode( "location", person.getLocation());
-	    addCompleteSubNode( "trade", person.getTrade());
-	    addCompleteSubNode( "visible", person.isVisible());
-	    addCompleteSubNode( "xPosition", person.getXPosition());
-	    addCompleteSubNode( "generation", person.getGeneration());
-	    addCompleteSubNode( "commentOne", person.getCommentOne());
+	    addCompleteSubNode( XmlNodes.LOCATION, person.getLocation());
+	    addCompleteSubNode( XmlNodes.TRADE, person.getTrade());
+	    addCompleteSubNode( XmlNodes.VISIBLE, person.isVisible());
+	    addCompleteSubNode( XmlNodes.X_POSITION, person.getXPosition());
+	    addCompleteSubNode( XmlNodes.COMMENT_ONE, person.getCommentOne());
 	    
 	    BufferedImage image = person.getPicture();
 	    if(image != null){
@@ -218,26 +220,28 @@ public class XmlBuilder {
 	}
 
 	private void writeXMLNote( Note note) throws XMLStreamException{
-		openNode("note");
+		openNode(XmlNodes.NOTE);
 	    for(String s : note.getComments()){
-	    	addCompleteSubNode( "comment", s);
+	    	addCompleteSubNode( XmlNodes.COMMENT, s);
 	    }
-	    addCompleteSubNode( "fontSize", note.getFontSize());
-	    addCompleteSubNode( "visible", note.isVisible());
-	    addCompleteSubNode( "x", note.getX());
-	    addCompleteSubNode( "y", note.getY());
-	    addCompleteSubNode( "smoothX", note.getSmoothX());
-	    addCompleteSubNode( "smoothY", note.getSmoothY());
+	    addCompleteSubNode( XmlNodes.FONT_SIZE, note.getFontSize());
+	    addCompleteSubNode( XmlNodes.VISIBLE, note.isVisible());
+	    addCompleteSubNode( XmlNodes.X_COORDINATE, note.getX());
+	    addCompleteSubNode( XmlNodes.Y_COORDINATE, note.getY());
+	    addCompleteSubNode( XmlNodes.SMOOTH_X, note.getSmoothX());
+	    addCompleteSubNode( XmlNodes.SMOOTH_Y, note.getSmoothY());
 	    lineBreak();
 	    closeNode();
 	}
 	
 	private void startDocument() throws XMLStreamException{
 		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		StartDocument startDocument = eventFactory.createStartDocument();
+		
+		StartDocument startDocument = eventFactory.createStartDocument("UTF-8");
 	    eventWriter.add(startDocument);
+	    eventWriter.setDefaultNamespace(XmlNodes.TREE.getNamespace());
 	    lineBreak();
-	    openNode("tree");
+	    openNode(XmlNodes.TREE);
 	}
 	
 	private void endDocument() throws XMLStreamException{
