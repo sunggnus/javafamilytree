@@ -173,20 +173,19 @@ public class TreeIO {
 		if (file.exists()) {
 			file.delete();
 		}
+		
+		
+		if(file.getAbsolutePath().endsWith(".sbt")){
 		try {
 			stream = new FileOutputStream(file);
 			objOut = new ObjectOutputStream(stream);
 			objOut.writeObject(node);
 			
-			String xmlFile = file.getAbsolutePath().replace(".sbt", ".xml");
-			XmlBuilder.writeXMLTree(xmlFile, node.getPersonsReference(), node.getNotesReference());
+
 
 		} catch (IOException e) {
 			throw e;
-		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		}  finally {
 			if (objOut != null) {
 				objOut.flush();
 				objOut.close();
@@ -198,6 +197,19 @@ public class TreeIO {
 		}
 
 		return true;
+		}
+		else{
+			
+			try {
+				XmlBuilder.writeXMLTree(file.getAbsolutePath(), 
+						node.getPersonsReference(), 
+						node.getNotesReference());
+			} catch (XMLStreamException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return true;
+		}
 	}
 
 	public boolean writeImageAsJPEG(String path, ExportImage canvas,

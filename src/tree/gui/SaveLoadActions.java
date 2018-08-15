@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import main.Config;
 import main.Main;
@@ -23,17 +25,52 @@ import tree.model.io.TreeIO;
 
 public class SaveLoadActions {
 
+	
+	private static String addFileEnding(String orgString, String ending){
+		int lastDot = orgString.lastIndexOf(".");
+		String res = "";
+		if(! ending.startsWith(".")){
+			ending = "." + ending;
+		}
+		
+		if(lastDot != -1){
+			res = orgString.substring(0, lastDot) + ending; 
+		}
+		else{
+			res = orgString + ending;
+		}
+		return res;
+		
+	}
+	
 	/**
 	 * 
 	 * @return the path to the file which should be saved
 	 */
-	private static String saveFileDialog() {
+	private static String saveFileDialog(boolean addFilter) {
 		JFileChooser chooser = new JFileChooser(Config.LAST_PATH);
+		FileFilter sbt = new FileNameExtensionFilter("sbt", 
+	            "sbt"); 
+			FileFilter xml = new FileNameExtensionFilter("xml", 
+	            "xml"); 
+		if(addFilter){
+			chooser.setAcceptAllFileFilterUsed(false);
+			chooser.addChoosableFileFilter(sbt);
+			chooser.addChoosableFileFilter(xml);
+		}
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int val = chooser.showSaveDialog(chooser);
 		if (val == JFileChooser.APPROVE_OPTION) {
 			String filePath = chooser.getSelectedFile().getAbsolutePath();
 			Config.LAST_PATH = chooser.getSelectedFile().getParent();
+
+			if(chooser.getFileFilter() == sbt && !filePath.endsWith(".sbt")){
+				filePath = addFileEnding(filePath, "sbt");
+			}
+			if(chooser.getFileFilter() == xml && !filePath.endsWith(".xml")){
+				filePath = addFileEnding(filePath, "xml");
+			}
+			
 
 			return filePath;
 		}
@@ -56,7 +93,7 @@ public class SaveLoadActions {
 
 	public static void exportBackgroundPicture(ActionEvent e) {
 		String mode = e.getActionCommand();
-		String filePath = saveFileDialog();
+		String filePath = saveFileDialog(false);
 		if (filePath != null) {
 			TreeIO saver = new TreeIO();
 			try {
@@ -78,16 +115,9 @@ public class SaveLoadActions {
 	}
 
 	public static void saveTree() {
-		String filePath = saveFileDialog();
+		String filePath = saveFileDialog(true);
 		if (filePath != null) {
-			if (!filePath.endsWith(".sbt")) {
-				String[] split = filePath.split("\\.");
-				if (split.length > 1) {
-					filePath = split[0] + ".sbt";
-				} else {
-					filePath += ".sbt";
-				}
-			}
+
 			TreeIO saver = new TreeIO();
 			try {
 				if (!saver.writeTree(Main.getMainNode(), filePath)) {
@@ -107,11 +137,13 @@ public class SaveLoadActions {
 
 	public static void loadTree() {
 		JFileChooser chooser = new JFileChooser(Config.LAST_PATH);
+
 		int val = chooser.showOpenDialog(chooser);
 		if (val == JFileChooser.APPROVE_OPTION) {
 			try {
 				String filePath = chooser.getSelectedFile().getAbsolutePath();
 				Config.LAST_PATH = chooser.getSelectedFile().getParent();
+				
 				TreeIO loader = new TreeIO();
 				MainNode node = loader.loadTree(filePath);
 				Main.setMainNode(node);
@@ -146,7 +178,7 @@ public class SaveLoadActions {
 
 	public static void exportAsImage(ActionEvent arg0) {
 		String mode = arg0.getActionCommand();
-		String filePath = saveFileDialog();
+		String filePath = saveFileDialog(false);
 		if (filePath != null) {
 			TreeIO saver = new TreeIO();
 			try {
