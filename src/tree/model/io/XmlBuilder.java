@@ -139,7 +139,7 @@ public class XmlBuilder {
 	}
 
 	private void addCompleteSubNode(XmlNodes name, GregorianCalendar value) throws XMLStreamException{
-		addCompleteSubNode(name, Utils.calendarToReadableString(value));
+		addCompleteSubNode(name, Utils.calendarToXmlStorageString(value));
 	}
 
 	private void addCompleteSubNode( XmlNodes name, Person value) throws XMLStreamException{

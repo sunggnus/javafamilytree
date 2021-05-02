@@ -137,7 +137,10 @@ public class SaveLoadActions {
 
 	public static void loadTree() {
 		JFileChooser chooser = new JFileChooser(Config.LAST_PATH);
-
+		FileFilter sbt = new FileNameExtensionFilter("sbt", "sbt"); 
+		FileFilter xml = new FileNameExtensionFilter("xml", "xml"); 
+		chooser.addChoosableFileFilter(sbt);
+		chooser.addChoosableFileFilter(xml);
 		int val = chooser.showOpenDialog(chooser);
 		if (val == JFileChooser.APPROVE_OPTION) {
 			try {

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Stack;
 
 import javax.swing.JFrame;
@@ -40,6 +41,14 @@ public class Utils {
 	
 	static public String calendarToReadableString(GregorianCalendar time) {
 		SimpleDateFormat terminlayout = new SimpleDateFormat();
+
+		terminlayout.applyPattern("dd MMM yyyy");
+
+		return calendarToString(time, terminlayout);
+	}
+	
+	static public String calendarToXmlStorageString(GregorianCalendar time) {
+		SimpleDateFormat terminlayout = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
 		terminlayout.applyPattern("dd MMM yyyy");
 

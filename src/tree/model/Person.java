@@ -111,14 +111,14 @@ public class Person implements Serializable {
 	 * the birth date of a person
 	 */
 
-	private GregorianCalendar birthDate;
+	private GregorianCalendar birthdate;
 
 	/**
 	 * the death date of a person it is null if the person is still alive or it
 	 * is not known
 	 */
 
-	private GregorianCalendar deathDate;
+	private GregorianCalendar deathdate;
 
 	/**
 	 * contains the generation in which this person was born the oldest
@@ -353,28 +353,28 @@ public class Person implements Serializable {
 
 	public void setBirthdate(int day, int month, int year) {
 		month--;
-		this.birthDate = new GregorianCalendar(year, month, day);
+		this.birthdate = new GregorianCalendar(year, month, day);
 	}
 
 	public void setBirthdate(GregorianCalendar birth) {
-		this.birthDate = birth;
+		this.birthdate = birth;
 	}
 
 	public void setDeathdate(int day, int month, int year) {
 		month--;
-		this.deathDate = new GregorianCalendar(year, month, day);
+		this.deathdate = new GregorianCalendar(year, month, day);
 	}
 
 	public void setDeathdate(GregorianCalendar death) {
-		this.deathDate = death;
+		this.deathdate = death;
 	}
 
 	public GregorianCalendar getBirthdate() {
-		return this.birthDate;
+		return this.birthdate;
 	}
 
 	public GregorianCalendar getDeathdate() {
-		return this.deathDate;
+		return this.deathdate;
 	}
 
 	public boolean isAlive() {
